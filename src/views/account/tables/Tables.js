@@ -42,7 +42,7 @@ const Tables = () => {
     }
     callData()
   }, [])
-  console.log(dataU)
+  // console.log(dataU)
   return (
     // console.log(dataU)
     <CRow>
