@@ -16,12 +16,12 @@ import {
   CTableRow,
 } from '@coreui/react'
 import { DocsExample } from 'src/components'
-const token = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjAuMTk3XC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNjU4OTA3NDk0LCJleHAiOjE2NTg5MTEwOTQsIm5iZiI6MTY1ODkwNzQ5NCwianRpIjoiZXBiSFhBOGptTVpuT0daWSIsInN1YiI6MiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.zf2gJGwH6VUUWz-BCcSI9uphy3o40PkPnbMyG5nRlEk`
+const token = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjAuMTk3XC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNjU4OTAyNDczLCJleHAiOjE2NTg5MDYwNzMsIm5iZiI6MTY1ODkwMjQ3MywianRpIjoibU40dTVjT0Z0cDZpdGVEUiIsInN1YiI6MiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.Vf3ktITUKeM3q6TI7rrELQnryp-hT4gF7rkkL_F6OsQ`
 const getSignature = async () => {
   try {
     const result = await axios({
       method: `Get`,
-      url: `http://192.168.0.197/api/user/gets`,
+      url: `http://192.168.0.197/api/history/transactions`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -47,25 +47,23 @@ const Tables = () => {
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>Account Table</strong>
+            <strong>History Transaction Table</strong>
           </CCardHeader>
           <CCardBody>
             <CTable>
               <CTableHead>
                 <CTableRow>
                   <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Nick Name</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">User ID</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Account Level</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Status</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Type</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
                 {data?.map((item, index) => (
                   <CTableRow key={index}>
                     <CTableHeaderCell scope="row">{index}</CTableHeaderCell>
-                    <CTableHeaderCell scope="row">{item.NickName}</CTableHeaderCell>
-                    <CTableDataCell colSpan="row">{item.UserID}</CTableDataCell>
-                    <CTableDataCell>{item.accountLevel}</CTableDataCell>
+                    <CTableHeaderCell scope="row">{item.status}</CTableHeaderCell>
+                    <CTableDataCell colSpan="row">{item.type}</CTableDataCell>
                   </CTableRow>
                 ))}
               </CTableBody>

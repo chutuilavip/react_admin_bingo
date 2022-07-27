@@ -16,12 +16,12 @@ import {
   CTableRow,
 } from '@coreui/react'
 import { DocsExample } from 'src/components'
-const token = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjAuMTk3XC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNjU4OTA3NDk0LCJleHAiOjE2NTg5MTEwOTQsIm5iZiI6MTY1ODkwNzQ5NCwianRpIjoiZXBiSFhBOGptTVpuT0daWSIsInN1YiI6MiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.zf2gJGwH6VUUWz-BCcSI9uphy3o40PkPnbMyG5nRlEk`
+const token = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjAuMTk3XC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNjU4OTAyNDczLCJleHAiOjE2NTg5MDYwNzMsIm5iZiI6MTY1ODkwMjQ3MywianRpIjoibU40dTVjT0Z0cDZpdGVEUiIsInN1YiI6MiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.Vf3ktITUKeM3q6TI7rrELQnryp-hT4gF7rkkL_F6OsQ`
 const getSignature = async () => {
   try {
     const result = await axios({
       method: `Get`,
-      url: `http://192.168.0.197/api/user/gets`,
+      url: `http://192.168.0.197/api/history/plays`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -41,13 +41,13 @@ const Tables = () => {
     }
     ss()
   }, [])
-  console.log('data ne', data)
+  console.log('data play ne ', data)
   return (
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>Account Table</strong>
+            <strong>History Play Table</strong>
           </CCardHeader>
           <CCardBody>
             <CTable>
@@ -55,17 +55,17 @@ const Tables = () => {
                 <CTableRow>
                   <CTableHeaderCell scope="col">#</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Nick Name</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">User ID</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Account Level</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Competitor Nick name</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">tID</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
                 {data?.map((item, index) => (
                   <CTableRow key={index}>
-                    <CTableHeaderCell scope="row">{index}</CTableHeaderCell>
+                    <CTableDataCell colSpan="row">{index}</CTableDataCell>
                     <CTableHeaderCell scope="row">{item.NickName}</CTableHeaderCell>
-                    <CTableDataCell colSpan="row">{item.UserID}</CTableDataCell>
-                    <CTableDataCell>{item.accountLevel}</CTableDataCell>
+                    <CTableDataCell colSpan="row">{item.vs_nickname}</CTableDataCell>
+                    <CTableDataCell>{item.tID}</CTableDataCell>
                   </CTableRow>
                 ))}
               </CTableBody>
@@ -76,5 +76,4 @@ const Tables = () => {
     </CRow>
   )
 }
-
 export default Tables

@@ -310,21 +310,42 @@ const _nav = [
         name: 'Danh sach',
         to: '/admin/account',
       },
-      // {
-      //   component: CNavItem,
-      //   name: 'Register',
-      //   to: '/register',
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: 'Error 404',
-      //   to: '/404',
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: 'Error 500',
-      //   to: '/500',
-      // },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: 'Quản lý lịch sử chơi game',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Danh sach',
+        to: '/admin/play',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: 'Quản lý lịch sử giao dịch',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Danh sach',
+        to: '/admin/transaction',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: 'Quản lý hệ thống',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Danh sach',
+        to: '/admin/system',
+      },
     ],
   },
 ]
