@@ -17,17 +17,22 @@ import {
 import { DocsExample } from 'src/components'
 
 const getPoint = async () => {
+  const token = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjAuMTk3XC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNjU4ODkwNzgwLCJleHAiOjE2NTg4OTQzODAsIm5iZiI6MTY1ODg5MDc4MCwianRpIjoiRm1wSFY2c1VFR3k2SnZDRCIsInN1YiI6MywicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.QFNtJihrXznXdIZGd9knKaNVXgVVOTD-C5CJ2JHdJFM`
   try {
-    const result = await axios.get("http://192.168.0.197/api/user/gets")
-    if (result) {
-      console.log(result)
-    }
-  } catch (error) {
-    console.log(error)
+    const result = await axios({
+      method: `Get`,
+      url: `http://192.168.0.197/api/user/gets`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    console.log(result)
+    return result
+  } catch (err) {
+    console.log('err')
   }
 }
-
-
+getPoint()
 const Tables = () => {
   return (
     <CRow>
