@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios'
+import { useState } from 'react'
 import {
   CCard,
   CCardBody,
@@ -17,7 +18,7 @@ import {
 import { DocsExample } from 'src/components'
 
 const getPoint = async () => {
-  const token = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjAuMTk3XC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNjU4ODkwNzgwLCJleHAiOjE2NTg4OTQzODAsIm5iZiI6MTY1ODg5MDc4MCwianRpIjoiRm1wSFY2c1VFR3k2SnZDRCIsInN1YiI6MywicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.QFNtJihrXznXdIZGd9knKaNVXgVVOTD-C5CJ2JHdJFM`
+  const token = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjAuMTk3XC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNjU4ODk0NTgyLCJleHAiOjE2NTg4OTgxODIsIm5iZiI6MTY1ODg5NDU4MiwianRpIjoiRm1GakFIS1dNbWNFWmthMyIsInN1YiI6MywicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.WjdAJClvyMvd6Fyxbe6e9ksMPaSdlscbu9KeKWmNjNI`
   try {
     const result = await axios({
       method: `Get`,
@@ -26,14 +27,24 @@ const getPoint = async () => {
         Authorization: `Bearer ${token}`,
       },
     })
-    console.log(result)
     return result
   } catch (err) {
     console.log('err')
   }
 }
-getPoint()
+// getPoint()
+// console.log(getPoint())
+
 const Tables = () => {
+  const [dataU, setDataU] = useState([])
+  useEffect(() => {
+    async function callData() {
+      let data = await getPoint()
+      setDataU(data)
+    }
+    callData()
+  }, [])
+  console.log(dataU)
   return (
     <CRow>
       <CCol xs={12}>
@@ -57,7 +68,7 @@ const Tables = () => {
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
-                  <CTableRow>
+                  {/* <CTableRow>
                     <CTableHeaderCell scope="row">1</CTableHeaderCell>
                     <CTableDataCell>Mark</CTableDataCell>
                     <CTableDataCell>Otto</CTableDataCell>
@@ -68,7 +79,8 @@ const Tables = () => {
                     <CTableDataCell>Jacob</CTableDataCell>
                     <CTableDataCell>Thornton</CTableDataCell>
                     <CTableDataCell>@fat</CTableDataCell>
-                  </CTableRow>
+                  </CTableRow> */}
+                  {/* {getPoint.map((i))} */}
                   <CTableRow>
                     <CTableHeaderCell scope="row">3</CTableHeaderCell>
                     <CTableDataCell colSpan="2">Larry the Bird</CTableDataCell>
