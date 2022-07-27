@@ -16,18 +16,37 @@ import {
 } from '@coreui/react'
 import { DocsExample } from 'src/components'
 
-const getPoint = async () => {
+// const getPoint = async () => {
+//   try {
+//     const result = await axios.get("http://192.168.0.197/api/user/gets")
+//     if (result) {
+//       console.log(result)
+//     }
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
+const token = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjAuMTk3XC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNjU4ODg2OTkwLCJleHAiOjE2NTg4OTA1OTAsIm5iZiI6MTY1ODg4Njk5MCwianRpIjoicmFkaGJoazdwQjhRYlhFQSIsInN1YiI6MiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.Gxcg9VRGcgACBqI_xUAsJcVP4r2t6o7ukUoPcD_oDck`
+const getSignature = async () => {
   try {
-    const result = await axios.get("http://192.168.0.197/api/user/gets")
-    if (result) {
-      console.log(result)
-    }
-  } catch (error) {
-    console.log(error)
+    // console.log("swapData", swapData);
+    const result = await axios({
+      method: `Get`,
+      url: `http://192.168.0.197/api/user/gets`,
+      // data: {
+      //   pointAmount: swapData.tokenConverted,
+      //   walletAddress: account,
+      // },
+      headers: {
+        Authorization: `Bearer ${token}`  
+      }
+    })
+    return result
+  } catch (err) {
+    console.log(err)
   }
 }
-
-
+getSignature()
 const Tables = () => {
   return (
     <CRow>
