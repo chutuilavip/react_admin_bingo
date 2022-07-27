@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 import {
   CButton,
   CCard,
@@ -15,8 +16,60 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
+let dataUser = new FormData()
 
 const Login = () => {
+  const [name, setName] = useState('')
+  const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
+  let navigate = useNavigate()
+
+  function handleChange(event) {
+    setName(event.target.value)
+  }
+  function handleChangePass(event) {
+    setPassword(event.target.value)
+  }
+  function postData() {
+    setLoading(true)
+    dataUser.append('adminID', name)
+    dataUser.append('adminPW', password)
+    axios({
+      method: 'post',
+      url: `http://192.168.0.197/api/auth/login`,
+      data: dataUser,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+      .then(function (response) {
+        //test timeout
+        // setTimeout(() => {
+        //   setLoading(false)
+        // }, 5000)
+
+        setLoading(false)
+        if (response.data.status === 401) {
+          toast.error(' Sai tên đăng nhập hoặc mật khẩu. Vui lòng nhập lại!', {
+            position: 'top-right',
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          })
+        } else {
+          navigate('/')
+        }
+      })
+      .catch(function (response) {
+        console.log(response)
+      })
+  }
+
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
@@ -32,7 +85,11 @@ const Login = () => {
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
                       </CInputGroupText>
-                      <CFormInput placeholder="Username" autoComplete="username" />
+                      <CFormInput
+                        placeholder="Username"
+                        autoComplete="username"
+                        onChange={handleChange}
+                      />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupText>
@@ -42,11 +99,17 @@ const Login = () => {
                         type="password"
                         placeholder="Password"
                         autoComplete="current-password"
+                        onChange={handleChangePass}
                       />
                     </CInputGroup>
                     <CRow>
                       <CCol xs={6}>
-                        <CButton color="primary" className="px-4">
+                        <CButton
+                          color="primary"
+                          className="px-4"
+                          onClick={postData}
+                          disabled={loading}
+                        >
                           Login
                         </CButton>
                       </CCol>

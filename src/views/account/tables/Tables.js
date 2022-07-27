@@ -32,11 +32,9 @@ const getPoint = async () => {
     console.log('err')
   }
 }
-// getPoint()
-// console.log(getPoint())
 
 const Tables = () => {
-  const [dataU, setDataU] = useState([])
+  const [dataU, setDataU] = useState({})
   useEffect(() => {
     async function callData() {
       let data = await getPoint()
@@ -46,6 +44,7 @@ const Tables = () => {
   }, [])
   console.log(dataU)
   return (
+    // console.log(dataU)
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
@@ -68,24 +67,13 @@ const Tables = () => {
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
-                  {/* <CTableRow>
-                    <CTableHeaderCell scope="row">1</CTableHeaderCell>
-                    <CTableDataCell>Mark</CTableDataCell>
-                    <CTableDataCell>Otto</CTableDataCell>
-                    <CTableDataCell>@mdo</CTableDataCell>
-                  </CTableRow>
-                  <CTableRow>
-                    <CTableHeaderCell scope="row">2</CTableHeaderCell>
-                    <CTableDataCell>Jacob</CTableDataCell>
-                    <CTableDataCell>Thornton</CTableDataCell>
-                    <CTableDataCell>@fat</CTableDataCell>
-                  </CTableRow> */}
-                  {/* {getPoint.map((i))} */}
-                  <CTableRow>
-                    <CTableHeaderCell scope="row">3</CTableHeaderCell>
-                    <CTableDataCell colSpan="2">Larry the Bird</CTableDataCell>
-                    <CTableDataCell>@twitter</CTableDataCell>
-                  </CTableRow>
+                  {dataU?.data?.res?.data?.map((item, index) => (
+                    <CTableRow key={index}>
+                      <CTableHeaderCell scope="row">{item.UserID}</CTableHeaderCell>
+                      <CTableDataCell colSpan="2">Larry the Bird</CTableDataCell>
+                      <CTableDataCell>@twitter</CTableDataCell>
+                    </CTableRow>
+                  ))}
                 </CTableBody>
               </CTable>
             </DocsExample>
