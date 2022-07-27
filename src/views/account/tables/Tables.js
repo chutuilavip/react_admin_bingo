@@ -33,6 +33,7 @@ const getPoint = async () => {
   }
 }
 
+
 const Tables = () => {
   const [dataU, setDataU] = useState({})
   useEffect(() => {
