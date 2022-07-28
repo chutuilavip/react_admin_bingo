@@ -78,24 +78,24 @@ const Tables = () => {
   const handleSubmit = () => {
     setLoading(true)
 
-    dataSys.append('title', title)
-    dataSys.append('version', version)
-    dataSys.append('maintain_content', maintainContent)
+    // dataSys.append('title', title)
+    // dataSys.append('version', version)
+    // dataSys.append('maintain_content', maintainContent)
 
-    axios({
-      method: 'post',
-      url: `${process.env.REACT_APP_URL_API}api/admin/sys/update`,
-      data: dataSys,
-      headers: { 'content-type': 'multipart/form-data' },
-    })
-      .then(function (response) {
-        setLoading(false)
+    // axios({
+    //   method: 'post',
+    //   url: `${process.env.REACT_APP_URL_API}api/admin/sys/update`,
+    //   data: dataSys,
+    //   headers: { 'content-type': 'multipart/form-data' },
+    // })
+    //   .then(function (response) {
+    //     setLoading(false)
 
-        console.log(response)
-      })
-      .catch(function (err) {
-        console.log(err)
-      })
+    //     console.log(response)
+    //   })
+    //   .catch(function (err) {
+    //     console.log(err)
+    //   })
   }
 
   return (
