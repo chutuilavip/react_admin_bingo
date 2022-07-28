@@ -1,14 +1,33 @@
 import React, { Component, Suspense } from 'react'
-import { HashRouter, Route, Routes } from 'react-router-dom'
+import { HashRouter, Route, Routes, Navigate } from 'react-router-dom'
 import './scss/style.scss'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import axios from 'axios';
+
 const loading = (
   <div className="pt-3 text-center">
     <div className="sk-spinner sk-spinner-pulse"></div>
   </div>
 )
-
+async function PrivateRoute() {
+  if(!localStorage.getItem('token_key') && window.location.href !== 'http://localhost:3000/#/login'){
+    return window.location.href = '/#/login'
+  }else{
+    const token = localStorage.getItem('token_key')
+    const result = await axios({
+      method: `Get`,
+      url: `${process.env.REACT_APP_URL_API}/api/auth/check-auth`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    if(!result.data.adminID){
+      return window.location.href = '/#/login'
+    }
+  }
+}
+PrivateRoute()
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
 
