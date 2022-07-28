@@ -20,6 +20,7 @@ export const AppSidebarNav = ({ items }) => {
     )
   }
 
+  const accessToken = true
   const navItem = (item, index) => {
     const { component, name, badge, icon, ...rest } = item
     const Component = component

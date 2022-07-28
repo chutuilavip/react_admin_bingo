@@ -1,5 +1,5 @@
 import React from 'react'
-
+const accessToken = true
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
@@ -50,6 +50,9 @@ const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 const Account = React.lazy(() => import('./views/account/tables/Tables'))
+const Play = React.lazy(() => import('./views/play/tables/Tables'))
+const Transaction = React.lazy(() => import('./views/transaction/tables/Tables'))
+const System = React.lazy(() => import('./views/system/tables/Tables'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
@@ -96,6 +99,9 @@ const routes = [
   { path: '/notifications/toasts', name: 'Toasts', element: Toasts },
   { path: '/widgets', name: 'Widgets', element: Widgets },
   { path: '/admin/account', name: 'Account', element: Account, exact: true },
+  { path: '/admin/play', name: 'Play', element: Play, exact: true },
+  { path: '/admin/transaction', name: 'Transaction', element: Transaction, exact: true },
+  { path: '/admin/system', name: 'System', element: System, exact: true },
 ]
 
 export default routes
