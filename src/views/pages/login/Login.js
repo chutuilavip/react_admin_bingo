@@ -40,17 +40,16 @@ const Login = () => {
     dataUser.append('adminID', name)
     dataUser.append('adminPW', password)
     axios({
+      // method: 'post',
+      // url: `http://192.168.0.197/api/auth/login`,
+      // data: dataUser,
+      // headers: { 'Content-Type': 'multipart/form-data' },
       method: 'post',
-      url: `http://192.168.0.197/api/auth/login`,
-      data: dataUser,
-      headers: { 'Content-Type': 'multipart/form-data' },
+      url: `https://www.mecallapi.com/api/login`,
+      data: { username: 'karn.yong@mecallapi.com', password: 'mecallapi' },
+      headers: { 'Content-Type': 'application/json' },
     })
       .then(function (response) {
-        //test timeout
-        // setTimeout(() => {
-        //   setLoading(false)
-        // }, 5000)
-
         setLoading(false)
         if (response.data.status === 401) {
           toast.error(' Sai tên đăng nhập hoặc mật khẩu. Vui lòng nhập lại!', {
@@ -62,8 +61,11 @@ const Login = () => {
             progress: undefined,
           })
         } else {
-          localStorage.setItem('token_key', response.data.access_token)
-          navigate('/')
+          // localStorage.setItem('token_key', response.data.access_token)
+          // navigate('/')
+          localStorage.setItem('token', response.data.accessToken)
+          console.log(response.data.accessToken)
+          navigate('/dashboard')
         }
       })
       .catch(function (response) {
