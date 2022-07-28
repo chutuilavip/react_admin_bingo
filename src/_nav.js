@@ -302,48 +302,48 @@ const _nav = [
   // },
   {
     component: CNavGroup,
-    name: 'Quản lý tài khoản',
+    name: 'Accounts',
     icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'Danh sach',
+        name: 'List',
         to: '/admin/account',
       },
     ],
   },
   {
     component: CNavGroup,
-    name: 'Quản lý lịch sử chơi game',
+    name: 'Gaming history',
     icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'Danh sach',
+        name: 'List',
         to: '/admin/play',
       },
     ],
   },
   {
     component: CNavGroup,
-    name: 'Quản lý lịch sử giao dịch',
+    name: 'Transaction history',
     icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'Danh sach',
+        name: 'List',
         to: '/admin/transaction',
       },
     ],
   },
   {
     component: CNavGroup,
-    name: 'Quản lý hệ thống',
+    name: 'System management',
     icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'Danh sach',
+        name: 'List',
         to: '/admin/system',
       },
     ],
