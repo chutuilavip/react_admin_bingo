@@ -45,9 +45,11 @@ const Login = () => {
       // data: dataUser,
       // headers: { 'Content-Type': 'multipart/form-data' },
       method: 'post',
+
       url: `https://www.mecallapi.com/api/login`,
       data: { username: 'karn.yong@mecallapi.com', password: 'mecallapi' },
       headers: { 'Content-Type': 'application/json' },
+
     })
       .then(function (response) {
         setLoading(false)

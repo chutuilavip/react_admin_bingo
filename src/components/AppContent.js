@@ -22,6 +22,7 @@ import routes from '../routes'
 // }
 
 const AppContent = () => {
+
   // const [data, setData] = useState([])
   // useEffect(() => {
   //   async function ss() {
@@ -34,6 +35,7 @@ const AppContent = () => {
   // console.log('admin', data)
 
   // const accessToken = data.adminID === 'admin' ? true : false
+
   return (
     <CContainer lg>
       <Suspense fallback={<CSpinner color="primary" />}>

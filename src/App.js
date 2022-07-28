@@ -1,9 +1,11 @@
 import React, { Component, Suspense } from 'react'
+
 // import { HashRouter, Route, Routes } from 'react-router-dom'
 import './scss/style.scss'
 import { ToastContainer, toast } from 'react-toastify'
 // import 'react-toastify/dist/ReactToastify.css'
 import Views from './Views'
+
 
 // Containers
 // const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
