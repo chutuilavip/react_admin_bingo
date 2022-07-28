@@ -18,7 +18,7 @@ import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 const _nav = [
   {
     component: CNavItem,
-    name: 'Tổng quan',
+    name: 'Dashboard',
     to: '/dashboard',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
     // badge: {
@@ -196,7 +196,7 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Biểu đồ',
+    name: 'Charts',
     to: '/charts',
     icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />,
   },
@@ -269,17 +269,17 @@ const _nav = [
   // },
   {
     component: CNavGroup,
-    name: 'Trang',
+    name: 'Pages',
     icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'Đăng nhập',
+        name: 'Login',
         to: '/login',
       },
       {
         component: CNavItem,
-        name: 'Đăng ký',
+        name: 'Register',
         to: '/register',
       },
       {
@@ -302,48 +302,48 @@ const _nav = [
   // },
   {
     component: CNavGroup,
-    name: 'Quản lý tài khoản',
+    name: 'Accounts',
     icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'Danh sách',
+        name: 'List',
         to: '/admin/account',
       },
     ],
   },
   {
     component: CNavGroup,
-    name: 'Quản lý lịch sử chơi game',
+    name: 'Gaming history',
     icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'Danh sách',
+        name: 'List',
         to: '/admin/play',
       },
     ],
   },
   {
     component: CNavGroup,
-    name: 'Quản lý lịch sử giao dịch',
+    name: 'Transaction history',
     icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'Danh sách',
+        name: 'List',
         to: '/admin/transaction',
       },
     ],
   },
   {
     component: CNavGroup,
-    name: 'Quản lý hệ thống',
+    name: 'System management',
     icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'Danh sách',
+        name: 'List',
         to: '/admin/system',
       },
     ],

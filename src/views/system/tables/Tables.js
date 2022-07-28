@@ -9,6 +9,7 @@ import {
   CCol,
   CForm,
   CFormInput,
+  CImage,
   CRow,
   CTable,
   CTableBody,
@@ -20,6 +21,8 @@ import {
 } from '@coreui/react'
 import { DocsExample } from 'src/components'
 import './style.css'
+import { toast } from 'react-toastify'
+import { Navigate } from 'react-router-dom'
 
 const token = localStorage.getItem('token_key')
 
@@ -27,7 +30,7 @@ const getSignature = async () => {
   try {
     const result = await axios({
       method: `Get`,
-      url: `http://192.168.0.197/api/admin/sys`,
+      url: `${process.env.REACT_APP_URL_API}api/admin/sys`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -39,6 +42,8 @@ const getSignature = async () => {
   }
 }
 
+let dataSys = new FormData()
+
 const Tables = () => {
   const [data, setData] = useState([])
 
@@ -46,7 +51,7 @@ const Tables = () => {
     async function ss() {
       const data = await getSignature()
       console.log(data)
-      setData(data.data.res.data)
+      setData(data)
     }
     ss()
   }, [])
@@ -55,33 +60,60 @@ const Tables = () => {
 
   const [title, setTitle] = useState('')
   const [version, setVersion] = useState('')
-  const [maintainContent, setMaintainContent] = useState('')
-  const [msg, setMsg] = useState('')
+  const [maintainContent, setMaintainContent] = useState(null)
+  const [loading, setLoading] = useState(false)
 
-  
+  const onChangeTitle = (e) => {
+    setTitle(e.target.value)
+  }
+
+  const onChangeVersion = (e) => {
+    setVersion(e.target.value)
+  }
+
+  const onChangemaintainContent = (e) => {
+    setMaintainContent(e.target.files[0])
+  }
+
+  const handleSubmit = () => {
+    setLoading(true)
+
+    dataSys.append('title', title)
+    dataSys.append('version', version)
+    dataSys.append('maintain_content', maintainContent)
+
+    axios({
+      method: 'post',
+      url: `${process.env.REACT_APP_URL_API}api/admin/sys/update`,
+      data: dataSys,
+      headers: { 'content-type': 'multipart/form-data' },
+    })
+      .then(function (response) {
+        setLoading(false)
+
+        console.log(response)
+      })
+      .catch(function (err) {
+        console.log(err)
+      })
+  }
 
   return (
-    <CForm className="form_system">
+    <CForm onSubmit={handleSubmit} className="form_system">
       <CCol sm={12} className="d-flex align-items-center">
         <CFormInput
           label="Tiêu đề"
           type="text"
           name="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
+          value={data?.data?.res?.data?.title}
+          onChange={onChangeTitle}
         />
       </CCol>
 
       <CCol sm={12} className="d-flex align-items-center mt-4">
-        <CFormInput
-          label="Phiên bản"
-          type="text"
-          name="version"
-          value={version}
-          onChange={(e) => setVersion(e.target.value)}
-          required
-        />
+        <CFormInput label="Phiên bản" type="text" name="version" 
+        value={data?.data?.res?.data?.version}
+        onChange={onChangeVersion} />
       </CCol>
 
       <CCol sm={12} className="d-flex align-items-center mt-4">
@@ -89,14 +121,19 @@ const Tables = () => {
           label="Hình ảnh"
           type="file"
           name="maintain_content"
-          value={maintainContent}
-          onChange={(e) => setMaintainContent(e.target.value)}
+          value={data?.data?.res?.data?.maintainContent}
+          multiple
+          onChange={onChangemaintainContent}
         />
       </CCol>
 
-      <CButton className="mt-5 btn_update" type='submit'>Cập nhật</CButton>
+      <CCol>
+        <CImage src={data?.data?.res?.data?.maintain_content} alt="Image" />
+      </CCol>
 
-      <div className="message">{msg ? <p>{msg}</p> : null}</div>
+      <CButton className="mt-5 btn_update" type="submit" disabled={loading}>
+        Cập nhật
+      </CButton>
     </CForm>
   )
 }
