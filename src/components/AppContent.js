@@ -28,13 +28,14 @@ const AppContent = () => {
     async function ss() {
       const data = await getSignature()
       console.log(data)
-      setData(data.data)
+      setData(data)
     }
     ss()
   }, [])
   console.log('admin', data)
 
-  const accessToken = data.adminID === 'admin' ? true : false
+  const accessToken =  true 
+  
   return (
     <CContainer lg>
       <Suspense fallback={<CSpinner color="primary" />}>
