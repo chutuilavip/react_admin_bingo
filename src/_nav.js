@@ -18,7 +18,7 @@ import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 const _nav = [
   {
     component: CNavItem,
-    name: 'Dashboard',
+    name: 'Tổng quan',
     to: '/dashboard',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
     // badge: {
@@ -196,7 +196,7 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Charts',
+    name: 'Biểu đồ',
     to: '/charts',
     icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />,
   },
@@ -269,17 +269,17 @@ const _nav = [
   // },
   {
     component: CNavGroup,
-    name: 'Pages',
+    name: 'Trang',
     icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
-        name: 'Login',
+        name: 'Đăng nhập',
         to: '/login',
       },
       {
         component: CNavItem,
-        name: 'Register',
+        name: 'Đăng ký',
         to: '/register',
       },
       {
@@ -307,7 +307,7 @@ const _nav = [
     items: [
       {
         component: CNavItem,
-        name: 'Danh sach',
+        name: 'Danh sách',
         to: '/admin/account',
       },
     ],
@@ -319,7 +319,7 @@ const _nav = [
     items: [
       {
         component: CNavItem,
-        name: 'Danh sach',
+        name: 'Danh sách',
         to: '/admin/play',
       },
     ],
@@ -331,7 +331,7 @@ const _nav = [
     items: [
       {
         component: CNavItem,
-        name: 'Danh sach',
+        name: 'Danh sách',
         to: '/admin/transaction',
       },
     ],
@@ -343,7 +343,7 @@ const _nav = [
     items: [
       {
         component: CNavItem,
-        name: 'Danh sach',
+        name: 'Danh sách',
         to: '/admin/system',
       },
     ],

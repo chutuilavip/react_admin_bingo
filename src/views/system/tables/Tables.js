@@ -2,10 +2,13 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import {
+  CButton,
   CCard,
   CCardBody,
   CCardHeader,
   CCol,
+  CForm,
+  CFormInput,
   CRow,
   CTable,
   CTableBody,
@@ -16,7 +19,10 @@ import {
   CTableRow,
 } from '@coreui/react'
 import { DocsExample } from 'src/components'
-const token = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjAuMTk3XC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNjU4OTAyNDczLCJleHAiOjE2NTg5MDYwNzMsIm5iZiI6MTY1ODkwMjQ3MywianRpIjoibU40dTVjT0Z0cDZpdGVEUiIsInN1YiI6MiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.Vf3ktITUKeM3q6TI7rrELQnryp-hT4gF7rkkL_F6OsQ`
+import './style.css'
+
+const token = localStorage.getItem('token_key')
+
 const getSignature = async () => {
   try {
     const result = await axios({
@@ -26,7 +32,7 @@ const getSignature = async () => {
         Authorization: `Bearer ${token}`,
       },
     })
-    //console.log('data', result.data.res.data)
+
     return result
   } catch (err) {
     console.log(err)
@@ -34,8 +40,8 @@ const getSignature = async () => {
 }
 
 const Tables = () => {
-  // const data = getSignature()
   const [data, setData] = useState([])
+
   useEffect(() => {
     async function ss() {
       const data = await getSignature()
@@ -44,44 +50,54 @@ const Tables = () => {
     }
     ss()
   }, [])
-  // const data = getSignature().slice()
-  // const [data, setData] = useState([])
-  // setData(...getSignature())
+
   console.log('data system ne', data)
 
+  const [title, setTitle] = useState('')
+  const [version, setVersion] = useState('')
+  const [maintainContent, setMaintainContent] = useState('')
+  const [msg, setMsg] = useState('')
+
+  
+
   return (
-    <CRow>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>System Table</strong>
-          </CCardHeader>
-          <CCardBody>
-            <CTable>
-              <CTableHead>
-                <CTableRow>
-                  <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Version</CTableHeaderCell>
-                </CTableRow>
-              </CTableHead>
-              <CTableBody>
-                {/* {data?.map((item, index) => (
-                    <CTableRow key={index}>
-                      <CTableHeaderCell scope="row">{item.title}</CTableHeaderCell>
-                      <CTableDataCell colSpan="2">{item.version}</CTableDataCell>
-                      <CTableDataCell>{item.NickName}</CTableDataCell>
-                    </CTableRow>
-                  ))} */}
-                <CTableRow>
-                  <CTableHeaderCell scope="row">{data.title}</CTableHeaderCell>
-                  <CTableDataCell colSpan="2">{data.version}</CTableDataCell>
-                </CTableRow>
-              </CTableBody>
-            </CTable>
-          </CCardBody>
-        </CCard>
+    <CForm className="form_system">
+      <CCol sm={12} className="d-flex align-items-center">
+        <CFormInput
+          label="Tiêu đề"
+          type="text"
+          name="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
       </CCol>
-    </CRow>
+
+      <CCol sm={12} className="d-flex align-items-center mt-4">
+        <CFormInput
+          label="Phiên bản"
+          type="text"
+          name="version"
+          value={version}
+          onChange={(e) => setVersion(e.target.value)}
+          required
+        />
+      </CCol>
+
+      <CCol sm={12} className="d-flex align-items-center mt-4">
+        <CFormInput
+          label="Hình ảnh"
+          type="file"
+          name="maintain_content"
+          value={maintainContent}
+          onChange={(e) => setMaintainContent(e.target.value)}
+        />
+      </CCol>
+
+      <CButton className="mt-5 btn_update" type='submit'>Cập nhật</CButton>
+
+      <div className="message">{msg ? <p>{msg}</p> : null}</div>
+    </CForm>
   )
 }
 
