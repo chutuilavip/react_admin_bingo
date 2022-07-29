@@ -3,26 +3,26 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import {
   CButton,
-  CCard,
-  CCardBody,
-  CCardHeader,
+  // CCard,
+  // CCardBody,
+  // CCardHeader,
   CCol,
   CForm,
   CFormInput,
   CImage,
-  CRow,
-  CTable,
-  CTableBody,
-  CTableCaption,
-  CTableDataCell,
-  CTableHead,
-  CTableHeaderCell,
-  CTableRow,
+  // CRow,
+  // CTable,
+  // CTableBody,
+  // CTableCaption,
+  // CTableDataCell,
+  // CTableHead,
+  // CTableHeaderCell,
+  // CTableRow,
 } from '@coreui/react'
-import { DocsExample } from 'src/components'
-import './style.css'
-import { toast } from 'react-toastify'
-import { Navigate } from 'react-router-dom'
+// import { DocsExample } from 'src/components'
+// import './style.css'
+// import { toast } from 'react-toastify'
+// import { Navigate } from 'react-router-dom'
 
 const token = localStorage.getItem('token_key')
 
@@ -131,13 +131,15 @@ const Tables = () => {
         />
       </CCol>
 
-      <CCol>
-        <CImage src={data?.data?.res?.data?.maintain_content} alt="Image" />
+      <CCol sm={12} className='mt-4 system_img'>
+        <CImage rounded src={data?.data?.res?.data?.maintain_content} alt="Image" width={200} height={200} />
       </CCol>
 
-      <CButton className="mt-5 btn_update" type="submit" disabled={loading}>
+      <div className='d-flex justify-content-end mt-4'>
+      <CButton className="btn_update" type="submit" disabled={loading}>
         Cập nhật
       </CButton>
+      </div>
     </CForm>
   )
 }

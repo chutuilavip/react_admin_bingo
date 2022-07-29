@@ -4,24 +4,28 @@
     font-weight: 600;
 }
 
-.btn_update{
+.form_system .btn_update{
     background: #3c4b64;
     font-size: 18px;
     padding: 8px 50px;
     font-weight: 600;
 }
 
-.form-control:focus{
+.form_system .form-control:focus{
     box-shadow: unset !important;
     outline: none !important;
 }
 
-.btn:active, .btn:hover, .btn:focus{
+.form_system .btn:active, .form_system .btn:hover, .form_system .btn:focus{
     background-color: #3c4b64 !important; 
     border-color: #3c4b64 !important;
     box-shadow: unset !important;
 }
 
-.btn:active:focus{
+.form_system .btn:active:focus{
     box-shadow: unset !important;
+}
+
+.form_system .system_img{
+margin-left: 150px;
 }
