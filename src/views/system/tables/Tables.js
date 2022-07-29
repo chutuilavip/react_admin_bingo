@@ -59,8 +59,6 @@ const Tables = () => {
     ss()
   }, [])
 
-  console.log('data system ne', data)
-
   const onChangeTitle = (e) => {
     setTitle(e.target.value)
   }
@@ -93,8 +91,6 @@ const Tables = () => {
       .catch(function (err) {
         console.log(err)
       })
-
-    console.log('xxx', formData)
 
     alert('Data has been saved!')
   }

@@ -1,11 +1,12 @@
 import React, { Suspense, useEffect, useState } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { CContainer, CSpinner } from '@coreui/react'
+
 import axios from 'axios'
 // routes config
 import routes from '../routes'
 
-const token = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjAuMTk3XC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNjU4OTE1MzU1LCJleHAiOjE2NTg5MTg5NTUsIm5iZiI6MTY1ODkxNTM1NSwianRpIjoiTlAyaDBuS0JNa3UyZVZEZCIsInN1YiI6MiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.TkL_f9Qz94JVtlGxJJzPADjgPy7rskLgU_S4sSdcCGI`
+const token = localStorage.getItem('token_key')
 const getSignature = async () => {
   try {
     const result = await axios({
@@ -31,11 +32,9 @@ const AppContent = () => {
       setData(data)
     }
     ss()
+    // views / pages / login / Login
   }, [])
   console.log('admin', data)
-
-  const accessToken =  true 
-  
   return (
     <CContainer lg>
       <Suspense fallback={<CSpinner color="primary" />}>
@@ -48,7 +47,7 @@ const AppContent = () => {
                   path={route.path}
                   exact={route.exact}
                   name={route.name}
-                  element={accessToken ? <route.element /> : <div>Duy</div>}
+                  element={<route.element />}
                 />
               )
             )
