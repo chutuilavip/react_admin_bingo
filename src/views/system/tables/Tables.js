@@ -20,7 +20,7 @@ import {
   // CTableRow,
 } from '@coreui/react'
 // import { DocsExample } from 'src/components'
-// import './style.css'
+import './style.css'
 // import { toast } from 'react-toastify'
 // import { Navigate } from 'react-router-dom'
 
@@ -30,7 +30,7 @@ const getSignature = async () => {
   try {
     const result = await axios({
       method: `Get`,
-      url: `${process.env.REACT_APP_URL_API}api/admin/sys`,
+      url: `${process.env.REACT_APP_URL_API}/api/admin/sys`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -42,10 +42,13 @@ const getSignature = async () => {
   }
 }
 
-let dataSys = new FormData()
+const formData = new FormData()
 
 const Tables = () => {
   const [data, setData] = useState([])
+  const [title, setTitle] = useState('')
+  const [version, setVersion] = useState('')
+  const [maintainContent, setMaintainContent] = useState('')
 
   useEffect(() => {
     async function ss() {
@@ -55,13 +58,6 @@ const Tables = () => {
     }
     ss()
   }, [])
-
-  console.log('data system ne', data)
-
-  const [title, setTitle] = useState('')
-  const [version, setVersion] = useState('')
-  const [maintainContent, setMaintainContent] = useState(null)
-  const [loading, setLoading] = useState(false)
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value)
@@ -76,26 +72,27 @@ const Tables = () => {
   }
 
   const handleSubmit = () => {
-    setLoading(true)
+    formData.append('title', title)
+    formData.append('version', version)
+    formData.append('maintain_content', maintainContent)
 
-    // dataSys.append('title', title)
-    // dataSys.append('version', version)
-    // dataSys.append('maintain_content', maintainContent)
-
-    // axios({
-    //   method: 'post',
-    //   url: `${process.env.REACT_APP_URL_API}api/admin/sys/update`,
-    //   data: dataSys,
-    //   headers: { 'content-type': 'multipart/form-data' },
+    // const res = await fetch(`${process.env.REACT_APP_URL_API}/api/admin/sys/update`, {
+    //   method: 'Post',
+    //   body: formData,
     // })
-    //   .then(function (response) {
-    //     setLoading(false)
 
-    //     console.log(response)
-    //   })
-    //   .catch(function (err) {
-    //     console.log(err)
-    //   })
+    axios({
+      method: 'Post',
+      url: `${process.env.REACT_APP_URL_API}/api/admin/sys/update`,
+      data: formData,
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' },
+    })
+      .then(function (response) {})
+      .catch(function (err) {
+        console.log(err)
+      })
+
+    alert('Data has been saved!')
   }
 
   return (
@@ -105,7 +102,7 @@ const Tables = () => {
           label="Tiêu đề"
           type="text"
           name="title"
-          value={data?.data?.res?.data?.title}
+          defaultValue={data?.data?.res?.data?.title}
           onChange={onChangeTitle}
         />
       </CCol>
@@ -115,7 +112,7 @@ const Tables = () => {
           label="Phiên bản"
           type="text"
           name="version"
-          value={data?.data?.res?.data?.version}
+          defaultValue={data?.data?.res?.data?.version}
           onChange={onChangeVersion}
         />
       </CCol>
@@ -125,20 +122,19 @@ const Tables = () => {
           label="Hình ảnh"
           type="file"
           name="maintain_content"
-          value={data?.data?.res?.data?.maintainContent}
-          multiple
+          defaultValue={data?.data?.res?.data?.maintainContent}
           onChange={onChangemaintainContent}
         />
       </CCol>
 
-      <CCol sm={12} className='mt-4 system_img'>
-        <CImage rounded src={data?.data?.res?.data?.maintain_content} alt="Image" width={200} height={200} />
+      <CCol sm={12} className="mt-4 system_img">
+        <CImage rounded src={data?.data?.res?.data?.maintain_content} alt="Image" width="100%" />
       </CCol>
 
-      <div className='d-flex justify-content-end mt-4'>
-      <CButton className="btn_update" type="submit" disabled={loading}>
-        Cập nhật
-      </CButton>
+      <div className="d-flex justify-content-end mt-4">
+        <CButton className="btn_update" type="submit">
+          Cập nhật
+        </CButton>
       </div>
     </CForm>
   )

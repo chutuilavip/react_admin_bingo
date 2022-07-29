@@ -9,7 +9,7 @@ import {
   CRow,
   CTable,
   CTableBody,
-  CTableCaption,
+  // CTableCaption,
   CTableDataCell,
   CTableHead,
   CTableHeaderCell,
@@ -29,7 +29,7 @@ const getSignature = async () => {
   try {
     const result = await axios({
       method: `Get`,
-      url: `${process.env.REACT_APP_URL_API}api/user?page=1&limit=${limit}`,
+      url: `${process.env.REACT_APP_URL_API}/api/user?page=1&limit=${limit}`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -63,7 +63,7 @@ const Tables = () => {
     try {
       const result = await axios({
         method: `Get`,
-        url: `${process.env.REACT_APP_URL_API}api/user?page=${currentPage}&limit=${limit}`,
+        url: `${process.env.REACT_APP_URL_API}/api/user?page=${currentPage}&limit=${limit}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },

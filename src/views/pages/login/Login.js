@@ -18,7 +18,9 @@ import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { ToastContainer, toast } from 'react-toastify'
+import { 
+  // ToastContainer, 
+  toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 let dataUser = new FormData()
@@ -41,7 +43,7 @@ const Login = () => {
     dataUser.append('adminPW', password)
     axios({
       method: 'post',
-      url: `${process.env.REACT_APP_URL_API}api/auth/login`,
+      url: `${process.env.REACT_APP_URL_API}/api/auth/login`,
       data: dataUser,
       headers: { 'Content-Type': 'multipart/form-data' },
     })
