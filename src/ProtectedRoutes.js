@@ -1,23 +1,36 @@
 import React, { useEffect } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 import { useState } from 'react'
+import axios from 'axios'
 
-const auth = async () => {
-  const token_user = localStorage.getItem('token')
-  return token_user
+const checkTokenUser = async () => {
+  const token_user = localStorage.getItem('token_key')
+  try {
+    const result = await axios({
+      method: `Get`,
+      url: `${process.env.REACT_APP_URL_API}api/auth/user-profile`,
+      headers: {
+        Authorization: `Bearer ${token_user}`,
+      },
+    })
+    return result
+  } catch (err) {
+    console.log('err')
+  }
 }
 
 export default function ProviderRoute() {
-  const [checkUser, setCheck] = useState('')
+  const [dataUser, setDataUser] = useState({})
   useEffect(() => {
-    async function getToken() {
-      const tokenUser = await auth()
-      setCheck(tokenUser)
+    async function checkData() {
+      const tokenUser = await checkTokenUser()
+      setDataUser(tokenUser)
     }
-    getToken()
+    checkData()
   }, [])
-  if (checkUser !== null && checkUser !== undefined) {
-    console.log(checkUser)
+
+  if (dataUser !== null && dataUser !== undefined) {
+    // console.log(dataUser)
     return <Outlet />
   } else return <Navigate to="/login" />
 }
