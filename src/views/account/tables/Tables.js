@@ -16,7 +16,7 @@ import {
   CTableRow,
 } from '@coreui/react'
 import { DocsExample } from 'src/components'
-const token = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjAuMTk3XC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNjU4OTA3NDk0LCJleHAiOjE2NTg5MTEwOTQsIm5iZiI6MTY1ODkwNzQ5NCwianRpIjoiZXBiSFhBOGptTVpuT0daWSIsInN1YiI6MiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.zf2gJGwH6VUUWz-BCcSI9uphy3o40PkPnbMyG5nRlEk`
+const token = localStorage.getItem('token_key')
 const getSignature = async () => {
   try {
     const result = await axios({
