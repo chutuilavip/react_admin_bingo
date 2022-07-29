@@ -2,86 +2,145 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import {
-  CCard,
-  CCardBody,
-  CCardHeader,
+  CButton,
+  // CCard,
+  // CCardBody,
+  // CCardHeader,
   CCol,
-  CRow,
-  CTable,
-  CTableBody,
-  CTableCaption,
-  CTableDataCell,
-  CTableHead,
-  CTableHeaderCell,
-  CTableRow,
+  CForm,
+  CFormInput,
+  CImage,
+  // CRow,
+  // CTable,
+  // CTableBody,
+  // CTableCaption,
+  // CTableDataCell,
+  // CTableHead,
+  // CTableHeaderCell,
+  // CTableRow,
 } from '@coreui/react'
-import { DocsExample } from 'src/components'
-const token = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xOTIuMTY4LjAuMTk3XC9hcGlcL2F1dGhcL2xvZ2luIiwiaWF0IjoxNjU4OTAyNDczLCJleHAiOjE2NTg5MDYwNzMsIm5iZiI6MTY1ODkwMjQ3MywianRpIjoibU40dTVjT0Z0cDZpdGVEUiIsInN1YiI6MiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.Vf3ktITUKeM3q6TI7rrELQnryp-hT4gF7rkkL_F6OsQ`
+// import { DocsExample } from 'src/components'
+import './style.css'
+// import { toast } from 'react-toastify'
+// import { Navigate } from 'react-router-dom'
+
+const token = localStorage.getItem('token_key')
+
 const getSignature = async () => {
   try {
     const result = await axios({
       method: `Get`,
-      url: `http://192.168.0.197/api/admin/sys`,
+      url: `${process.env.REACT_APP_URL_API}/api/admin/sys`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
-    //console.log('data', result.data.res.data)
+
     return result
   } catch (err) {
     console.log(err)
   }
 }
 
+const formData = new FormData()
+
 const Tables = () => {
-  // const data = getSignature()
   const [data, setData] = useState([])
+  const [title, setTitle] = useState('')
+  const [version, setVersion] = useState('')
+  const [maintainContent, setMaintainContent] = useState('')
+
   useEffect(() => {
     async function ss() {
       const data = await getSignature()
       console.log(data)
-      setData(data.data.res.data)
+      setData(data)
     }
     ss()
   }, [])
-  // const data = getSignature().slice()
-  // const [data, setData] = useState([])
-  // setData(...getSignature())
+
   console.log('data system ne', data)
 
+  const onChangeTitle = (e) => {
+    setTitle(e.target.value)
+  }
+
+  const onChangeVersion = (e) => {
+    setVersion(e.target.value)
+  }
+
+  const onChangemaintainContent = (e) => {
+    setMaintainContent(e.target.files[0])
+  }
+
+  const handleSubmit = () => {
+    formData.append('title', title)
+    formData.append('version', version)
+    formData.append('maintain_content', maintainContent)
+
+    // const res = await fetch(`${process.env.REACT_APP_URL_API}/api/admin/sys/update`, {
+    //   method: 'Post',
+    //   body: formData,
+    // })
+
+    axios({
+      method: 'Post',
+      url: `${process.env.REACT_APP_URL_API}/api/admin/sys/update`,
+      data: formData,
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' },
+    })
+      .then(function (response) {})
+      .catch(function (err) {
+        console.log(err)
+      })
+
+    console.log('xxx', formData)
+
+    alert('Data has been saved!')
+  }
+
   return (
-    <CRow>
-      <CCol xs={12}>
-        <CCard className="mb-4">
-          <CCardHeader>
-            <strong>System Table</strong>
-          </CCardHeader>
-          <CCardBody>
-            <CTable>
-              <CTableHead>
-                <CTableRow>
-                  <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Version</CTableHeaderCell>
-                </CTableRow>
-              </CTableHead>
-              <CTableBody>
-                {/* {data?.map((item, index) => (
-                    <CTableRow key={index}>
-                      <CTableHeaderCell scope="row">{item.title}</CTableHeaderCell>
-                      <CTableDataCell colSpan="2">{item.version}</CTableDataCell>
-                      <CTableDataCell>{item.NickName}</CTableDataCell>
-                    </CTableRow>
-                  ))} */}
-                <CTableRow>
-                  <CTableHeaderCell scope="row">{data.title}</CTableHeaderCell>
-                  <CTableDataCell colSpan="2">{data.version}</CTableDataCell>
-                </CTableRow>
-              </CTableBody>
-            </CTable>
-          </CCardBody>
-        </CCard>
+    <CForm onSubmit={handleSubmit} className="form_system">
+      <CCol sm={12} className="d-flex align-items-center">
+        <CFormInput
+          label="Tiêu đề"
+          type="text"
+          name="title"
+          defaultValue={data?.data?.res?.data?.title}
+          onChange={onChangeTitle}
+        />
       </CCol>
-    </CRow>
+
+      <CCol sm={12} className="d-flex align-items-center mt-4">
+        <CFormInput
+          label="Phiên bản"
+          type="text"
+          name="version"
+          defaultValue={data?.data?.res?.data?.version}
+          onChange={onChangeVersion}
+        />
+      </CCol>
+
+      <CCol sm={12} className="d-flex align-items-center mt-4">
+        <CFormInput
+          label="Hình ảnh"
+          type="file"
+          name="maintain_content"
+          defaultValue={data?.data?.res?.data?.maintainContent}
+          onChange={onChangemaintainContent}
+        />
+      </CCol>
+
+      <CCol sm={12} className="mt-4 system_img">
+        <CImage rounded src={data?.data?.res?.data?.maintain_content} alt="Image" width="100%" />
+      </CCol>
+
+      <div className="d-flex justify-content-end mt-4">
+        <CButton className="btn_update" type="submit">
+          Cập nhật
+        </CButton>
+      </div>
+    </CForm>
   )
 }
 
