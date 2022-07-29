@@ -41,7 +41,7 @@ const Login = () => {
     dataUser.append('adminPW', password)
     axios({
       method: 'post',
-      url: `http://192.168.0.197/api/auth/login`,
+      url: `${process.env.REACT_APP_URL_API}api/auth/login`,
       data: dataUser,
       headers: { 'Content-Type': 'multipart/form-data' },
     })

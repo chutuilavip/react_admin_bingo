@@ -21,7 +21,7 @@ const getSignature = async () => {
   try {
     const result = await axios({
       method: `Get`,
-      url: `http://192.168.0.197/api/history/transactions`,
+      url: `${process.env.REACT_APP_URL_API}/api/history/transactions`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -54,16 +54,44 @@ const Tables = () => {
               <CTableHead>
                 <CTableRow>
                   <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Status</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Type</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Tài khoản</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Hình thức</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Số lượng</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">From</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">To</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
                 {data?.map((item, index) => (
                   <CTableRow key={index}>
                     <CTableHeaderCell scope="row">{index}</CTableHeaderCell>
-                    <CTableHeaderCell scope="row">{item.status}</CTableHeaderCell>
-                    <CTableDataCell colSpan="row">{item.type}</CTableDataCell>
+                    <CTableHeaderCell scope="row">{item.NickName}</CTableHeaderCell>
+                    <CTableDataCell scope="row">
+                      {(() => {
+                        switch (item.type) {
+                          case 'swap_to_point':
+                            return 'Đổi token sang điểm';
+                          case 'swap_to_token':
+                            return 'Đổi điểm sang token';
+                          default:
+                            return '';
+                        }
+                      })()}
+                    </CTableDataCell>
+                    <CTableHeaderCell scope="row">
+                      {(() => {
+                        switch (item.type) {
+                          case 'swap_to_point':
+                            return `${item.tokenAmount} / ${item.pointAmount}`;
+                          case 'swap_to_token':
+                            return `${item.pointAmount} / ${item.tokenAmount}`;
+                          default:
+                            return '';
+                        }
+                      })()}
+                    </CTableHeaderCell>
+                    <CTableHeaderCell scope="row">{item.from.slice(0, 7)}...{item.from.slice(-5)}</CTableHeaderCell>
+                    <CTableHeaderCell scope="row">{item.to.slice(0, 7)}...{item.to.slice(-5)}</CTableHeaderCell>
                   </CTableRow>
                 ))}
               </CTableBody>
@@ -74,5 +102,4 @@ const Tables = () => {
     </CRow>
   )
 }
-
 export default Tables

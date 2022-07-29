@@ -29,14 +29,12 @@ const AppContent = () => {
     async function ss() {
       const data = await getSignature()
       console.log(data)
-      setData(data.data)
+      setData(data)
     }
     ss()
     // views / pages / login / Login
   }, [])
   console.log('admin', data)
-  const Login = React.lazy(() => import('../views/pages/login/Login'))
-  const accessToken = data.adminID === 'admin' ? true : false
   return (
     <CContainer lg>
       <Suspense fallback={<CSpinner color="primary" />}>
