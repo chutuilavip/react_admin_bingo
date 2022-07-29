@@ -200,73 +200,73 @@ const _nav = [
     to: '/charts',
     icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />,
   },
-  // {
-  //   component: CNavGroup,
-  //   name: 'Icons',
-  //   icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
-  //   items: [
-  //     {
-  //       component: CNavItem,
-  //       name: 'CoreUI Free',
-  //       to: '/icons/coreui-icons',
-  //       badge: {
-  //         color: 'success',
-  //         text: 'NEW',
-  //       },
-  //     },
-  //     {
-  //       component: CNavItem,
-  //       name: 'CoreUI Flags',
-  //       to: '/icons/flags',
-  //     },
-  //     {
-  //       component: CNavItem,
-  //       name: 'CoreUI Brands',
-  //       to: '/icons/brands',
-  //     },
-  //   ],
-  // },
-  // {
-  //   component: CNavGroup,
-  //   name: 'Notifications',
-  //   icon: <CIcon icon={cilBell} customClassName="nav-icon" />,
-  //   items: [
-  //     {
-  //       component: CNavItem,
-  //       name: 'Alerts',
-  //       to: '/notifications/alerts',
-  //     },
-  //     {
-  //       component: CNavItem,
-  //       name: 'Badges',
-  //       to: '/notifications/badges',
-  //     },
-  //     {
-  //       component: CNavItem,
-  //       name: 'Modal',
-  //       to: '/notifications/modals',
-  //     },
-  //     {
-  //       component: CNavItem,
-  //       name: 'Toasts',
-  //       to: '/notifications/toasts',
-  //     },
-  //   ],
-  // },
-  // {
-  //   component: CNavItem,
-  //   name: 'Widgets',
-  //   to: '/widgets',
-  //   icon: <CIcon icon={cilCalculator} customClassName="nav-icon" />,
-  //   badge: {
-  //     color: 'info',
-  //     text: 'NEW',
-  //   },
-  // },
-  // {
-  //   component: CNavTitle,
-  //   name: 'Extras',
-  // },
+  {
+    component: CNavGroup,
+    name: 'Icons',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'CoreUI Free',
+        to: '/icons/coreui-icons',
+        badge: {
+          color: 'success',
+          text: 'NEW',
+        },
+      },
+      {
+        component: CNavItem,
+        name: 'CoreUI Flags',
+        to: '/icons/flags',
+      },
+      {
+        component: CNavItem,
+        name: 'CoreUI Brands',
+        to: '/icons/brands',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: 'Notifications',
+    icon: <CIcon icon={cilBell} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Alerts',
+        to: '/notifications/alerts',
+      },
+      {
+        component: CNavItem,
+        name: 'Badges',
+        to: '/notifications/badges',
+      },
+      {
+        component: CNavItem,
+        name: 'Modal',
+        to: '/notifications/modals',
+      },
+      {
+        component: CNavItem,
+        name: 'Toasts',
+        to: '/notifications/toasts',
+      },
+    ],
+  },
+  {
+    component: CNavItem,
+    name: 'Widgets',
+    to: '/widgets',
+    icon: <CIcon icon={cilCalculator} customClassName="nav-icon" />,
+    badge: {
+      color: 'info',
+      text: 'NEW',
+    },
+  },
+  {
+    component: CNavTitle,
+    name: 'Extras',
+  },
   {
     component: CNavGroup,
     name: 'Pages',
