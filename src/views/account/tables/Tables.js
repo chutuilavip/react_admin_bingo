@@ -53,6 +53,7 @@ const Tables = () => {
   const [data, setData] = useState([])
   // const [data1, setData1] = useState(false)
   const [page, setPage] = useState(0)
+  const [pageNumber, setPageNumber] = useState()
   const [form, setForm] = useState(false)
   const [detail, setDetail] = useState(false)
   const [deleteForm, setDeleteForm] = useState(false)
@@ -84,7 +85,6 @@ const Tables = () => {
   //   console.log('form')
   // }, [form])
   // console.log(() => {}, form)
-
   const getEdit = async (id) => {
     try {
       const result = await axios({
@@ -107,7 +107,6 @@ const Tables = () => {
       console.log('err')
     }
   }
-
   const getDelete = async (id) => {
     try {
       const result = await axios({
@@ -118,14 +117,12 @@ const Tables = () => {
         },
       })
       setDataForm(result)
-      setState(0)
       setNickName(result?.data?.res?.data?.NickName)
       return result
     } catch (err) {
       console.log('err')
     }
   }
-
   const fetchPage = async (currentPage) => {
     try {
       const result = await axios({
@@ -141,7 +138,6 @@ const Tables = () => {
       console.log('err')
     }
   }
-
   const handleDeleteForm = async (id) => {
     await getDelete(id)
     // setState(0)
@@ -160,40 +156,31 @@ const Tables = () => {
     setDetail(!detail)
     console.log('chi tiet ne')
   }
-
   const handlePageClick = async (data) => {
-    // console.log(data.selected)
-
+    console.log(data.selected)
+    setPageNumber(data.selected)
     let currentPage = data.selected + 1
-
     const pageFormServer = await fetchPage(currentPage)
-
     setData(pageFormServer)
   }
-
   const handleChange = (e) => {
     setState(e.target.value)
   }
-
   const onChangeNickName = (e) => {
     setNickName(e.target.value)
   }
-
   const onChangeCash = (e) => {
     setCash(e.target.value)
   }
-
   const onChangeGold = (e) => {
     setGold(e.target.value)
   }
-
   const onChangeIsBlock = (e) => {
     setIsBlock(e.target.value)
   }
   const onChangeAvatar_index = (e) => {
     setAvatar_index(e.target.value)
   }
-
   const handleSubmit = async (id) => {
     editData.append('NickName', nickName)
     editData.append('Cash', cash)
@@ -208,11 +195,14 @@ const Tables = () => {
     })
       .then(function (response) {
         console.log(response.data.errors)
-        getPage()
+        //getPage()
       })
       .catch(function (err) {
         console.log(err)
       })
+    const pageFormServer = await fetchPage(pageNumber + 1)
+    setData(pageFormServer)
+
     setForm(!form)
   }
   const handleDelete = (id) => {
@@ -230,7 +220,7 @@ const Tables = () => {
       .catch(function (err) {
         console.log(err)
       })
-    setForm(!deleteForm)
+    setDeleteForm(!deleteForm)
   }
 
   return (
@@ -469,7 +459,7 @@ const Tables = () => {
                       <CTableDataCell>{item.Gold}</CTableDataCell>
                       <CTableDataCell>
                         <svg
-                          onClick={() => handleDeleteForm(item.uID)}
+                          onClick={() => handleDetail(item.uID)}
                           xmlns="http://www.w3.org/2000/svg"
                           className="h-6 w-6"
                           fill="none"
@@ -478,7 +468,7 @@ const Tables = () => {
                           height={30}
                           width={30}
                         >
-                          <path d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
+                          <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                         </svg>
                         <svg
                           onClick={() => handleEdit(item.uID)}
@@ -492,8 +482,9 @@ const Tables = () => {
                         >
                           <path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                         </svg>
+
                         <svg
-                          onClick={() => handleDetail(item.uID)}
+                          onClick={() => handleDeleteForm(item.uID)}
                           xmlns="http://www.w3.org/2000/svg"
                           className="h-6 w-6"
                           fill="none"
@@ -502,7 +493,7 @@ const Tables = () => {
                           height={30}
                           width={30}
                         >
-                          <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                          <path d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
                         </svg>
                       </CTableDataCell>
                     </CTableRow>
