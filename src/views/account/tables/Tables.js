@@ -51,9 +51,11 @@ const getSignature = async () => {
 const editData = new FormData()
 const Tables = () => {
   const [data, setData] = useState([])
+  // const [data1, setData1] = useState(false)
   const [page, setPage] = useState(0)
   const [form, setForm] = useState(false)
   const [detail, setDetail] = useState(false)
+  const [deleteForm, setDeleteForm] = useState(false)
   const [dataForm, setDataForm] = useState()
   const [state, setState] = useState('')
   const [nickName, setNickName] = useState('')
@@ -62,20 +64,26 @@ const Tables = () => {
   const [isBlock, setIsBlock] = useState('')
   const [avatar_index, setAvatar_index] = useState('')
 
+  async function getPage() {
+    const data = await getSignature()
+    console.log(data)
+    const total = data.data.res.total
+    setPage(Math.ceil(total / limit))
+    setData(data)
+  }
   useEffect(() => {
-    async function getPage() {
-      const data = await getSignature()
-      console.log(data)
-
-      const total = data.data.res.total
-
-      setPage(Math.ceil(total / limit))
-
-      setData(data)
-    }
-
     getPage()
+    //getEdit()
   }, [limit])
+  // useEffect(() => {
+  //   getPage()
+  // }, [limit, form])
+  //
+  // useEffect(() => {
+  //   getPage()
+  //   console.log('form')
+  // }, [form])
+  // console.log(() => {}, form)
 
   const getEdit = async (id) => {
     try {
@@ -87,7 +95,31 @@ const Tables = () => {
         },
       })
       setDataForm(result)
-      console.log(result)
+
+      setState(result?.data?.res?.data?.isBlock)
+      setNickName(result?.data?.res?.data?.NickName)
+      setCash(result?.data?.res?.data?.Cash)
+      setGold(result?.data?.res?.data?.Gold)
+      setAvatar_index(result?.data?.res?.data?.Avatar_index)
+
+      return result
+    } catch (err) {
+      console.log('err')
+    }
+  }
+
+  const getDelete = async (id) => {
+    try {
+      const result = await axios({
+        method: `Get`,
+        url: `${process.env.REACT_APP_URL_API}/api/user/${id}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      setDataForm(result)
+      setState(0)
+      setNickName(result?.data?.res?.data?.NickName)
       return result
     } catch (err) {
       console.log('err')
@@ -103,41 +135,24 @@ const Tables = () => {
           Authorization: `Bearer ${token}`,
         },
       })
+
       return result
     } catch (err) {
       console.log('err')
     }
   }
 
-  const handleDetele = (id) => {
-    editData.append('NickName', nickName)
-    editData.append('Cash', cash)
-    editData.append('Gold', gold)
-    editData.append('isBlock', 0)
-    editData.append('Avatar_index', avatar_index)
-    axios({
-      method: 'Post',
-      url: `${process.env.REACT_APP_URL_API}/api/user/update/${id}`,
-      data: editData,
-      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' },
-    })
-      .then(function (response) {})
-      .catch(function (err) {
-        console.log(err)
-      })
-
-    alert('Data has been saved!')
-    setForm(!form)
-    //console.log(id)
+  const handleDeleteForm = async (id) => {
+    await getDelete(id)
+    // setState(0)
+    // setNickName(dataForm?.data?.res?.data?.NickName)
+    setDeleteForm(!deleteForm)
   }
   const handleEdit = async (id) => {
+    // dataEdit(id)
     await getEdit(id)
     setForm(!form)
-    setState(dataForm?.data?.res?.data?.isBlock)
-    setNickName(dataForm?.data?.res?.data?.NickName)
-    setCash(dataForm?.data?.res?.data?.Cash)
-    setGold(dataForm?.data?.res?.data?.Gold)
-    setAvatar_index(dataForm?.data?.res?.data?.Avatar_index)
+    //
   }
   const handleDetail = async (id) => {
     await getEdit(id)
@@ -145,8 +160,9 @@ const Tables = () => {
     setDetail(!detail)
     console.log('chi tiet ne')
   }
+
   const handlePageClick = async (data) => {
-    console.log(data.selected)
+    // console.log(data.selected)
 
     let currentPage = data.selected + 1
 
@@ -178,15 +194,30 @@ const Tables = () => {
     setAvatar_index(e.target.value)
   }
 
-  const handleSubmit = (id) => {
+  const handleSubmit = async (id) => {
     editData.append('NickName', nickName)
-
     editData.append('Cash', cash)
-
     editData.append('Gold', gold)
     editData.append('isBlock', state)
     editData.append('Avatar_index', avatar_index)
-
+    await axios({
+      method: 'Post',
+      url: `${process.env.REACT_APP_URL_API}/api/user/update/${id}`,
+      data: editData,
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' },
+    })
+      .then(function (response) {
+        console.log(response.data.errors)
+        getPage()
+      })
+      .catch(function (err) {
+        console.log(err)
+      })
+    setForm(!form)
+  }
+  const handleDelete = (id) => {
+    editData.append('NickName', nickName)
+    editData.append('isBlock', 1)
     axios({
       method: 'Post',
       url: `${process.env.REACT_APP_URL_API}/api/user/update/${id}`,
@@ -199,14 +230,12 @@ const Tables = () => {
       .catch(function (err) {
         console.log(err)
       })
-
-    setForm(!form)
-    //console.log(id)
+    setForm(!deleteForm)
   }
+
   return (
     // console.log(dataU)
     <div>
-      {/* <CButton onClick={() => setVisible(!visible)}>Launch static backdrop modal</CButton> */}
       <CModal visible={form} onClose={() => setForm(false)}>
         <CModalHeader>
           <CModalTitle>Modal title</CModalTitle>
@@ -250,15 +279,10 @@ const Tables = () => {
               id="inputState"
               label="State"
               defaultValue={dataForm?.data?.res?.data?.isBlock}
-              // onChange={handleChange}
+              onClick={handleChange}
             >
-              <option>Status</option>
-              <option value="0" onClick={handleChange}>
-                Active
-              </option>
-              <option value="1" onClick={handleChange}>
-                Block
-              </option>
+              <option value={0}>Active</option>
+              <option value={1}>Block</option>
             </CFormSelect>
           </CCol>
           <CCol xs={12}>
@@ -279,7 +303,6 @@ const Tables = () => {
           </CButton>
         </CModalFooter>
       </CModal>
-
       <CModal visible={detail} onClose={() => setDetail(false)}>
         <CModalHeader>
           <CModalTitle>Modal title</CModalTitle>
@@ -348,6 +371,12 @@ const Tables = () => {
                         </CTableDataCell>
                       </CTableRow>
                       <CTableRow>
+                        <CTableDataCell scope="row">Cash</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {dataForm?.data?.res?.data.Cash}
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
                         <CTableDataCell scope="row">Gold</CTableDataCell>
                         <CTableDataCell scope="row">
                           {dataForm?.data?.res?.data.Gold}
@@ -396,6 +425,19 @@ const Tables = () => {
           </CButton>
         </CModalFooter>
       </CModal>
+      <CModal visible={deleteForm} onClose={() => setDeleteForm(false)}>
+        <CModalHeader>
+          <CModalTitle>Are you sure want to delete</CModalTitle>
+        </CModalHeader>
+        <CModalFooter>
+          <CButton color="primary" onClick={() => handleDelete(dataForm?.data?.res?.data?.uID)}>
+            Delete
+          </CButton>
+          <CButton color="secondary" onClick={() => setDeleteForm(false)}>
+            Close
+          </CButton>
+        </CModalFooter>
+      </CModal>
 
       <CRow>
         <CCol xs={12}>
@@ -427,7 +469,7 @@ const Tables = () => {
                       <CTableDataCell>{item.Gold}</CTableDataCell>
                       <CTableDataCell>
                         <svg
-                          onClick={() => handleDetele(item.uID)}
+                          onClick={() => handleDeleteForm(item.uID)}
                           xmlns="http://www.w3.org/2000/svg"
                           className="h-6 w-6"
                           fill="none"
