@@ -48,11 +48,6 @@ const Login = () => {
       headers: { 'Content-Type': 'multipart/form-data' },
     })
       .then(function (response) {
-        //test timeout
-        // setTimeout(() => {
-        //   setLoading(false)
-        // }, 5000)
-
         setLoading(false)
         if (response.data.status === 401) {
           toast.error(' Sai tên đăng nhập hoặc mật khẩu. Vui lòng nhập lại!', {

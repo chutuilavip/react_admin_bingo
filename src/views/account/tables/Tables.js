@@ -48,43 +48,42 @@ const getSignature = async () => {
     console.log('err')
   }
 }
-
-// const getEdit = async (id) => {
-//   try {
-//     const result = await axios({
-//       method: `Get`,
-//       url: `${process.env.REACT_APP_URL_API}/api/user/${id}`,
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     })
-//     return result
-//   } catch (err) {
-//     console.log('err')
-//   }
-// }
-
+const editData = new FormData()
 const Tables = () => {
   const [data, setData] = useState([])
-
+  // const [data1, setData1] = useState(false)
   const [page, setPage] = useState(0)
   const [form, setForm] = useState(false)
+  const [detail, setDetail] = useState(false)
+  const [deleteForm, setDeleteForm] = useState(false)
   const [dataForm, setDataForm] = useState()
-  const [state, setState] = useState()
+  const [state, setState] = useState('')
+  const [nickName, setNickName] = useState('')
+  const [cash, setCash] = useState('')
+  const [gold, setGold] = useState('')
+  const [isBlock, setIsBlock] = useState('')
+  const [avatar_index, setAvatar_index] = useState('')
+
+  async function getPage() {
+    const data = await getSignature()
+    console.log(data)
+    const total = data.data.res.total
+    setPage(Math.ceil(total / limit))
+    setData(data)
+  }
   useEffect(() => {
-    async function getPage() {
-      const data = await getSignature()
-      console.log(data)
-
-      const total = data.data.res.total
-
-      setPage(Math.ceil(total / limit))
-
-      setData(data)
-    }
-
     getPage()
+    //getEdit()
   }, [limit])
+  // useEffect(() => {
+  //   getPage()
+  // }, [limit, form])
+  //
+  // useEffect(() => {
+  //   getPage()
+  //   console.log('form')
+  // }, [form])
+  // console.log(() => {}, form)
 
   const getEdit = async (id) => {
     try {
@@ -96,12 +95,37 @@ const Tables = () => {
         },
       })
       setDataForm(result)
-      console.log(result)
+
+      setState(result?.data?.res?.data?.isBlock)
+      setNickName(result?.data?.res?.data?.NickName)
+      setCash(result?.data?.res?.data?.Cash)
+      setGold(result?.data?.res?.data?.Gold)
+      setAvatar_index(result?.data?.res?.data?.Avatar_index)
+
       return result
     } catch (err) {
       console.log('err')
     }
   }
+
+  const getDelete = async (id) => {
+    try {
+      const result = await axios({
+        method: `Get`,
+        url: `${process.env.REACT_APP_URL_API}/api/user/${id}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      setDataForm(result)
+      setState(0)
+      setNickName(result?.data?.res?.data?.NickName)
+      return result
+    } catch (err) {
+      console.log('err')
+    }
+  }
+
   const fetchPage = async (currentPage) => {
     try {
       const result = await axios({
@@ -111,23 +135,34 @@ const Tables = () => {
           Authorization: `Bearer ${token}`,
         },
       })
+
       return result
     } catch (err) {
       console.log('err')
     }
   }
 
-  const handleDetele = (id) => {
-    //console.log('xóa nè')
+  const handleDeleteForm = async (id) => {
+    await getDelete(id)
+    // setState(0)
+    // setNickName(dataForm?.data?.res?.data?.NickName)
+    setDeleteForm(!deleteForm)
   }
   const handleEdit = async (id) => {
+    // dataEdit(id)
+    await getEdit(id)
+    setForm(!form)
+    //
+  }
+  const handleDetail = async (id) => {
     await getEdit(id)
 
-    setForm(!form)
+    setDetail(!detail)
+    console.log('chi tiet ne')
   }
-  const handleOnchageNickName = () => {}
+
   const handlePageClick = async (data) => {
-    console.log(data.selected)
+    // console.log(data.selected)
 
     let currentPage = data.selected + 1
 
@@ -136,12 +171,71 @@ const Tables = () => {
     setData(pageFormServer)
   }
 
-  const handleChange = (event) => setState(0)
-  const [visible, setVisible] = useState(false)
+  const handleChange = (e) => {
+    setState(e.target.value)
+  }
+
+  const onChangeNickName = (e) => {
+    setNickName(e.target.value)
+  }
+
+  const onChangeCash = (e) => {
+    setCash(e.target.value)
+  }
+
+  const onChangeGold = (e) => {
+    setGold(e.target.value)
+  }
+
+  const onChangeIsBlock = (e) => {
+    setIsBlock(e.target.value)
+  }
+  const onChangeAvatar_index = (e) => {
+    setAvatar_index(e.target.value)
+  }
+
+  const handleSubmit = async (id) => {
+    editData.append('NickName', nickName)
+    editData.append('Cash', cash)
+    editData.append('Gold', gold)
+    editData.append('isBlock', state)
+    editData.append('Avatar_index', avatar_index)
+    await axios({
+      method: 'Post',
+      url: `${process.env.REACT_APP_URL_API}/api/user/update/${id}`,
+      data: editData,
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' },
+    })
+      .then(function (response) {
+        console.log(response.data.errors)
+        getPage()
+      })
+      .catch(function (err) {
+        console.log(err)
+      })
+    setForm(!form)
+  }
+  const handleDelete = (id) => {
+    editData.append('NickName', nickName)
+    editData.append('isBlock', 1)
+    axios({
+      method: 'Post',
+      url: `${process.env.REACT_APP_URL_API}/api/user/update/${id}`,
+      data: editData,
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' },
+    })
+      .then(function (response) {
+        console.log(response.data.errors)
+      })
+      .catch(function (err) {
+        console.log(err)
+      })
+    setForm(!deleteForm)
+  }
+
   return (
     // console.log(dataU)
     <div>
-      {/* <CButton onClick={() => setVisible(!visible)}>Launch static backdrop modal</CButton> */}
       <CModal visible={form} onClose={() => setForm(false)}>
         <CModalHeader>
           <CModalTitle>Modal title</CModalTitle>
@@ -151,7 +245,7 @@ const Tables = () => {
             <CFormInput
               label="Nick Name"
               placeholder="1234 Main St"
-              onChange={handleOnchageNickName}
+              onChange={onChangeNickName}
               // defaultValue={dataForm.data.cash}
               defaultValue={dataForm?.data?.res?.data?.NickName}
             />
@@ -160,6 +254,7 @@ const Tables = () => {
             <CFormInput
               label="Cash"
               placeholder="1234 Main St"
+              onChange={onChangeCash}
               defaultValue={dataForm?.data?.res?.data?.Cash}
             />
           </CCol>
@@ -167,6 +262,7 @@ const Tables = () => {
             <CFormInput
               label="Gold"
               placeholder="1234 Main St"
+              onChange={onChangeGold}
               defaultValue={dataForm?.data?.res?.data?.Gold}
             />
           </CCol>
@@ -174,6 +270,7 @@ const Tables = () => {
             <CFormInput
               label="isBlock"
               placeholder="1234 Main St"
+              onChange={onChangeIsBlock}
               defaultValue={dataForm?.data?.res?.data?.isBlock}
             />
           </CCol>
@@ -181,18 +278,18 @@ const Tables = () => {
             <CFormSelect
               id="inputState"
               label="State"
-              value={dataForm?.data?.res?.data?.isBlock}
-              onChange={handleChange}
+              defaultValue={dataForm?.data?.res?.data?.isBlock}
+              onClick={handleChange}
             >
-              <option>Status</option>
-              <option value="0">Active</option>
-              <option value="1">Block</option>
+              <option value={0}>Active</option>
+              <option value={1}>Block</option>
             </CFormSelect>
           </CCol>
           <CCol xs={12}>
             <CFormInput
               label="Avatar index"
               placeholder="1234 Main St"
+              onChange={onChangeAvatar_index}
               defaultValue={dataForm?.data?.res?.data?.Avatar_index}
             />
           </CCol>
@@ -201,7 +298,144 @@ const Tables = () => {
           <CButton color="secondary" onClick={() => setForm(false)}>
             Close
           </CButton>
-          <CButton color="primary">Save changes</CButton>
+          <CButton color="primary" onClick={() => handleSubmit(dataForm?.data?.res?.data?.uID)}>
+            Submit
+          </CButton>
+        </CModalFooter>
+      </CModal>
+      <CModal visible={detail} onClose={() => setDetail(false)}>
+        <CModalHeader>
+          <CModalTitle>Modal title</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          <CRow>
+            <CCol xs={17}>
+              <CCard className="mb-4">
+                <CCardBody>
+                  <CTable>
+                    <CTableHead>
+                      <CTableRow>
+                        <CTableHeaderCell scope="col">Prop</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">Data</CTableHeaderCell>
+                      </CTableRow>
+                    </CTableHead>
+                    <CTableBody>
+                      <CTableRow>
+                        <CTableDataCell scope="row">uID</CTableDataCell>
+                        <CTableDataCell scope="row">{dataForm?.data?.res?.data.uID}</CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableDataCell scope="row">UserID</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {dataForm?.data?.res?.data.UserID}
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableDataCell scope="row">UserCode</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {dataForm?.data?.res?.data.UserCode}
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableDataCell scope="row">loginKey</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {dataForm?.data?.res?.data.loginKey}
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableDataCell scope="row">NickName</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {dataForm?.data?.res?.data.NickName}
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableDataCell scope="row">Avatar_index</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {dataForm?.data?.res?.data.Avatar_index}
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableDataCell scope="row">v</CTableDataCell>
+                        <CTableDataCell scope="row">{dataForm?.data?.res?.data.v}</CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableDataCell scope="row">accountLevel</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {dataForm?.data?.res?.data.accountLevel}
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableDataCell scope="row">accountExp</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {dataForm?.data?.res?.data.accountExp}
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableDataCell scope="row">Cash</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {dataForm?.data?.res?.data.Cash}
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableDataCell scope="row">Gold</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {dataForm?.data?.res?.data.Gold}
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableDataCell scope="row">leagueTier</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {dataForm?.data?.res?.data.leagueTier}
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableDataCell scope="row">isBlock</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {dataForm?.data?.res?.data.isBlock}
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableDataCell scope="row">registerDate</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {dataForm?.data?.res?.data.registerDate}
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableDataCell scope="row">lastAccessDate</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {dataForm?.data?.res?.data.lastAccessDate}
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableDataCell scope="row">pendingGold</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {dataForm?.data?.res?.data.pendingGold}
+                        </CTableDataCell>
+                      </CTableRow>
+                    </CTableBody>
+                  </CTable>
+                </CCardBody>
+              </CCard>
+            </CCol>
+          </CRow>
+        </CModalBody>
+        <CModalFooter>
+          <CButton color="secondary" onClick={() => setDetail(false)}>
+            Close
+          </CButton>
+        </CModalFooter>
+      </CModal>
+      <CModal visible={deleteForm} onClose={() => setDeleteForm(false)}>
+        <CModalHeader>
+          <CModalTitle>Are you sure want to delete</CModalTitle>
+        </CModalHeader>
+        <CModalFooter>
+          <CButton color="primary" onClick={() => handleDelete(dataForm?.data?.res?.data?.uID)}>
+            Delete
+          </CButton>
+          <CButton color="secondary" onClick={() => setDeleteForm(false)}>
+            Close
+          </CButton>
         </CModalFooter>
       </CModal>
 
@@ -225,9 +459,9 @@ const Tables = () => {
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
-                  {data?.data?.res?.data?.data.map((item) => (
+                  {data?.data?.res?.data?.data.map((item, index) => (
                     <CTableRow key={item.id}>
-                      <CTableDataCell scope="row">{item.id}</CTableDataCell>
+                      <CTableDataCell scope="row">{index}</CTableDataCell>
                       <CTableDataCell scope="row">{item.NickName}</CTableDataCell>
                       <CTableDataCell colSpan="row">{item.UserID}</CTableDataCell>
                       <CTableDataCell>{item.accountLevel}</CTableDataCell>
@@ -235,7 +469,7 @@ const Tables = () => {
                       <CTableDataCell>{item.Gold}</CTableDataCell>
                       <CTableDataCell>
                         <svg
-                          onClick={() => handleDetele()}
+                          onClick={() => handleDeleteForm(item.uID)}
                           xmlns="http://www.w3.org/2000/svg"
                           className="h-6 w-6"
                           fill="none"
@@ -259,6 +493,7 @@ const Tables = () => {
                           <path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                         </svg>
                         <svg
+                          onClick={() => handleDetail(item.uID)}
                           xmlns="http://www.w3.org/2000/svg"
                           className="h-6 w-6"
                           fill="none"
