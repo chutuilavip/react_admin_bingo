@@ -234,10 +234,10 @@ const Tables = () => {
                         })()}
                       </CTableHeaderCell>
                       <CTableHeaderCell scope="row">
-                        {/* {item.from.slice(0, 7)}...{item.from.slice(-5)} */}
+                        {item.from.slice(0, 7)}...{item.from.slice(-5)}
                       </CTableHeaderCell>
                       <CTableHeaderCell scope="row">
-                        {/* {item.to.slice(0, 7)}...{item.to.slice(-5)} */}
+                      {item.to !== null ? ( <>{item.to.slice(0, 7)}...{item.to.slice(-5)}</>) : (<></>)}
                       </CTableHeaderCell>
                       <CTableHeaderCell scope="row">
                         <svg
