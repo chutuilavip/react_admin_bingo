@@ -60,7 +60,7 @@ const Login = () => {
           })
         } else {
           localStorage.setItem('token_key', response.data.access_token)
-          navigate('/')
+          navigate('/dashboard')
         }
       })
       .catch(function (response) {
