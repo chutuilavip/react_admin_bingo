@@ -467,6 +467,7 @@ const Tables = () => {
                           stroke="currentColor"
                           height={30}
                           width={30}
+                          style={{cursor:"pointer"}}
                         >
                           <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                         </svg>
@@ -479,6 +480,7 @@ const Tables = () => {
                           stroke="currentColor"
                           height={28}
                           width={28}
+                          style={{cursor:"pointer"}}
                         >
                           <path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                         </svg>
@@ -492,6 +494,7 @@ const Tables = () => {
                           stroke="currentColor"
                           height={30}
                           width={30}
+                          style={{cursor:"pointer"}}
                         >
                           <path d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
                         </svg>
