@@ -8,7 +8,7 @@ const checkTokenUser = async () => {
   try {
     const result = await axios({
       method: `Get`,
-      url: `${process.env.REACT_APP_URL_API}api/auth/user-profile`,
+      url: `${process.env.REACT_APP_URL_API}/api/auth/user-profile`,
       headers: {
         Authorization: `Bearer ${token_user}`,
       },
@@ -30,7 +30,6 @@ export default function ProviderRoute() {
   }, [])
 
   if (dataUser !== null && dataUser !== undefined) {
-    // console.log(dataUser)
     return <Outlet />
   } else return <Navigate to="/login" />
 }
