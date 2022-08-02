@@ -75,6 +75,8 @@ const Tables = () => {
   }
 
   const handleSubmit = (e) => {
+    e.preventDefault()
+
     formData.append('title', title)
     formData.append('version', version)
     formData.append('maintain_content', maintainContent)
@@ -99,7 +101,6 @@ const Tables = () => {
         <CFormInput
           label="Tiêu đề"
           type="text"
-          name="title"
           defaultValue={data.title}
           onChange={onChangeTitle}
         />
@@ -109,7 +110,6 @@ const Tables = () => {
         <CFormInput
           label="Phiên bản"
           type="text"
-          name="version"
           defaultValue={data.version}
           onChange={onChangeVersion}
         />
@@ -119,7 +119,6 @@ const Tables = () => {
         <CFormInput
           label="Hình ảnh"
           type="file"
-          name="maintain_content"
           defaultValue={data.maintainContent}
           onChange={onChangemaintainContent}
         />
