@@ -3,14 +3,17 @@ import React, { Component, Suspense } from 'react'
 // import { HashRouter, Route, Routes } from 'react-router-dom'
 import './scss/style.scss'
 import { ToastContainer, toast } from 'react-toastify'
+
 // import 'react-toastify/dist/ReactToastify.css'
 import Views from './Views'
+
 
 
 // Containers
 // const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
 
 // Pages
+
 // const Login = React.lazy(() => import('./views/pages/login/Login'))
 // const Register = React.lazy(() => import('./views/pages/register/Register'))
 // const Page404 = React.lazy(() => import('./views/pages/page404/Page404'))
@@ -18,6 +21,7 @@ import Views from './Views'
 class App extends Component {
   render() {
     return <Views />
+
   }
 }
 

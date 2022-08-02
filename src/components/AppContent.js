@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect, useState } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { CContainer, CSpinner } from '@coreui/react'
+
 import axios from 'axios'
 // routes config
 import routes from '../routes'
@@ -36,6 +37,7 @@ const AppContent = () => {
 
   // const accessToken = data.adminID === 'admin' ? true : false
 
+
   return (
     <CContainer lg>
       <Suspense fallback={<CSpinner color="primary" />}>
@@ -48,7 +50,9 @@ const AppContent = () => {
                   path={route.path}
                   exact={route.exact}
                   name={route.name}
+
                   // element={accessToken ? <route.element /> : <div>Duy</div>}
+
                 />
               )
             )
