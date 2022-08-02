@@ -118,35 +118,33 @@ const Tables = () => {
                     </CTableHead>
                     <CTableBody>
                       <CTableRow>
-                        <CTableDataCell scope="row">tID</CTableDataCell>
+                        <CTableDataCell scope="row">ID</CTableDataCell>
                         <CTableDataCell scope="row">{dataDetail.tID}</CTableDataCell>
                       </CTableRow>
                       <CTableRow>
-                        <CTableDataCell scope="row">uID</CTableDataCell>
+                        <CTableDataCell scope="row">User ID</CTableDataCell>
                         <CTableDataCell scope="row">{dataDetail.uID}</CTableDataCell>
                       </CTableRow>
                       <CTableRow>
-                        <CTableDataCell scope="row">is_win</CTableDataCell>
-                        <CTableDataCell scope="row">{dataDetail.is_win}</CTableDataCell>
+                        <CTableDataCell scope="row">Is Win?</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {dataDetail.is_win === 0 ? 'Lose' : 'Win'}
+                        </CTableDataCell>
                       </CTableRow>
                       <CTableRow>
-                        <CTableDataCell scope="row">reward</CTableDataCell>
+                        <CTableDataCell scope="row">Reward</CTableDataCell>
                         <CTableDataCell scope="row">{dataDetail.reward}</CTableDataCell>
                       </CTableRow>
                       <CTableRow>
-                        <CTableDataCell scope="row">fee</CTableDataCell>
+                        <CTableDataCell scope="row">Fee</CTableDataCell>
                         <CTableDataCell scope="row">{dataDetail.fee}</CTableDataCell>
                       </CTableRow>
                       <CTableRow>
-                        <CTableDataCell scope="row">total_score</CTableDataCell>
+                        <CTableDataCell scope="row">Total Score</CTableDataCell>
                         <CTableDataCell scope="row">{dataDetail.total_score}</CTableDataCell>
                       </CTableRow>
                       <CTableRow>
-                        <CTableDataCell scope="row">total_score</CTableDataCell>
-                        <CTableDataCell scope="row">{dataDetail.total_score}</CTableDataCell>
-                      </CTableRow>
-                      <CTableRow>
-                        <CTableDataCell scope="row">NickName</CTableDataCell>
+                        <CTableDataCell scope="row">Nick Name</CTableDataCell>
                         <CTableDataCell scope="row">{dataDetail.NickName}</CTableDataCell>
                       </CTableRow>
                     </CTableBody>
@@ -176,6 +174,7 @@ const Tables = () => {
                     <CTableHeaderCell scope="col">NickName</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Scope</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Time</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Action</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
