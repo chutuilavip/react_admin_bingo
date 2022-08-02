@@ -25,6 +25,8 @@ async function PrivateRoute() {
         Authorization: `Bearer ${token}`,
       },
     })
+    console.log('xxxx');
+    console.log(result);
     if (!result.data.adminID) {
       return (window.location.href = '/#/login')
     }

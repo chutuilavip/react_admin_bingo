@@ -282,16 +282,16 @@ const _nav = [
         name: 'Register',
         to: '/register',
       },
-      {
-        component: CNavItem,
-        name: 'Error 404',
-        to: '/404',
-      },
-      {
-        component: CNavItem,
-        name: 'Error 500',
-        to: '/500',
-      },
+      // {
+      //   component: CNavItem,
+      //   name: 'Error 404',
+      //   to: '/404',
+      // },
+      // {
+      //   component: CNavItem,
+      //   name: 'Error 500',
+      //   to: '/500',
+      // },
     ],
   },
   // {
