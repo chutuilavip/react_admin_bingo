@@ -1,29 +1,15 @@
 import React, { useRef } from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 import {
   CButton,
-  // CCard,
-  // CCardBody,
-  // CCardHeader,
   CCol,
   CForm,
   CFormInput,
   CImage,
-  // CRow,
-  // CTable,
-  // CTableBody,
-  // CTableCaption,
-  // CTableDataCell,
-  // CTableHead,
-  // CTableHeaderCell,
-  // CTableRow,
 } from '@coreui/react'
-// import { DocsExample } from 'src/components'
 import './style.css'
-// import { Title } from 'chart.js'
-// import { toast } from 'react-toastify'
-// import { Navigate } from 'react-router-dom'
 
 const token = localStorage.getItem('token_key')
 
@@ -75,26 +61,46 @@ const Tables = () => {
   }
 
   const handleSubmit = (e) => {
+    e.preventDefault()
     formData.append('title', title)
     formData.append('version', version)
     formData.append('maintain_content', maintainContent)
-
     axios({
       method: 'Post',
       url: `${process.env.REACT_APP_URL_API}/api/admin/sys/update`,
       data: formData,
       headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' },
     })
-      .then(function (response) {})
+      .then(async function (response) {
+        console.log(response)
+        const data = await getSignature()
+        setData(data)
+        if(response.data.status == 200){
+          return Swal.fire({
+            title: "Success",
+            text: response.data.success,
+            icon: "success",
+            confirmButtonText: "OK",
+          })
+        }else{
+          return Swal.fire({
+            title: "Error",
+            text: response.data.error,
+            icon: "error",
+            confirmButtonText: "OK",
+          })
+        }
+        
+
+      })
       .catch(function (err) {
         console.log(err)
       })
 
-    alert('Data has been saved!')
   }
 
   return (
-    <CForm onSubmit={handleSubmit} className="form_system">
+    <CForm className="form_system">
       <CCol sm={12} className="d-flex align-items-center">
         <CFormInput
           label="Tiêu đề"
@@ -136,7 +142,7 @@ const Tables = () => {
       )}
 
       <div className="d-flex justify-content-end mt-4">
-        <CButton className="btn_update" type="submit">
+        <CButton onClick={handleSubmit} className="btn_update" type="submit">
           Cập nhật
         </CButton>
       </div>

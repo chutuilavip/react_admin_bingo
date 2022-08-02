@@ -162,8 +162,6 @@ const Tables = () => {
   }
 
   const handlePageClick = async (data) => {
-    // console.log(data.selected)
-
     let currentPage = data.selected + 1
 
     const pageFormServer = await fetchPage(currentPage)
