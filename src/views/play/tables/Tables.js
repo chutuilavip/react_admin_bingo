@@ -60,9 +60,9 @@ const Tables = () => {
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                {data?.map((item, index) => (
+                {data.data?.map((item, index) => (
                   <CTableRow key={index}>
-                    <CTableDataCell colSpan="row">{index}</CTableDataCell>
+                    <CTableDataCell colSpan="row">{item.tID}</CTableDataCell>
                     <CTableHeaderCell scope="row">{item.NickName}</CTableHeaderCell>
                     <CTableDataCell colSpan="row">{item.vs_nickname}</CTableDataCell>
                     <CTableDataCell>{item.tID}</CTableDataCell>
