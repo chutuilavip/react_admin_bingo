@@ -11,7 +11,7 @@ const getSignature = async () => {
   try {
     const result = await axios({
       method: `Get`,
-      url: `http://192.168.0.197/api/auth/user-profile`,
+      url: `${process.env.REACT_APP_URL_API}/api/auth/user-profile`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
