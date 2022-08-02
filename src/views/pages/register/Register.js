@@ -16,6 +16,7 @@ import { cilLockLocked, cilUser } from '@coreui/icons'
 import './style.css'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const formData = new FormData()
 
@@ -87,7 +88,7 @@ const Register = () => {
           console.log(err)
         })
 
-      alert('Data has been saved!')
+      toast('Register success!')
       navigate('/login')
     }
   }

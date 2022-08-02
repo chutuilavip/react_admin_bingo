@@ -225,7 +225,7 @@ const Tables = () => {
   return (
     // console.log(dataU)
     <div>
-      <CModal visible={form} onClose={() => setForm(false)}>
+      <CModal className='modal_edit' visible={form} onClose={() => setForm(false)}>
         <CModalHeader>
           <CModalTitle>Modal title</CModalTitle>
         </CModalHeader>
@@ -292,7 +292,7 @@ const Tables = () => {
           </CButton>
         </CModalFooter>
       </CModal>
-      <CModal visible={detail} onClose={() => setDetail(false)}>
+      <CModal className='modal_detail' visible={detail} onClose={() => setDetail(false)}>
         <CModalHeader>
           <CModalTitle>Modal title</CModalTitle>
         </CModalHeader>
@@ -414,7 +414,7 @@ const Tables = () => {
           </CButton>
         </CModalFooter>
       </CModal>
-      <CModal visible={deleteForm} onClose={() => setDeleteForm(false)}>
+      <CModal className='modal_del' visible={deleteForm} onClose={() => setDeleteForm(false)}>
         <CModalHeader>
           <CModalTitle>Are you sure want to delete</CModalTitle>
         </CModalHeader>
@@ -472,7 +472,7 @@ const Tables = () => {
                         <svg
                           onClick={() => handleEdit(item.uID)}
                           xmlns="http://www.w3.org/2000/svg"
-                          className="h-6 w-6"
+                          className="h-6 w-6 mx-2"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
