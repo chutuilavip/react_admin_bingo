@@ -75,7 +75,7 @@ const Tables = () => {
         console.log(response)
         const data = await getSignature()
         setData(data)
-        if(response.data.status == 200){
+        if(response.data.status === 200){
           return Swal.fire({
             title: "Success",
             text: response.data.success,

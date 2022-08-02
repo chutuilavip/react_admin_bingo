@@ -116,7 +116,7 @@ const Register = () => {
                     />
                   </CInputGroup>
 
-                  {error.username && <p>{error.username}</p>}
+                  {error.username && <p className='text-danger'>{error.username}</p>}
                   {/* <CInputGroup className="mb-3">
                     <CInputGroupText>@</CInputGroupText>
                     <CFormInput placeholder="Email" autoComplete="email" />
@@ -136,7 +136,7 @@ const Register = () => {
                     />
                   </CInputGroup>
 
-                  {error.password && <p>{error.password}</p>}
+                  {error.password && <p className='text-danger'>{error.password}</p>}
 
                   <CInputGroup className="mb-4">
                     <CInputGroupText>
@@ -153,7 +153,7 @@ const Register = () => {
                     />
                   </CInputGroup>
 
-                  {error.confirmPassword && <p>{error.confirmPassword}</p>}
+                  {error.confirmPassword && <p className='text-danger'>{error.confirmPassword}</p>}
 
                   <div className="d-grid">
                     <CButton onClick={handleSubmit} color="success">
