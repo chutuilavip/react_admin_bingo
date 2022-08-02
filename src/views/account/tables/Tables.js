@@ -107,6 +107,7 @@ const Tables = () => {
       console.log('err')
     }
   }
+
   const getDelete = async (id) => {
     try {
       const result = await axios({

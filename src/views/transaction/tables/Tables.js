@@ -2,10 +2,16 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import {
+  CButton,
   CCard,
   CCardBody,
   CCardHeader,
   CCol,
+  CModal,
+  CModalBody,
+  CModalFooter,
+  CModalHeader,
+  CModalTitle,
   CRow,
   CTable,
   CTableBody,
@@ -17,6 +23,7 @@ import {
 } from '@coreui/react'
 import ReactPaginate from 'react-paginate'
 // import { DocsExample } from 'src/components'
+import "./style.css"
 
 const token = localStorage.getItem('token_key')
 let limit = 10
@@ -35,10 +42,12 @@ const getSignature = async () => {
     console.log('err')
   }
 }
+
 const Tables = () => {
   const [data, setData] = useState([])
   const [page, setPage] = useState(0)
-  // const [pageNumber, setPageNumber] = useState()
+  const [dataForm, setDataForm] = useState([])
+  const [detail, setDetail] = useState(false)
 
   async function getPage() {
     const data = await getSignature()
@@ -57,7 +66,7 @@ const Tables = () => {
     try {
       const result = await axios({
         method: `Get`,
-        url: `${process.env.REACT_APP_URL_API}/api/user?page=${currentPage}&limit=${limit}`,
+        url: `${process.env.REACT_APP_URL_API}/api/history/transactions?page=${currentPage}&limit=${limit}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -70,7 +79,7 @@ const Tables = () => {
   }
 
   const handlePageClick = async (data) => {
-    setPage(data.selected)
+    // setPage(data.selected)
     let currentPage = data.selected + 1
     const pageFormServer = await fetchPage(currentPage)
     setData(pageFormServer)
@@ -84,9 +93,98 @@ const Tables = () => {
     }
     ss()
   }, [])
+
+  const getDetail = async (id) => {
+    try {
+      const result = await axios({
+        method: `Get`,
+        url: `${process.env.REACT_APP_URL_API}/api/history/transaction/${id}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      setDataForm(result)
+      return result
+    } catch (err) {
+      console.log('err')
+    }
+  }
+
+  const handleDetail = async (id) => {
+    await getDetail(id)
+
+    setDetail(!detail)
+  }
+
+  console.log('sdsdsdsd' + dataForm)
+
   console.log('data ne', data)
   return (
     <div>
+      <CModal className="modal_detail" visible={detail} onClose={() => setDetail(false)}>
+        <CModalHeader>
+          <CModalTitle>Modal title</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          <CRow>
+            <CCol xs={17}>
+              <CCard className="mb-4">
+                <CCardBody>
+                  <CTable>
+                    <CTableHead>
+                      <CTableRow>
+                        <CTableHeaderCell scope="col">Prop</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">Data</CTableHeaderCell>
+                      </CTableRow>
+                    </CTableHead>
+                    <CTableBody>
+                      <CTableRow>
+                        <CTableDataCell scope="row">Nickname</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {dataForm?.data?.res?.data?.NickName}
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableDataCell scope="row">Type</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {dataForm?.data?.res?.data?.type}
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableDataCell scope="row">Token Amount</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {dataForm?.data?.res?.data?.tokenAmount}
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableDataCell scope="row">Point Amount</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {dataForm?.data?.res?.data?.pointAmount}
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableDataCell scope="row">From</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {dataForm?.data?.res?.data?.from}
+                        </CTableDataCell>
+                      </CTableRow>
+                      <CTableRow>
+                        <CTableDataCell scope="row">To</CTableDataCell>
+                        <CTableDataCell scope="row">{dataForm?.data?.res?.data?.to}</CTableDataCell>
+                      </CTableRow>
+                    </CTableBody>
+                  </CTable>
+                </CCardBody>
+              </CCard>
+            </CCol>
+          </CRow>
+        </CModalBody>
+        <CModalFooter>
+          <CButton color="secondary" onClick={() => setDetail(false)}>
+            Close
+          </CButton>
+        </CModalFooter>
+      </CModal>
       <CRow>
         <CCol xs={12}>
           <CCard className="mb-4">
@@ -136,13 +234,14 @@ const Tables = () => {
                         })()}
                       </CTableHeaderCell>
                       <CTableHeaderCell scope="row">
-                        {item.from.slice(0, 7)}...{item.from.slice(-5)}
+                        {/* {item.from.slice(0, 7)}...{item.from.slice(-5)} */}
                       </CTableHeaderCell>
                       <CTableHeaderCell scope="row">
-                        {item.to.slice(0, 7)}...{item.to.slice(-5)}
+                        {/* {item.to.slice(0, 7)}...{item.to.slice(-5)} */}
                       </CTableHeaderCell>
                       <CTableHeaderCell scope="row">
                         <svg
+                          onClick={() => handleDetail(item.id)}
                           xmlns="http://www.w3.org/2000/svg"
                           className="h-6 w-6"
                           fill="none"
