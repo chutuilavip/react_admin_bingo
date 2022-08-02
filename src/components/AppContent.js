@@ -28,13 +28,11 @@ const AppContent = () => {
   useEffect(() => {
     async function ss() {
       const data = await getSignature()
-      console.log(data)
       setData(data)
     }
     ss()
     // views / pages / login / Login
   }, [])
-  console.log('admin', data)
   return (
     <CContainer lg>
       <Suspense fallback={<CSpinner color="primary" />}>
