@@ -51,7 +51,6 @@ const getSignature = async () => {
 const editData = new FormData()
 const Tables = () => {
   const [data, setData] = useState([])
-  // const [data1, setData1] = useState(false)
   const [page, setPage] = useState(0)
   const [pageNumber, setPageNumber] = useState()
   const [form, setForm] = useState(false)
@@ -154,7 +153,6 @@ const Tables = () => {
     await getEdit(id)
 
     setDetail(!detail)
-    console.log('chi tiet ne')
   }
   const handlePageClick = async (data) => {
     setPageNumber(data.selected)
@@ -225,7 +223,7 @@ const Tables = () => {
   return (
     // console.log(dataU)
     <div>
-      <CModal className='modal_edit' visible={form} onClose={() => setForm(false)}>
+      <CModal className="modal_edit" visible={form} onClose={() => setForm(false)}>
         <CModalHeader>
           <CModalTitle>Modal title</CModalTitle>
         </CModalHeader>
@@ -292,7 +290,7 @@ const Tables = () => {
           </CButton>
         </CModalFooter>
       </CModal>
-      <CModal className='modal_detail' visible={detail} onClose={() => setDetail(false)}>
+      <CModal className="modal_detail" visible={detail} onClose={() => setDetail(false)}>
         <CModalHeader>
           <CModalTitle>Modal title</CModalTitle>
         </CModalHeader>
@@ -414,7 +412,7 @@ const Tables = () => {
           </CButton>
         </CModalFooter>
       </CModal>
-      <CModal className='modal_del' visible={deleteForm} onClose={() => setDeleteForm(false)}>
+      <CModal className="modal_del" visible={deleteForm} onClose={() => setDeleteForm(false)}>
         <CModalHeader>
           <CModalTitle>Are you sure want to delete</CModalTitle>
         </CModalHeader>
