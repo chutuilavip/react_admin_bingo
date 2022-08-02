@@ -118,35 +118,33 @@ const Tables = () => {
                     </CTableHead>
                     <CTableBody>
                       <CTableRow>
-                        <CTableDataCell scope="row">tID</CTableDataCell>
+                        <CTableDataCell scope="row">ID</CTableDataCell>
                         <CTableDataCell scope="row">{dataDetail.tID}</CTableDataCell>
                       </CTableRow>
                       <CTableRow>
-                        <CTableDataCell scope="row">uID</CTableDataCell>
+                        <CTableDataCell scope="row">User ID</CTableDataCell>
                         <CTableDataCell scope="row">{dataDetail.uID}</CTableDataCell>
                       </CTableRow>
                       <CTableRow>
-                        <CTableDataCell scope="row">is_win</CTableDataCell>
-                        <CTableDataCell scope="row">{dataDetail.is_win}</CTableDataCell>
+                        <CTableDataCell scope="row">Is Win?</CTableDataCell>
+                        <CTableDataCell scope="row">
+                          {dataDetail.is_win === 0 ? 'Lose' : 'Win'}
+                        </CTableDataCell>
                       </CTableRow>
                       <CTableRow>
-                        <CTableDataCell scope="row">reward</CTableDataCell>
+                        <CTableDataCell scope="row">Reward</CTableDataCell>
                         <CTableDataCell scope="row">{dataDetail.reward}</CTableDataCell>
                       </CTableRow>
                       <CTableRow>
-                        <CTableDataCell scope="row">fee</CTableDataCell>
+                        <CTableDataCell scope="row">Fee</CTableDataCell>
                         <CTableDataCell scope="row">{dataDetail.fee}</CTableDataCell>
                       </CTableRow>
                       <CTableRow>
-                        <CTableDataCell scope="row">total_score</CTableDataCell>
+                        <CTableDataCell scope="row">Total Score</CTableDataCell>
                         <CTableDataCell scope="row">{dataDetail.total_score}</CTableDataCell>
                       </CTableRow>
                       <CTableRow>
-                        <CTableDataCell scope="row">total_score</CTableDataCell>
-                        <CTableDataCell scope="row">{dataDetail.total_score}</CTableDataCell>
-                      </CTableRow>
-                      <CTableRow>
-                        <CTableDataCell scope="row">NickName</CTableDataCell>
+                        <CTableDataCell scope="row">Nick Name</CTableDataCell>
                         <CTableDataCell scope="row">{dataDetail.NickName}</CTableDataCell>
                       </CTableRow>
                     </CTableBody>
@@ -176,6 +174,7 @@ const Tables = () => {
                     <CTableHeaderCell scope="col">NickName</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Scope</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Time</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Action</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
@@ -187,21 +186,21 @@ const Tables = () => {
                       <CTableHeaderCell scope="row">{item.total_score}</CTableHeaderCell>
                       <CTableHeaderCell scope="row">{item.logdate}</CTableHeaderCell>
                       <CTableDataCell>
-                        <button>
-                          <svg
-                            onClick={() => handleDetail(item)}
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            height={30}
-                            width={30}
-                            style={{cursor:"pointer"}}
-                          >
-                            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                          </svg>
-                        </button>
+                        {/* <button> */}
+                        <svg
+                          onClick={() => handleDetail(item)}
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          height={30}
+                          width={30}
+                          style={{ cursor: 'pointer' }}
+                        >
+                          <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                        </svg>
+                        {/* </button> */}
                       </CTableDataCell>
                     </CTableRow>
                   ))}
