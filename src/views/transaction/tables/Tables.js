@@ -57,7 +57,7 @@ const Tables = () => {
     try {
       const result = await axios({
         method: `Get`,
-        url: `${process.env.REACT_APP_URL_API}/api/user?page=${currentPage}&limit=${limit}`,
+        url: `${process.env.REACT_APP_URL_API}/api/history/transactions?page=1&limit=${limit}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
