@@ -26,7 +26,6 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const navigate = useNavigate()
   const [error, setError] = useState({})
-  const [touched, setTouched] = useState(false)
 
   const onChangeUsername = (e) => {
     setUsername(e.target.value)
