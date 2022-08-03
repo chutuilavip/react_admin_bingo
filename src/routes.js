@@ -49,8 +49,10 @@ const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 const Account = React.lazy(() => import('./views/account/tables/Tables'))
+const Game = React.lazy(() => import('./views/game/tables/Tables'))
 const Play = React.lazy(() => import('./views/play/tables/Tables'))
 const Transaction = React.lazy(() => import('./views/transaction/tables/Tables'))
+const Banner = React.lazy(() => import('./views/banner/tables/Tables'))
 const System = React.lazy(() => import('./views/system/tables/Tables'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -98,8 +100,10 @@ const routes = [
   { path: '/notifications/toasts', name: 'Toasts', element: Toasts },
   { path: '/widgets', name: 'Widgets', element: Widgets },
   { path: '/admin/account', name: 'Account', element: Account, exact: true },
+  { path: '/admin/game', name: 'Game', element: Game, exact: true },
   { path: '/admin/play', name: 'Play', element: Play, exact: true },
   { path: '/admin/transaction', name: 'Transaction', element: Transaction, exact: true },
+  { path: '/admin/banner', name: 'Banner', element: Banner, exact: true },
   { path: '/admin/system', name: 'System', element: System, exact: true },
 ]
 

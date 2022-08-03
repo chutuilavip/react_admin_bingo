@@ -13,11 +13,6 @@
     outline: none !important;
 }
 
-.modal_detail .modal-content{
-    width: fit-content !important;
-}
-
-.modal_edit .modal-content,
-.modal_del .modal-content{
-    width: 100%;
+.modal-content{
+    width: 650px;
 }

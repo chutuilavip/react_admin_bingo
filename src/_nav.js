@@ -314,6 +314,18 @@ const _nav = [
   },
   {
     component: CNavGroup,
+    name: 'Game',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'List',
+        to: '/admin/game',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
     name: 'Gaming history',
     icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
     items: [
@@ -333,6 +345,18 @@ const _nav = [
         component: CNavItem,
         name: 'List',
         to: '/admin/transaction',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: 'Banner management',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'List',
+        to: '/admin/banner',
       },
     ],
   },
