@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { useState, useEffect } from 'react'
+// import DatePicker from 'react-datepicker'
+// import ReactDatePicker from 'react-datepicker'
 
+import DateTimePicker from 'react-date-picker'
 import axios from 'axios'
 import {
   CModalFooter,
@@ -56,13 +59,47 @@ const getSignature1 = async () => {
     console.log('err')
   }
 }
+const getSignature2 = async (id) => {
+  try {
+    const result = await axios({
+      method: `Get`,
+      url: `${process.env.REACT_APP_URL_API}/api/game-list/${id}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return result
+  } catch (err) {
+    console.log('err')
+  }
+}
+const getSignature3 = async () => {
+  try {
+    const result = await axios({
+      method: `Get`,
+      url: `${process.env.REACT_APP_URL_API}/api/game/league`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return result
+  } catch (err) {
+    console.log('err')
+  }
+}
 const editData = new FormData()
 const Tables = () => {
   const [data, setData] = useState([])
   const [data1, setData1] = useState([])
+  const [data2, setData2] = useState([])
+  const [headToHeadDetail, setHeadToHeadDetail] = useState({})
+  const [idHeadToHeadDetail, setidHeadToHeadDetail] = useState('')
+
   const [page, setPage] = useState(0)
   const [detail, setDetail] = useState(false)
   const [dataDetail, setDataDetail] = useState([])
+  const [editModal, setEditMoldal] = useState(false)
+  //------------------------------------------- game config ----------------------------------------------------------
   const [playTime, setPlayTime] = useState('')
   const [coolTime, setCoolTime] = useState('')
   const [numberPickScore, setNumberPickScore] = useState('')
@@ -71,6 +108,31 @@ const Tables = () => {
   const [leagueJoinPrice, setLeagueJoinPrice] = useState('')
   const [leaguePlayPrice, setLeaguePlayPrice] = useState('')
   const [leagueRewardFee, setLeagueRewardFee] = useState('')
+  //------------------------------------------------------------------------------------------------------------------
+  //------------------------------------------- head to head ----------------------------------------------------------
+
+  const [headToHead, setHeadToHead] = useState({
+    game_name: '',
+    play_coin: '',
+    reward_fee: '',
+    is_usable: '',
+  })
+  //------------------------------------------------------------------------------------------------------------------
+  //------------------------------------------- league ----------------------------------------------------------
+
+  const [league, setLeague] = useState({
+    eventName: '',
+    reqStart: '',
+    reqEnd: '',
+    startDate: '',
+    endDate: '',
+    isStatus: '',
+    isView: '',
+    reqCoin: '',
+    playCoin: '',
+    rewardCoin: '',
+  })
+  //------------------------------------------------------------------------------------------------------------------
 
   // handle detail
   const handleDetail = (data) => {
@@ -91,17 +153,49 @@ const Tables = () => {
   }
   async function getPage1() {
     const data = await getSignature1()
-    console.log('Duy nè', data?.data?.res?.data)
+    //console.log('Duy nè', data?.data?.res?.data)
     setData1(data)
+  }
+  async function getPage2() {
+    const data = await getSignature3()
+    console.log('Duy nè', data?.data?.res?.data[0])
+    setData2(data)
+    setLeague({
+      ...league,
+      eventName: data?.data?.res?.data[0].eventName,
+      reqStart: data?.data?.res?.data[0].reqStart,
+      reqEnd: data?.data?.res?.data[0].reqEnd,
+      startDate: data?.data?.res?.data[0].startDate,
+      endDate: data?.data?.res?.data[0].endDate,
+      isStatus: data?.data?.res?.data[0].isStatus,
+      isView: data?.data?.res?.data[0].isView,
+      reqCoin: data?.data?.res?.data[0].reqCoin,
+      playCoin: data?.data?.res?.data[0].playCoin,
+      rewardCoin: data?.data?.res?.data[0].rewardCoin,
+    })
+  }
+
+  async function getHeadToHeadDetail(id) {
+    const data = await getSignature2(id)
+    console.log('Duy nè', data?.data?.res?.data)
+    //setHeadToHeadDetail(data)
+    setHeadToHead({
+      ...headToHead,
+      game_name: data?.data?.res?.data?.game_name,
+      play_coin: data?.data?.res?.data?.playCoin,
+      reward_fee: data?.data?.res?.data?.reward_fee,
+      is_usable: data?.data?.res?.data?.is_usable,
+    })
   }
   useEffect(() => {
     getPage()
     getPage1()
+    getPage2()
   }, [])
-
   const onChange = (e, name) => {
     console.log(e.target.value)
     switch (name) {
+      //------------------------------------------- game config ----------------------------------------------------------
       case 'play_time':
         setPlayTime(e.target.value)
         break
@@ -126,6 +220,56 @@ const Tables = () => {
       case 'league_join_price':
         setLeagueJoinPrice(e.target.value)
         break
+      //------------------------------------------------------------------------------------------------------------------
+      //------------------------------------------- head to head ----------------------------------------------------------
+      case 'game_name':
+        setHeadToHead({ ...headToHead, game_name: e.target.value })
+        break
+      case 'playCoin':
+        setHeadToHead({ ...headToHead, play_coin: e.target.value })
+        break
+      case 'reward_fee':
+        setHeadToHead({ ...headToHead, reward_fee: e.target.value })
+        break
+      case 'is_usable':
+        setHeadToHead({ ...headToHead, is_usable: e.target.value })
+        break
+      //------------------------------------------------------------------------------------------------------------------
+      //------------------------------------------- league ---------------------------------------------------------------
+      case 'eventName':
+        setLeague({ ...league, eventName: e.target.value })
+        break
+      case 'reqStart':
+        setLeague({ ...league, reqStart: e.target.value })
+        break
+      case 'reqEnd':
+        setLeague({ ...league, reqEnd: e.target.value })
+        break
+      case 'startDate':
+        setLeague({ ...league, startDate: e.target.value })
+        break
+
+      case 'endDate':
+        setLeague({ ...league, endDate: e.target.value })
+        break
+      case 'isStatus':
+        setLeague({ ...league, isStatus: e.target.value })
+        break
+      case 'isView':
+        setLeague({ ...league, isView: e.target.value })
+        break
+      case 'reqCoin':
+        setLeague({ ...league, reqCoin: e.target.value })
+        break
+      case 'play_Coin':
+        setLeague({ ...league, playCoin: e.target.value })
+        break
+      case 'rewardCoin':
+        setLeague({ ...league, rewardCoin: e.target.value })
+        break
+
+      //------------------------------------------------------------------------------------------------------------------
+
       default:
     }
   }
@@ -152,8 +296,93 @@ const Tables = () => {
         console.log(err)
       })
   }
+  const handleSubmitHeadToHead = async (id) => {
+    await axios({
+      method: 'Post',
+      url: `${process.env.REACT_APP_URL_API}/api/game-list/update/${id}`,
+      data: headToHead,
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' },
+    })
+      .then(function (response) {
+        console.log(response.data.errors)
+        getPage1()
+      })
+      .catch(function (err) {
+        console.log(err)
+      })
+
+    setEditMoldal(!editModal)
+  }
+
+  const handleEdit = async (id) => {
+    await getHeadToHeadDetail(id)
+    setEditMoldal(!editModal)
+    setidHeadToHeadDetail(id)
+  }
+
+  var optionHour = []
+  for (var i = 0; i < 24; i++) {
+    optionHour.push(<option value={i}> {i} </option>)
+  }
+  var optionMinute = []
+  for (var j = 0; j < 60; j++) {
+    optionMinute.push(<option value={j}> {j} </option>)
+  }
+  const [value, onChanged] = useState(new Date())
+
   return (
     <div>
+      <CModal className="modal_edit" visible={editModal} onClose={() => setEditMoldal(false)}>
+        <CModalHeader>
+          <CModalTitle>Modal title</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          <CCol xs={12}>
+            <CFormInput
+              label="game_name"
+              placeholder=""
+              onChange={(e) => onChange(e, 'game_name')}
+              defaultValue={headToHead.game_name}
+              //defaultValue={dataForm?.data?.res?.data?.NickName}
+            />
+          </CCol>
+          <CCol xs={12}>
+            <CFormInput
+              label="playCoin"
+              placeholder=""
+              onChange={(e) => onChange(e, 'playCoin')}
+              defaultValue={headToHead.play_coin}
+              //defaultValue={dataForm?.data?.res?.data?.NickName}
+            />
+          </CCol>
+          <CCol xs={12}>
+            <CFormInput
+              label="is_usable"
+              placeholder=""
+              onChange={(e) => onChange(e, 'is_usable')}
+              defaultValue={headToHead.is_usable}
+              //defaultValue={dataForm?.data?.res?.data?.NickName}
+            />
+          </CCol>
+          <CCol xs={12}>
+            <CFormInput
+              label="reward_fee"
+              placeholder=""
+              onChange={(e) => onChange(e, 'reward_fee')}
+              defaultValue={headToHead.reward_fee}
+              //defaultValue={dataForm?.data?.res?.data?.NickName}
+            />
+          </CCol>
+        </CModalBody>
+        <CModalFooter>
+          <CButton color="secondary" onClick={() => setEditMoldal(false)}>
+            Close
+          </CButton>
+          <CButton color="primary" onClick={() => handleSubmitHeadToHead(idHeadToHeadDetail)}>
+            Submit
+          </CButton>
+        </CModalFooter>
+      </CModal>
       <CRow>
         <CCol xs={12}>
           <CCard className="mb-4">
@@ -241,6 +470,7 @@ const Tables = () => {
                     onChange(e, 'league_play_price')
                   }}
                 />
+
                 <CFormInput
                   type="number"
                   id="exampleFormControlInput1"
@@ -293,18 +523,7 @@ const Tables = () => {
                           <CTableDataCell>{item.is_usable}</CTableDataCell>
                           <CTableDataCell>
                             <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-6 w-6"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              height={30}
-                              width={30}
-                              style={{ cursor: 'pointer' }}
-                            >
-                              <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                            </svg>
-                            <svg
+                              onClick={() => handleEdit(item.gID)}
                               xmlns="http://www.w3.org/2000/svg"
                               className="h-6 w-6 mx-2"
                               fill="none"
@@ -316,21 +535,122 @@ const Tables = () => {
                             >
                               <path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                             </svg>
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="h-6 w-6"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              height={30}
-                              width={30}
-                              style={{ cursor: 'pointer' }}
-                            >
-                              <path d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
-                            </svg>
                           </CTableDataCell>
                         </CTableRow>
                       ))}
+                    </CTableBody>
+                  </CTable>
+                </CCardBody>
+              </CCard>
+            </CCol>
+
+            <CCol xs={12}>
+              <CCard className="mb-4">
+                <CCardHeader>
+                  <strong>Head to head </strong>
+                </CCardHeader>
+                <CCardBody>
+                  <CTable>
+                    <CTableHead>
+                      <CTableRow>
+                        <CTableHeaderCell scope="col">eventID</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">event_name</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">req_start_date</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">league_start_date</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">league_end_date</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">req_gold</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">req_play_coin</CTableHeaderCell>
+                      </CTableRow>
+                    </CTableHead>
+
+                    <CTableBody>
+                      <CTableRow>
+                        <CTableDataCell scope="row" className="">
+                          <CFormInput
+                            placeholder=""
+                            defaultValue={data2?.data?.res?.data[0].eventID}
+                          />
+                        </CTableDataCell>
+                        <CTableDataCell scope="row">
+                          <CFormInput
+                            placeholder=""
+                            defaultValue={league.eventName}
+                            onChange={(e) => {
+                              onChange(e, 'eventName')
+                            }}
+
+                            //onChange={(e) => onChange(e, 'eventName')}
+                          />
+                        </CTableDataCell>
+                        <CTableDataCell colSpan="row">
+                          <div className="d-flex">
+                            <DateTimePicker
+                              onChange={onChanged}
+                              defaultValue={league.reqStart.slice(0, 10)}
+                              format="yyyy-MM-dd"
+                            />
+                            <CFormSelect
+                              aria-label="Default select example "
+                              className="w-25"
+                              defaultValue={league.reqStart.slice(10, 12)}
+                            >
+                              {optionHour}
+                            </CFormSelect>
+                            <CFormSelect aria-label="Default select example " className="w-25">
+                              {optionMinute}
+                            </CFormSelect>
+                          </div>
+                        </CTableDataCell>
+                        <CTableDataCell colSpan="row">
+                          <div className="d-flex">
+                            <DateTimePicker
+                              onChange={onChanged}
+                              value={value}
+                              format="yyyy-MM-dd"
+                            />
+                            <CFormSelect aria-label="Default select example " className="w-25">
+                              {optionHour}
+                            </CFormSelect>
+                            <CFormSelect aria-label="Default select example " className="w-25">
+                              {optionMinute}
+                            </CFormSelect>
+                          </div>
+                        </CTableDataCell>
+                        <CTableDataCell colSpan="row">
+                          <div className="d-flex">
+                            <DateTimePicker
+                              onChange={onChanged}
+                              value={value}
+                              format="yyyy-MM-dd"
+                            />
+                            <CFormSelect aria-label="Default select example " className="w-25">
+                              {optionHour}
+                            </CFormSelect>
+
+                            <CFormSelect aria-label="Default select example " className="w-25">
+                              {optionMinute}
+                            </CFormSelect>
+                          </div>
+                        </CTableDataCell>
+                        <CTableDataCell scope="row">
+                          <CCol xs={12}>
+                            <CFormInput
+                              placeholder=""
+                              onChange={(e) => onChange(e, 'play_Coin')}
+                              defaultValue={league.playCoin}
+                            />
+                          </CCol>
+                        </CTableDataCell>
+                        <CTableDataCell scope="row">
+                          <CCol xs={12}>
+                            <CFormInput
+                              placeholder=""
+                              onChange={(e) => onChange(e, 'rewardCoin')}
+                              defaultValue={league.rewardCoin}
+                            />
+                          </CCol>
+                        </CTableDataCell>
+                      </CTableRow>
                     </CTableBody>
                   </CTable>
                 </CCardBody>
