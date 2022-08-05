@@ -182,7 +182,7 @@ const Tables = () => {
 
   const handleEdit = async (id) => {
      const dataEdit = await getEdit(id)
-     console.log('aaa', dataEdit)
+    //  console.log('aaa', dataEdit)
     setDataFormEdit(dataEdit)
     setTitle(dataEdit.title)
     setImage(dataEdit.image)
@@ -210,7 +210,7 @@ const Tables = () => {
     const pageFormServer = await fetchPage(pageNumber + 1)
     setData(pageFormServer)
 
-    setFormEdit(!form)
+    setFormEdit(form)
   }
 
   const handleDelete = async (id) => {
