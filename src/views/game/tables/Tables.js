@@ -28,6 +28,7 @@ import {
   CForm,
 } from '@coreui/react'
 import ReactPaginate from 'react-paginate'
+import './style.css'
 
 const token = localStorage.getItem('token_key')
 
@@ -550,109 +551,106 @@ const Tables = () => {
                   <strong>Head to head </strong>
                 </CCardHeader>
                 <CCardBody>
-                  <CTable>
-                    <CTableHead>
-                      <CTableRow>
-                        <CTableHeaderCell scope="col">eventID</CTableHeaderCell>
-                        <CTableHeaderCell scope="col">event_name</CTableHeaderCell>
-                        <CTableHeaderCell scope="col">req_start_date</CTableHeaderCell>
-                        <CTableHeaderCell scope="col">league_start_date</CTableHeaderCell>
-                        <CTableHeaderCell scope="col">league_end_date</CTableHeaderCell>
-                        <CTableHeaderCell scope="col">req_gold</CTableHeaderCell>
-                        <CTableHeaderCell scope="col">req_play_coin</CTableHeaderCell>
-                      </CTableRow>
-                    </CTableHead>
+                  <CForm className="d-flex">
+                    <div className='px-1'>
+                      <label className="pb-2">ID</label>
+                      <CFormInput placeholder="" defaultValue={data2?.data?.res?.data[0].eventID} />
+                    </div>
 
-                    <CTableBody>
-                      <CTableRow>
-                        <CTableDataCell scope="row" className="">
-                          <CFormInput
-                            placeholder=""
-                            defaultValue={data2?.data?.res?.data[0].eventID}
-                          />
-                        </CTableDataCell>
-                        <CTableDataCell scope="row">
-                          <CFormInput
-                            placeholder=""
-                            defaultValue={league.eventName}
-                            onChange={(e) => {
-                              onChange(e, 'eventName')
-                            }}
+                    <div className='px-1'>
+                      <label className="pb-2">Name</label>
+                      <CFormInput
+                        placeholder=""
+                        defaultValue={league.eventName}
+                        onChange={(e) => {
+                          onChange(e, 'eventName')
+                        }}
 
-                            //onChange={(e) => onChange(e, 'eventName')}
-                          />
-                        </CTableDataCell>
-                        <CTableDataCell colSpan="row">
-                          <div className="d-flex">
-                            <DateTimePicker
-                              onChange={onChanged}
-                              defaultValue={league.reqStart.slice(0, 10)}
-                              format="yyyy-MM-dd"
-                            />
-                            <CFormSelect
-                              aria-label="Default select example "
-                              className="w-25"
-                              defaultValue={league.reqStart.slice(10, 12)}
-                            >
-                              {optionHour}
-                            </CFormSelect>
-                            <CFormSelect aria-label="Default select example " className="w-25">
-                              {optionMinute}
-                            </CFormSelect>
-                          </div>
-                        </CTableDataCell>
-                        <CTableDataCell colSpan="row">
-                          <div className="d-flex">
-                            <DateTimePicker
-                              onChange={onChanged}
-                              value={value}
-                              format="yyyy-MM-dd"
-                            />
-                            <CFormSelect aria-label="Default select example " className="w-25">
-                              {optionHour}
-                            </CFormSelect>
-                            <CFormSelect aria-label="Default select example " className="w-25">
-                              {optionMinute}
-                            </CFormSelect>
-                          </div>
-                        </CTableDataCell>
-                        <CTableDataCell colSpan="row">
-                          <div className="d-flex">
-                            <DateTimePicker
-                              onChange={onChanged}
-                              value={value}
-                              format="yyyy-MM-dd"
-                            />
-                            <CFormSelect aria-label="Default select example " className="w-25">
-                              {optionHour}
-                            </CFormSelect>
+                        //onChange={(e) => onChange(e, 'eventName')}
+                      />
+                    </div>
 
-                            <CFormSelect aria-label="Default select example " className="w-25">
-                              {optionMinute}
-                            </CFormSelect>
-                          </div>
-                        </CTableDataCell>
-                        <CTableDataCell scope="row">
-                          <CCol xs={12}>
-                            <CFormInput
-                              placeholder=""
-                              onChange={(e) => onChange(e, 'play_Coin')}
-                              defaultValue={league.playCoin}
-                            />
-                          </CCol>
-                        </CTableDataCell>
-                        <CTableDataCell scope="row">
-                          <CCol xs={12}>
-                            <CFormInput
-                              placeholder=""
-                              onChange={(e) => onChange(e, 'rewardCoin')}
-                              defaultValue={league.rewardCoin}
-                            />
-                          </CCol>
-                        </CTableDataCell>
-                      </CTableRow>
-                    </CTableBody>
-                  </CTable>
+                    <div className='px-1'>
+                      <label className="pb-2">Start date</label>
+                      <div className="d-flex">
+                        <DateTimePicker
+                          onChange={onChanged}
+                          defaultValue={league.reqStart.slice(0, 10)}
+                          format="yyyy-MM-dd"
+                        />
+                        <CFormSelect
+                          aria-label="Default select example"
+                          // className="w-25"
+                          defaultValue={league.reqStart.slice(10, 12)}
+                        >
+                          {optionHour}
+                        </CFormSelect>
+                        <CFormSelect
+                          aria-label="Default select example"
+                          // className="w-25"
+                        >
+                          {optionMinute}
+                        </CFormSelect>
+                      </div>
+                    </div>
+
+                    <div className='px-1'>
+                      <label className="pb-2">League start date</label>
+                      <div className="d-flex">
+                        <DateTimePicker onChange={onChanged} value={value} format="yyyy-MM-dd" />
+                        <CFormSelect
+                          aria-label="Default select example "
+                          // className="w-25"
+                        >
+                          {optionHour}
+                        </CFormSelect>
+                        <CFormSelect
+                          aria-label="Default select example "
+                          // className="w-25"
+                        >
+                          {optionMinute}
+                        </CFormSelect>
+                      </div>
+                    </div>
+
+                    <div className='px-1'>
+                      <label className="pb-2">League end date</label>
+                      <div className="d-flex">
+                        <DateTimePicker onChange={onChanged} value={value} format="yyyy-MM-dd" />
+                        <CFormSelect
+                          aria-label="Default select example "
+                          // className="w-25"
+                        >
+                          {optionHour}
+                        </CFormSelect>
+
+                        <CFormSelect
+                          aria-label="Default select example "
+                          // className="w-25"
+                        >
+                          {optionMinute}
+                        </CFormSelect>
+                      </div>
+                    </div>
+
+                    <div className='px-1'>
+                      <label className="pb-2">Gold</label>
+                      <CFormInput
+                        placeholder=""
+                        onChange={(e) => onChange(e, 'play_Coin')}
+                        defaultValue={league.playCoin}
+                      />
+                    </div>
+
+                    <div className='px-1'>
+                      <label className="pb-2">Play coin</label>
+                      <CFormInput
+                        placeholder=""
+                        onChange={(e) => onChange(e, 'rewardCoin')}
+                        defaultValue={league.rewardCoin}
+                      />
+                    </div>
+                  </CForm>
                 </CCardBody>
               </CCard>
             </CCol>

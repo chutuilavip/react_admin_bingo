@@ -174,7 +174,7 @@ const Tables = () => {
       // setImage(result?.data?.res?.data?.image)
       // setStatus(result?.data?.res?.data?.status)
 
-      return result
+      return result.data.res.data
     } catch (err) {
       console.log('err')
     }
@@ -184,6 +184,9 @@ const Tables = () => {
      const dataEdit = await getEdit(id)
      console.log('aaa', dataEdit)
     setDataFormEdit(dataEdit)
+    setTitle(dataEdit.title)
+    setImage(dataEdit.image)
+    setStatus(dataEdit.status)
     setFormEdit(!form)
   }
 
@@ -288,8 +291,7 @@ const Tables = () => {
               label="Title"
               placeholder=""
               onChange={onChangeTitle}
-              defaultValue={dataFormEdit?.data?.res?.data?.title}
-              name="title"
+              defaultValue={dataFormEdit.title}
               onKeyUp={handleKeyUp}
               type="text"
             />
@@ -302,7 +304,6 @@ const Tables = () => {
               label="Image"
               placeholder=""
               onChange={onChangeImage}
-              name="image"
               type="file"
             />
           </CCol>
@@ -313,7 +314,7 @@ const Tables = () => {
           <CButton color="secondary" onClick={() => setFormEdit(false)}>
             Close
           </CButton>
-          <CButton color="primary" onClick={() => handleSubmitEdit(dataFormEdit?.data?.res?.data?.id)}>
+          <CButton color="primary" onClick={() => handleSubmitEdit(dataFormEdit.id)}>
             Submit
           </CButton>
         </CModalFooter>
