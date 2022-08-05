@@ -122,16 +122,30 @@ const Tables = () => {
   //------------------------------------------- league ----------------------------------------------------------
 
   const [league, setLeague] = useState({
-    eventName: '',
-    reqStart: '',
-    reqEnd: '',
-    startDate: '',
-    endDate: '',
-    isStatus: '',
-    isView: '',
-    reqCoin: '',
-    playCoin: '',
-    rewardCoin: '',
+    event_name: '',
+    // =========================================================================
+
+    //reqStart: '',
+    req_start_date: '',
+    req_start_hour: '',
+    req_start_minute: '',
+
+    //reqEnd: '',
+
+    //startDate: '',
+    league_start_date: '',
+    league_start_hour: '',
+    league_start_minute: '',
+
+    //endDate: '',
+    league_end_date: '',
+    league_end_hour: '',
+    league_end_minute: '',
+
+    // =========================================================================
+
+    req_gold: '',
+    req_play_coin: '',
   })
   //------------------------------------------------------------------------------------------------------------------
 
@@ -163,16 +177,26 @@ const Tables = () => {
     setData2(data)
     setLeague({
       ...league,
-      eventName: data?.data?.res?.data[0].eventName,
-      reqStart: data?.data?.res?.data[0].reqStart,
-      reqEnd: data?.data?.res?.data[0].reqEnd,
-      startDate: data?.data?.res?.data[0].startDate,
-      endDate: data?.data?.res?.data[0].endDate,
-      isStatus: data?.data?.res?.data[0].isStatus,
-      isView: data?.data?.res?.data[0].isView,
-      reqCoin: data?.data?.res?.data[0].reqCoin,
-      playCoin: data?.data?.res?.data[0].playCoin,
-      rewardCoin: data?.data?.res?.data[0].rewardCoin,
+      event_name: data?.data?.res?.data[0].eventName,
+      // --------------------------------------------------------------
+      //reqStart: data?.data?.res?.data[0].reqStart,
+      req_start_date: data?.data?.res?.data[0].reqStart.slice(0, 10),
+      req_start_hour: data?.data?.res?.data[0].reqStart.slice(10, 13),
+      req_start_minute: data?.data?.res?.data[0].reqStart.slice(14, 16),
+      //reqEnd: data?.data?.res?.data[0].reqEnd,
+
+      //startDate: data?.data?.res?.data[0].startDate,
+      league_start_date: data?.data?.res?.data[0].startDate.slice(0, 10),
+      league_start_hour: data?.data?.res?.data[0].startDate.slice(10, 13),
+      league_start_minute: data?.data?.res?.data[0].startDate.slice(14, 16),
+
+      //endDate: data?.data?.res?.data[0].endDate,
+      league_end_date: data?.data?.res?.data[0].endDate.slice(0, 10),
+      league_end_hour: data?.data?.res?.data[0].endDate.slice(10, 13),
+      league_end_minute: data?.data?.res?.data[0].endDate.slice(14, 16),
+      // --------------------------------------------------------------
+      req_gold: data?.data?.res?.data[0].reqCoin,
+      req_play_coin: data?.data?.res?.data[0].playCoin,
     })
   }
 
@@ -237,36 +261,57 @@ const Tables = () => {
         break
       //------------------------------------------------------------------------------------------------------------------
       //------------------------------------------- league ---------------------------------------------------------------
-      case 'eventName':
-        setLeague({ ...league, eventName: e.target.value })
-        break
-      case 'reqStart':
-        setLeague({ ...league, reqStart: e.target.value })
-        break
-      case 'reqEnd':
-        setLeague({ ...league, reqEnd: e.target.value })
-        break
-      case 'startDate':
-        setLeague({ ...league, startDate: e.target.value })
+      case 'event_name':
+        setLeague({ ...league, event_name: e.target.value })
         break
 
-      case 'endDate':
-        setLeague({ ...league, endDate: e.target.value })
+      // case 'reqStart':
+      //   setLeague({ ...league, reqStart: e.target.value })
+      //   break
+      case 'req_start_date':
+        setLeague({ ...league, req_start_date: e.target.value })
         break
-      case 'isStatus':
-        setLeague({ ...league, isStatus: e.target.value })
+      case 'req_start_hour':
+        setLeague({ ...league, req_start_hour: e.target.value })
         break
-      case 'isView':
-        setLeague({ ...league, isView: e.target.value })
+      case 'req_start_minute':
+        setLeague({ ...league, req_start_minute: e.target.value })
         break
-      case 'reqCoin':
-        setLeague({ ...league, reqCoin: e.target.value })
+      // case 'reqEnd':
+      //   setLeague({ ...league, reqEnd: e.target.value })
+      //   break
+      case 'league_start_date':
+        setLeague({ ...league, league_start_date: e.target.value })
         break
-      case 'play_Coin':
-        setLeague({ ...league, playCoin: e.target.value })
+      case 'league_start_hour':
+        setLeague({ ...league, league_start_hour: e.target.value })
         break
-      case 'rewardCoin':
-        setLeague({ ...league, rewardCoin: e.target.value })
+      case 'league_start_minute':
+        setLeague({ ...league, league_start_minute: e.target.value })
+        break
+      // case 'startDate':
+      //   setLeague({ ...league, startDate: e.target.value })
+      //   break
+
+      // case 'endDate':
+      //   setLeague({ ...league, endDate: e.target.value })
+      //   break
+
+      case 'league_end_date':
+        setLeague({ ...league, league_end_date: e.target.value })
+        break
+      case 'league_end_hour':
+        setLeague({ ...league, league_end_hour: e.target.value })
+        break
+      case 'league_end_minute':
+        setLeague({ ...league, league_end_minute: e.target.value })
+        break
+      //djahdjahdasjd
+      case 'req_gold':
+        setLeague({ ...league, req_gold: e.target.value })
+        break
+      case 'req_play_coin':
+        setLeague({ ...league, req_play_coin: e.target.value })
         break
 
       //------------------------------------------------------------------------------------------------------------------
@@ -314,7 +359,21 @@ const Tables = () => {
 
     setEditMoldal(!editModal)
   }
-
+  const handleSubmitLeague = async (id) => {
+    await axios({
+      method: 'Post',
+      url: `${process.env.REACT_APP_URL_API}/api/game/league/update/${id}`,
+      data: league,
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' },
+    })
+      .then(function (response) {
+        console.log(response.data.errors)
+        getPage2()
+      })
+      .catch(function (err) {
+        console.log(err)
+      })
+  }
   const handleEdit = async (id) => {
     await getHeadToHeadDetail(id)
     setEditMoldal(!editModal)
@@ -329,7 +388,6 @@ const Tables = () => {
   for (var j = 0; j < 60; j++) {
     optionMinute.push(<option value={j}> {j} </option>)
   }
-  const [value, onChanged] = useState(new Date())
 
   return (
     <div>
@@ -548,7 +606,7 @@ const Tables = () => {
             <CCol xs={12}>
               <CCard className="mb-4">
                 <CCardHeader>
-                  <strong>Head to head </strong>
+                  <strong>League </strong>
                 </CCardHeader>
                 <CCardBody>
                   <CForm>
@@ -565,84 +623,117 @@ const Tables = () => {
                         <label className="pb-2">Name</label>
                         <CFormInput
                           placeholder=""
-                          defaultValue={league.eventName}
+                          defaultValue={league.event_name}
                           onChange={(e) => {
-                            onChange(e, 'eventName')
+                            onChange(e, 'event_name')
                           }}
-
-                          //onChange={(e) => onChange(e, 'eventName')}
                         />
                       </div>
 
                       <div className="px-1">
                         <label className="pb-2">Start date</label>
                         <div className="d-flex">
-                          <DateTimePicker
-                            onChange={onChanged}
-                            defaultValue={league.reqStart.slice(0, 10)}
-                            format="yyyy-MM-dd"
+                          <CFormInput
+                            placeholder=""
+                            type="date"
+                            onChange={(e) => {
+                              onChange(e, 'req_start_date')
+                            }}
+                            defaultValue={league.req_start_date}
                           />
                           <CFormSelect
+                            onClick={(e) => {
+                              onChange(e, 'req_start_hour')
+                            }}
+                            aria-label="Default select example"
+                            defaultValue={league.req_start_hour}
+                          >
+                            {optionHour}
+                          </CFormSelect>
+                          <CFormSelect
+                            onClick={(e) => {
+                              onChange(e, 'req_start_minute')
+                            }}
                             aria-label="Default select example"
                             // className="w-25"
-                            defaultValue={league.reqStart.slice(10, 12)}
+                            defaultValue={league.req_start_minute}
                           >
-                            {optionHour}
+                            {optionMinute}
                           </CFormSelect>
+                        </div>
+                      </div>
+                      <div className="px-1">
+                        <label className="pb-2">League Start date</label>
+                        <div className="d-flex">
+                          <CFormInput
+                            placeholder=""
+                            type="date"
+                            onChange={(e) => {
+                              onChange(e, 'league_start_date')
+                            }}
+                            defaultValue={league.league_start_date}
+                          />
                           <CFormSelect
+                            onClick={(e) => {
+                              onChange(e, 'league_start_hour')
+                            }}
                             aria-label="Default select example"
                             // className="w-25"
-                          >
-                            {optionMinute}
-                          </CFormSelect>
-                        </div>
-                      </div>
-
-                      <div className="px-1">
-                        <label className="pb-2">League start date</label>
-                        <div className="d-flex">
-                          <DateTimePicker onChange={onChanged} value={value} format="yyyy-MM-dd" />
-                          <CFormSelect
-                            aria-label="Default select example "
-                            // className="w-25"
+                            defaultValue={league.league_start_hour}
                           >
                             {optionHour}
                           </CFormSelect>
                           <CFormSelect
-                            aria-label="Default select example "
+                            onClick={(e) => {
+                              onChange(e, 'league_start_minute')
+                            }}
+                            aria-label="Default select example"
                             // className="w-25"
+                            defaultValue={league.league_start_minute}
                           >
                             {optionMinute}
                           </CFormSelect>
                         </div>
                       </div>
-
                       <div className="px-1">
-                        <label className="pb-2">League end date</label>
+                        <label className="pb-2">League End date</label>
                         <div className="d-flex">
-                          <DateTimePicker onChange={onChanged} value={value} format="yyyy-MM-dd" />
+                          <CFormInput
+                            placeholder=""
+                            type="date"
+                            onChange={(e) => {
+                              onChange(e, 'league_end_date')
+                            }}
+                            defaultValue={league.league_end_date}
+                          />
                           <CFormSelect
-                            aria-label="Default select example "
+                            onClick={(e) => {
+                              onChange(e, 'league_end_hour')
+                            }}
+                            aria-label="Default select example"
                             // className="w-25"
+                            defaultValue={league.league_end_hour}
                           >
                             {optionHour}
                           </CFormSelect>
-
                           <CFormSelect
-                            aria-label="Default select example "
+                            onClick={(e) => {
+                              onChange(e, 'league_end_minute')
+                            }}
+                            aria-label="Default select example"
                             // className="w-25"
+                            defaultValue={league.league_end_minute}
                           >
                             {optionMinute}
                           </CFormSelect>
                         </div>
                       </div>
-
                       <div className="px-1">
                         <label className="pb-2">Gold</label>
                         <CFormInput
                           placeholder=""
-                          onChange={(e) => onChange(e, 'play_Coin')}
-                          defaultValue={league.playCoin}
+                          onChange={(e) => onChange(e, 'req_gold')}
+                          defaultValue={league.req_gold}
                         />
                       </div>
 
@@ -650,14 +741,16 @@ const Tables = () => {
                         <label className="pb-2">Play coin</label>
                         <CFormInput
                           placeholder=""
-                          onChange={(e) => onChange(e, 'rewardCoin')}
-                          defaultValue={league.rewardCoin}
+                          onChange={(e) => onChange(e, 'req_play_coin')}
+                          defaultValue={league.req_play_coin}
                         />
                       </div>
                     </div>
 
                     <div className="d-flex justify-content-center mt-4">
-                      <CButton className='w-25'>Submit</CButton>
+                      <CButton onClick={() => handleSubmitLeague(1)} className="w-25">
+                        Submit
+                      </CButton>
                     </div>
                   </CForm>
                 </CCardBody>
