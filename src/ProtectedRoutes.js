@@ -31,5 +31,7 @@ export default function ProviderRoute() {
 
   if (dataUser !== null && dataUser !== undefined) {
     return <Outlet />
+  } else if (dataUser == null && dataUser == undefined) {
+    return <Navigate to="/login" />
   } else return <Navigate to="/login" />
 }

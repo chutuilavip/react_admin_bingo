@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import Form_Edit from 'src/views/pages/login/Form_Edit'
 import {
   CCard,
   CCardBody,
@@ -66,7 +65,6 @@ const Tables = () => {
 
   async function getPage() {
     const data = await getSignature()
-    console.log(data)
     const total = data.data.res.total
     setPage(Math.ceil(total / limit))
     setData(data)
@@ -192,7 +190,6 @@ const Tables = () => {
     })
       .then(function (response) {
         console.log(response.data.errors)
-        //getPage()
       })
       .catch(function (err) {
         console.log(err)
@@ -202,7 +199,7 @@ const Tables = () => {
 
     setForm(!form)
   }
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     editData.append('NickName', nickName)
     editData.append('isBlock', 1)
     axios({
@@ -217,11 +214,12 @@ const Tables = () => {
       .catch(function (err) {
         console.log(err)
       })
+    const pageFormServer = await fetchPage(pageNumber + 1)
+    setData(pageFormServer)
     setDeleteForm(!deleteForm)
   }
 
   return (
-    // console.log(dataU)
     <div>
       <CModal className="modal_edit" visible={form} onClose={() => setForm(false)}>
         <CModalHeader>
