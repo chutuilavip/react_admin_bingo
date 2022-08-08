@@ -103,7 +103,7 @@ const Tables = () => {
     <CForm className="form_system">
       <CCol sm={12} className="d-flex align-items-center">
         <CFormInput
-          label="Tiêu đề"
+          label="Title"
           type="text"
           defaultValue={data.title}
           onChange={onChangeTitle}
@@ -112,7 +112,7 @@ const Tables = () => {
 
       <CCol sm={12} className="d-flex align-items-center mt-4">
         <CFormInput
-          label="Phiên bản"
+          label="Version"
           type="text"
           defaultValue={data.version}
           onChange={onChangeVersion}
@@ -121,7 +121,7 @@ const Tables = () => {
 
       <CCol sm={12} className="d-flex align-items-center mt-4">
         <CFormInput
-          label="Hình ảnh"
+          label="Image"
           type="file"
           defaultValue={data.maintainContent}
           onChange={onChangemaintainContent}
@@ -140,7 +140,7 @@ const Tables = () => {
 
       <div className="d-flex justify-content-end mt-4">
         <CButton onClick={handleSubmit} className="btn_update" type="submit">
-          Cập nhật
+          Submit
         </CButton>
       </div>
     </CForm>

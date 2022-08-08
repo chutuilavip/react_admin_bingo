@@ -7,8 +7,8 @@
 .form_system .btn_update {
   background: #3c4b64;
   font-size: 18px;
-  padding: 8px 50px;
   font-weight: 600;
+  width: 150px;
 }
 
 .form_system .form-control:focus {
@@ -31,3 +31,22 @@
 .form_system .system_img {
   margin-left: 135px;
 }
+
+.swal2-styled.swal2-confirm{
+  background-color: #3c4b64;
+  width: 150px;
+}
+
+.swal2-styled.swal2-confirm:focus{
+  box-shadow: none;
+}
+
+.swal2-html-container{
+  font-size: 20px;
+}
+
+.swal2-styled.swal2-deny,
+.swal2-styled.swal2-cancel{
+  width: 150px;
+}
+

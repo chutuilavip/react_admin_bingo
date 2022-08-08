@@ -18,10 +18,12 @@ import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { 
-  // ToastContainer, 
-  toast } from 'react-toastify'
+import {
+  // ToastContainer,
+  toast,
+} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import "../style.css"
 
 let dataUser = new FormData()
 
@@ -104,7 +106,7 @@ const Login = () => {
                       <CCol xs={6}>
                         <CButton
                           color="primary"
-                          className="px-4"
+                          className="px-4 btn_login"
                           onClick={postData}
                           disabled={loading}
                         >
@@ -129,7 +131,7 @@ const Login = () => {
                       tempor incididunt ut labore et dolore magna aliqua.
                     </p>
                     <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>
+                      <CButton className="mt-3 btn_register" active tabIndex={-1}>
                         Register Now!
                       </CButton>
                     </Link>

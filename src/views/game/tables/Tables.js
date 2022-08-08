@@ -432,7 +432,7 @@ const Tables = () => {
           <CButton color="secondary" onClick={() => setEditMoldal(false)}>
             Close
           </CButton>
-          <CButton color="primary" onClick={() => handleSubmitHeadToHead(idHeadToHeadDetail)}>
+          <CButton onClick={() => handleSubmitHeadToHead(idHeadToHeadDetail)} className="btn_submit">
             Submit
           </CButton>
         </CModalFooter>
@@ -541,8 +541,7 @@ const Tables = () => {
 
             <div className="d-flex justify-content-center mb-3">
               <CButton
-                className="w-25 btn btn-primary"
-                color="primary"
+                className="w-25 btn_submit"               
                 onClick={() => handleSubmit()}
               >
                 Submit
@@ -743,7 +742,7 @@ const Tables = () => {
                     </div>
 
                     <div className="d-flex justify-content-center mt-4">
-                      <CButton onClick={() => handleSubmitLeague(1)} className="w-25">
+                      <CButton onClick={() => handleSubmitLeague(1)} className="w-25 btn_submit">
                         Submit
                       </CButton>
                     </div>
