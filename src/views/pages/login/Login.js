@@ -18,9 +18,10 @@ import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { 
-  // ToastContainer, 
-  toast } from 'react-toastify'
+import {
+  // ToastContainer,
+  toast,
+} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 let dataUser = new FormData()
@@ -59,7 +60,8 @@ const Login = () => {
             progress: undefined,
           })
         } else {
-          localStorage.setItem('token_key', response.data.access_token)
+          // localStorage.setItem('token_key', response.data.access_token)
+          sessionStorage.setItem('token_key', response.data.access_token)
           navigate('/dashboard')
         }
       })

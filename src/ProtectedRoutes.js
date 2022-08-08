@@ -4,7 +4,8 @@ import { useState } from 'react'
 import axios from 'axios'
 
 const checkTokenUser = async () => {
-  const token_user = localStorage.getItem('token_key')
+  // const token_user = localStorage.getItem('token_key')
+  const token_user = sessionStorage.getItem('token_user')
   try {
     const result = await axios({
       method: `Get`,

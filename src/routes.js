@@ -55,7 +55,7 @@ const Transaction = React.lazy(() => import('./views/transaction/tables/Tables')
 const Banner = React.lazy(() => import('./views/banner/tables/Tables'))
 const System = React.lazy(() => import('./views/system/tables/Tables'))
 const routes = [
-  { path: '/', exact: true, name: 'Home' },
+  { path: '/', name: 'Dashboard', element: Dashboard },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
