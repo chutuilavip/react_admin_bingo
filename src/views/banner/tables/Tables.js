@@ -30,6 +30,7 @@ import {
 import ReactPaginate from 'react-paginate'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import "./style.css"
 
 const token = localStorage.getItem('token_key')
 
@@ -234,7 +235,7 @@ const Tables = () => {
     <div>
       <CButton
         onClick={() => handleOpenAdd()}
-        className="fs-5 px-4 py-0 d-flex align-items-center mb-4"
+        className="fs-5 d-flex align-items-center justify-content-center py-1 mb-4 btn_add"
       >
         <span className="fs-3 pb-1 pe-2">+</span> Add
       </CButton>

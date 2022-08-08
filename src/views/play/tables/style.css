@@ -1,3 +1,22 @@
 .modal-content{
     width: 650px;
 }
+
+.active > .page-link{
+    background-color: #303c54 !important;
+    border-color: #303c54 !important;
+    color: #fff !important;
+}
+
+.page-link {
+ color: #222 !important;
+}
+
+.page-link:focus {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.form_system .btn_update{
+    width: 150px;
+}

@@ -6,3 +6,13 @@
 .form-select{
     width: fit-content !important;
 }
+
+.btn.btn-primary.btn_submit{
+  background-color: #303c54 !important;
+  border-color: #303c54 !important;
+}
+
+.btn:active:focus,
+.btn:focus{
+    box-shadow: none;
+}
