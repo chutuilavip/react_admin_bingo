@@ -2,10 +2,10 @@ import React, { useEffect } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 import { useState } from 'react'
 import axios from 'axios'
+import DefaultLayout from './layout/DefaultLayout'
 
 const checkTokenUser = async () => {
-  // const token_user = localStorage.getItem('token_key')
-  const token_user = sessionStorage.getItem('token_user')
+  const token_user = localStorage.getItem('token_key')
   try {
     const result = await axios({
       method: `Get`,
@@ -31,6 +31,6 @@ export default function ProviderRoute() {
   }, [])
 
   if (dataUser !== null && dataUser !== undefined) {
-    return <Outlet />
+    return <DefaultLayout />
   } else return <Navigate to="/login" />
 }

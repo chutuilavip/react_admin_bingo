@@ -60,8 +60,7 @@ const Login = () => {
             progress: undefined,
           })
         } else {
-          // localStorage.setItem('token_key', response.data.access_token)
-          sessionStorage.setItem('token_key', response.data.access_token)
+          localStorage.setItem('token_key', response.data.access_token)
           navigate('/dashboard')
         }
       })
