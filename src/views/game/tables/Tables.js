@@ -1,9 +1,7 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { useState, useEffect } from 'react'
 // import DatePicker from 'react-datepicker'
 // import ReactDatePicker from 'react-datepicker'
-
-import DateTimePicker from 'react-date-picker'
 import axios from 'axios'
 import {
   CModalFooter,
@@ -27,7 +25,6 @@ import {
   CTableRow,
   CForm,
 } from '@coreui/react'
-import ReactPaginate from 'react-paginate'
 import './style.css'
 
 const token = localStorage.getItem('token_key')
@@ -93,12 +90,12 @@ const Tables = () => {
   const [data, setData] = useState([])
   const [data1, setData1] = useState([])
   const [data2, setData2] = useState([])
-  const [headToHeadDetail, setHeadToHeadDetail] = useState({})
+  //const [headToHeadDetail, setHeadToHeadDetail] = useState({})
   const [idHeadToHeadDetail, setidHeadToHeadDetail] = useState('')
 
-  const [page, setPage] = useState(0)
-  const [detail, setDetail] = useState(false)
-  const [dataDetail, setDataDetail] = useState([])
+  // const [page, setPage] = useState(0)
+  //const [detail, setDetail] = useState(false)
+  //const [dataDetail, setDataDetail] = useState([])
   const [editModal, setEditMoldal] = useState(false)
   //------------------------------------------- game config ----------------------------------------------------------
   const [playTime, setPlayTime] = useState('')
@@ -150,10 +147,10 @@ const Tables = () => {
   //------------------------------------------------------------------------------------------------------------------
 
   // handle detail
-  const handleDetail = (data) => {
-    setDataDetail(data)
-    setDetail(!detail)
-  }
+  // const handleDetail = (data) => {
+  //   setDataDetail(data)
+  //   setDetail(!detail)
+  // }
   async function getPage() {
     const data = await getSignature()
     setData(data)
@@ -168,12 +165,11 @@ const Tables = () => {
   }
   async function getPage1() {
     const data = await getSignature1()
-    //console.log('Duy nè', data?.data?.res?.data)
     setData1(data)
   }
   async function getPage2() {
     const data = await getSignature3()
-    console.log('Duy nè', data?.data?.res?.data[0])
+
     setData2(data)
     setLeague({
       ...league,
@@ -202,7 +198,6 @@ const Tables = () => {
 
   async function getHeadToHeadDetail(id) {
     const data = await getSignature2(id)
-    console.log('Duy nè', data?.data?.res?.data)
     //setHeadToHeadDetail(data)
     setHeadToHead({
       ...headToHead,

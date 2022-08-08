@@ -23,7 +23,7 @@ import {
 } from '@coreui/react'
 import ReactPaginate from 'react-paginate'
 // import { DocsExample } from 'src/components'
-import "./style.css"
+import './style.css'
 
 const token = localStorage.getItem('token_key')
 let limit = 10
@@ -116,9 +116,6 @@ const Tables = () => {
     setDetail(!detail)
   }
 
-  console.log('sdsdsdsd' + dataForm)
-
-  console.log('data ne', data)
   return (
     <div>
       <CModal className="modal_detail" visible={detail} onClose={() => setDetail(false)}>
@@ -237,7 +234,13 @@ const Tables = () => {
                         {item.from.slice(0, 7)}...{item.from.slice(-5)}
                       </CTableHeaderCell>
                       <CTableHeaderCell scope="row">
-                      {item.to !== null ? ( <>{item.to.slice(0, 7)}...{item.to.slice(-5)}</>) : (<></>)}
+                        {item.to !== null ? (
+                          <>
+                            {item.to.slice(0, 7)}...{item.to.slice(-5)}
+                          </>
+                        ) : (
+                          <></>
+                        )}
                       </CTableHeaderCell>
                       <CTableHeaderCell scope="row">
                         <svg
@@ -249,7 +252,7 @@ const Tables = () => {
                           stroke="currentColor"
                           height={30}
                           width={30}
-                          style={{cursor:"pointer"}}
+                          style={{ cursor: 'pointer' }}
                         >
                           <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                         </svg>

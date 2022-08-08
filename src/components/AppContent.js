@@ -16,7 +16,7 @@ const getSignature = async () => {
         Authorization: `Bearer ${token}`,
       },
     })
-    //console.log('data', result.data.res.data)
+
     return result
   } catch (err) {
     console.log(err)
