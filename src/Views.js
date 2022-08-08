@@ -11,7 +11,7 @@ const Views = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/" element={<ProtectedRoutes />}>
-        <Route path="*" name="/home" element={<DefaultLayout />} />
+        <Route path="*" name="/" element={<DefaultLayout />} />
       </Route>
     </Routes>
   )
