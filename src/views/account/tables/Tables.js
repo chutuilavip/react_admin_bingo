@@ -59,8 +59,8 @@ const Tables = () => {
   const [dataForm, setDataForm] = useState()
   const [state, setState] = useState('')
   const [nickName, setNickName] = useState('')
-  const [cash, setCash] = useState('')
-  const [gold, setGold] = useState('')
+  const [cash, setCash] = useState('0')
+  const [gold, setGold] = useState('0')
   const [isBlock, setIsBlock] = useState('')
   const [avatar_index, setAvatar_index] = useState('')
 
@@ -97,8 +97,8 @@ const Tables = () => {
 
       setState(result?.data?.res?.data?.isBlock)
       setNickName(result?.data?.res?.data?.NickName)
-      setCash(result?.data?.res?.data?.Cash)
-      setGold(result?.data?.res?.data?.Gold)
+      setCash(0)
+      setGold(0)
       setAvatar_index(result?.data?.res?.data?.Avatar_index)
 
       return result
@@ -106,7 +106,6 @@ const Tables = () => {
       console.log('err')
     }
   }
-
   const getDelete = async (id) => {
     try {
       const result = await axios({
