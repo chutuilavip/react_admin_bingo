@@ -235,7 +235,7 @@ const Tables = () => {
     <div>
       <CButton
         onClick={() => handleOpenAdd()}
-        className="fs-5 d-flex align-items-center justify-content-center py-1 mb-4 btn_add"
+        className="d-flex align-items-center justify-content-center py-0 mb-4 btn_add"
       >
         <span className="fs-3 pb-1 pe-2">+</span> Add
       </CButton>

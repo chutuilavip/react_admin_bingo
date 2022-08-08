@@ -11,7 +11,8 @@
 }
 
 .btn.btn-primary.btn_add{
-    width: 150px;
+    width: 120px;
+    font-size: 18px;
 }
 
 .btn.btn-primary,
