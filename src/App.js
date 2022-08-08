@@ -1,13 +1,9 @@
-import React, { Component, Suspense } from 'react'
+import React, { Component } from 'react'
 
-// import { HashRouter, Route, Routes } from 'react-router-dom'
 import './scss/style.scss'
-import { ToastContainer, toast } from 'react-toastify'
-
-// import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import Views from './Views'
-
-
 
 // Containers
 // const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
@@ -20,8 +16,12 @@ import Views from './Views'
 // const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
 class App extends Component {
   render() {
-    return <Views />
-
+    return (
+      <>
+        <Views />
+        <ToastContainer />
+      </>
+    )
   }
 }
 
