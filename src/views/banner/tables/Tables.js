@@ -264,7 +264,6 @@ const Tables = () => {
               label="Image"
               placeholder=""
               onChange={onChangeImage}
-              defaultValue={image}
               name="image"
               type="file"
             />

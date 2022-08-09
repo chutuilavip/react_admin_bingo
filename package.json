@@ -2,7 +2,7 @@
   "name": "@coreui/coreui-free-react-admin-template",
   "version": "4.4.0",
   "description": "CoreUI Free React Admin Template",
-  "homepage": ".",
+  "homepage": "https://adminbingo-810b9.web.app/",
   "bugs": {
     "url": "https://github.com/coreui/coreui-free-react-admin-template/issues"
   },
@@ -20,7 +20,8 @@
     "start": "react-scripts start",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
-    "test:debug": "react-scripts --inspect-brk test --runInBand"
+    "test:debug": "react-scripts --inspect-brk test --runInBand",
+    "firebase": "npm run build && firebase deploy"
   },
   "dependencies": {
     "@coreui/chartjs": "^3.0.0",

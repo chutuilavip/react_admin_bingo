@@ -26,6 +26,7 @@ import {
   CForm,
 } from '@coreui/react'
 import './style.css'
+import { toast } from 'react-toastify'
 
 const token = localStorage.getItem('token_key')
 
@@ -331,10 +332,16 @@ const Tables = () => {
     })
       .then(function (response) {
         console.log(response.data.errors)
-        //getPage()
+        if (response.data.errors !== '') {
+          (response.data.errors).map((item, index) => (
+            toast.error(item)
+          ))
+        } else if (response.data.message !== '') {
+          toast.error(response.data.message)
+        }
       })
       .catch(function (err) {
-        console.log(err)
+        console.log(222222)
       })
   }
   const handleSubmitHeadToHead = async (id) => {
@@ -397,7 +404,7 @@ const Tables = () => {
               placeholder=""
               onChange={(e) => onChange(e, 'game_name')}
               defaultValue={headToHead.game_name}
-              //defaultValue={dataForm?.data?.res?.data?.NickName}
+            //defaultValue={dataForm?.data?.res?.data?.NickName}
             />
           </CCol>
           <CCol xs={12}>
@@ -406,7 +413,7 @@ const Tables = () => {
               placeholder=""
               onChange={(e) => onChange(e, 'playCoin')}
               defaultValue={headToHead.play_coin}
-              //defaultValue={dataForm?.data?.res?.data?.NickName}
+            //defaultValue={dataForm?.data?.res?.data?.NickName}
             />
           </CCol>
           <CCol xs={12}>
@@ -415,7 +422,7 @@ const Tables = () => {
               placeholder=""
               onChange={(e) => onChange(e, 'is_usable')}
               defaultValue={headToHead.is_usable}
-              //defaultValue={dataForm?.data?.res?.data?.NickName}
+            //defaultValue={dataForm?.data?.res?.data?.NickName}
             />
           </CCol>
           <CCol xs={12}>
@@ -424,7 +431,7 @@ const Tables = () => {
               placeholder=""
               onChange={(e) => onChange(e, 'reward_fee')}
               defaultValue={headToHead.reward_fee}
-              //defaultValue={dataForm?.data?.res?.data?.NickName}
+            //defaultValue={dataForm?.data?.res?.data?.NickName}
             />
           </CCol>
         </CModalBody>
@@ -541,7 +548,7 @@ const Tables = () => {
 
             <div className="d-flex justify-content-center mb-3">
               <CButton
-                className="w-25 btn_submit"               
+                className="w-25 btn_submit"
                 onClick={() => handleSubmit()}
               >
                 Submit

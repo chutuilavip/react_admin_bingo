@@ -81,14 +81,18 @@ const Register = () => {
         headers: { 'Content-Type': 'application/json' },
       })
         .then(function (response) {
-          console.log(response)
+          toast('Register success!')
+          navigate('/login')
         })
-        .catch(function (err) {
-          console.log(err)
+        .catch(err => {
+          if(err.response.data.errors !== ''){
+            (err.response.data.errors).map((item, index) => (
+              toast.error(item)
+            ))
+          }else if(err.response.data.message !== ''){
+              toast.error(err.response.data.message)
+          }
         })
-
-      toast('Register success!')
-      navigate('/login')
     }
   }
 
