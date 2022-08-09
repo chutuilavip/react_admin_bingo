@@ -16,7 +16,7 @@ const checkTokenUser = async () => {
     })
     return result
   } catch (err) {
-    console.log('err')
+    console.log('err get')
   }
 }
 
@@ -30,7 +30,7 @@ export default function ProviderRoute() {
     }
     checkData()
   }, [])
-  console.log('data', dataUser)
+
   if (dataUser !== null && dataUser !== undefined) {
     return <DefaultLayout />
   } else return <Navigate to="/login" />
