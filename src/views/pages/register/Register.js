@@ -40,7 +40,6 @@ const Register = () => {
   }
 
   const validation = (e) => {
-
     const msg = {}
 
     if (username === '') {
@@ -48,11 +47,17 @@ const Register = () => {
     } else if (username.length < 4) {
       msg.username = 'Username should be at least 4 charcters long'
     }
+
     if (password === '') {
       msg.password = 'Password is requied!'
+    } else if (password.length < 6) {
+      msg.password = 'Password should be at least 8 charcters long'
     }
+
     if (confirmPassword === '') {
       msg.confirmPassword = 'Password is requied!'
+    } else if (confirmPassword.length < 6) {
+      msg.confirmPassword = 'Password should be at least 8 charcters long'
     } else if (password !== confirmPassword) {
       msg.confirmPassword = 'Password does not match!'
     }
@@ -62,8 +67,8 @@ const Register = () => {
     return true
   }
 
-  const handleKeyUp =(e)=>{
-    validation();
+  const handleKeyUp = (e) => {
+    validation()
   }
 
   const handleSubmit = async (e) => {
@@ -120,7 +125,7 @@ const Register = () => {
                     />
                   </CInputGroup>
 
-                  {error.username && <p className='text-danger'>{error.username}</p>}
+                  {error.username && <p className="text-danger">{error.username}</p>}
                   {/* <CInputGroup className="mb-3">
                     <CInputGroupText>@</CInputGroupText>
                     <CFormInput placeholder="Email" autoComplete="email" />
@@ -140,7 +145,7 @@ const Register = () => {
                     />
                   </CInputGroup>
 
-                  {error.password && <p className='text-danger'>{error.password}</p>}
+                  {error.password && <p className="text-danger">{error.password}</p>}
 
                   <CInputGroup className="mb-4">
                     <CInputGroupText>
@@ -157,7 +162,7 @@ const Register = () => {
                     />
                   </CInputGroup>
 
-                  {error.confirmPassword && <p className='text-danger'>{error.confirmPassword}</p>}
+                  {error.confirmPassword && <p className="text-danger">{error.confirmPassword}</p>}
 
                   <div className="d-grid">
                     <CButton onClick={handleSubmit} color="success">
