@@ -19,7 +19,7 @@ const getSignature = async () => {
 
     return result
   } catch (err) {
-    console.log(err)
+    console.log('err get', err)
   }
 }
 

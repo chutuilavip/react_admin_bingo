@@ -22,7 +22,7 @@ import {
   CModalBody,
   CModalFooter,
   CFormInput,
-  CFormSelect,
+  // CFormSelect,
   CImage,
 } from '@coreui/react'
 // import { DocsExample } from 'src/components'
@@ -30,7 +30,7 @@ import {
 import ReactPaginate from 'react-paginate'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
-import "./style.css"
+import './style.css'
 
 const token = localStorage.getItem('token_key')
 
@@ -77,7 +77,7 @@ const Tables = () => {
 
   async function getPage() {
     const data = await getSignature()
-    console.log(data)
+    // console.log(data)
     const total = data.data.res.total
     setPage(Math.ceil(total / limit))
     setData(data)
@@ -122,7 +122,7 @@ const Tables = () => {
       msg.title = 'Title is requied!'
     }
 
-    if (image === "" ) {
+    if (image === '') {
       msg.image = 'Image is requied!'
     }
 
@@ -144,13 +144,13 @@ const Tables = () => {
       formData.append('status', 1)
 
       await axios({
-        method: 'Post',
+        method: 'POST',
         url: `${process.env.REACT_APP_URL_API}/api/banner/add`,
         data: formData,
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' },
       })
         .then(function (response) {
-          console.log(response)
+          console.log('res', response)
         })
         .catch(function (err) {
           console.log(err)
@@ -170,10 +170,6 @@ const Tables = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-       //setDataFormEdit(result)
-      // setTitle(result?.data?.res?.data?.title)
-      // setImage(result?.data?.res?.data?.image)
-      // setStatus(result?.data?.res?.data?.status)
 
       return result.data.res.data
     } catch (err) {
@@ -182,7 +178,7 @@ const Tables = () => {
   }
 
   const handleEdit = async (id) => {
-     const dataEdit = await getEdit(id)
+    const dataEdit = await getEdit(id)
     //  console.log('aaa', dataEdit)
     setDataFormEdit(dataEdit)
     setTitle(dataEdit.title)
@@ -296,16 +292,11 @@ const Tables = () => {
               type="text"
             />
           </CCol>
-{/* 
+          {/* 
           {error.title && <p className="text-danger">{error.title}</p>} */}
 
           <CCol xs={12}>
-            <CFormInput
-              label="Image"
-              placeholder=""
-              onChange={onChangeImage}
-              type="file"
-            />
+            <CFormInput label="Image" placeholder="" onChange={onChangeImage} type="file" />
           </CCol>
 
           {/* {error.image && <p className="text-danger">{error.image}</p>} */}
@@ -318,7 +309,7 @@ const Tables = () => {
             Submit
           </CButton>
         </CModalFooter>
-      </CModal> 
+      </CModal>
 
       <CRow>
         <CCol xs={12}>
