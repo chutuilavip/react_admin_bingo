@@ -22,7 +22,7 @@ import {
   CModalBody,
   CModalFooter,
   CFormInput,
-  CFormSelect,
+  // CFormSelect,
   CImage,
 } from '@coreui/react'
 // import { DocsExample } from 'src/components'
@@ -79,7 +79,7 @@ const Tables = () => {
 
   async function getPage() {
     const data = await getSignature()
-    console.log(data)
+    // console.log(data)
     const total = data.data.res.total
     setPage(Math.ceil(total / limit))
     setData(data)
@@ -146,7 +146,7 @@ const Tables = () => {
       formData.append('status', 1)
 
       await axios({
-        method: 'Post',
+        method: 'POST',
         url: `${process.env.REACT_APP_URL_API}/api/banner/add`,
         data: formData,
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' },
@@ -181,6 +181,7 @@ const Tables = () => {
           Authorization: `Bearer ${token}`,
         },
       })
+
       return result.data.res.data
     } catch (err) {
       console.log('err')

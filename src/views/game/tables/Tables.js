@@ -331,17 +331,20 @@ const Tables = () => {
       headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' },
     })
       .then(function (response) {
-        console.log(response.data.errors)
+        // console.log(response.data.errors)
+        console.log(response)
         if (response.data.errors !== '') {
-          (response.data.errors).map((item, index) => (
-            toast.error(item)
-          ))
+          response.data.errors.map((item, index) => toast.error(item))
         } else if (response.data.message !== '') {
           toast.error(response.data.message)
         }
       })
-      .catch(function (err) {
-        console.log(222222)
+      .catch(function (response) {
+        if (response.data.errors !== '') {
+          response.data.errors.map((item, index) => toast.error(item))
+        } else if (response.data.message !== '') {
+          toast.error(response.data.message)
+        }
       })
   }
   const handleSubmitHeadToHead = async (id) => {
@@ -353,10 +356,20 @@ const Tables = () => {
     })
       .then(function (response) {
         console.log(response.data.errors)
+        if (response.data.errors !== '') {
+          response.data.errors.map((item, index) => toast.error(item))
+        } else if (response.data.message !== '') {
+          toast.error(response.data.message)
+        }
         getPage1()
       })
       .catch(function (err) {
         console.log(err)
+        if (err.data.errors !== '') {
+          err.data.errors.map((item, index) => toast.error(item))
+        } else if (err.data.message !== '') {
+          toast.error(err.data.message)
+        }
       })
 
     setEditMoldal(!editModal)
@@ -370,10 +383,20 @@ const Tables = () => {
     })
       .then(function (response) {
         console.log(response.data.errors)
+        if (response.data.errors !== '') {
+          response.data.errors.map((item, index) => toast.error(item))
+        } else if (response.data.message !== '') {
+          toast.error(response.data.message)
+        }
         getPage2()
       })
       .catch(function (err) {
         console.log(err)
+        if (err.data.errors !== '') {
+          err.data.errors.map((item, index) => toast.error(item))
+        } else if (err.data.message !== '') {
+          toast.error(err.data.message)
+        }
       })
   }
   const handleEdit = async (id) => {
@@ -404,7 +427,7 @@ const Tables = () => {
               placeholder=""
               onChange={(e) => onChange(e, 'game_name')}
               defaultValue={headToHead.game_name}
-            //defaultValue={dataForm?.data?.res?.data?.NickName}
+              //defaultValue={dataForm?.data?.res?.data?.NickName}
             />
           </CCol>
           <CCol xs={12}>
@@ -413,7 +436,7 @@ const Tables = () => {
               placeholder=""
               onChange={(e) => onChange(e, 'playCoin')}
               defaultValue={headToHead.play_coin}
-            //defaultValue={dataForm?.data?.res?.data?.NickName}
+              //defaultValue={dataForm?.data?.res?.data?.NickName}
             />
           </CCol>
           <CCol xs={12}>
@@ -422,7 +445,7 @@ const Tables = () => {
               placeholder=""
               onChange={(e) => onChange(e, 'is_usable')}
               defaultValue={headToHead.is_usable}
-            //defaultValue={dataForm?.data?.res?.data?.NickName}
+              //defaultValue={dataForm?.data?.res?.data?.NickName}
             />
           </CCol>
           <CCol xs={12}>
@@ -431,7 +454,7 @@ const Tables = () => {
               placeholder=""
               onChange={(e) => onChange(e, 'reward_fee')}
               defaultValue={headToHead.reward_fee}
-            //defaultValue={dataForm?.data?.res?.data?.NickName}
+              //defaultValue={dataForm?.data?.res?.data?.NickName}
             />
           </CCol>
         </CModalBody>
@@ -439,7 +462,10 @@ const Tables = () => {
           <CButton color="secondary" onClick={() => setEditMoldal(false)}>
             Close
           </CButton>
-          <CButton onClick={() => handleSubmitHeadToHead(idHeadToHeadDetail)} className="btn_submit">
+          <CButton
+            onClick={() => handleSubmitHeadToHead(idHeadToHeadDetail)}
+            className="btn_submit"
+          >
             Submit
           </CButton>
         </CModalFooter>
@@ -547,10 +573,7 @@ const Tables = () => {
             </CCardBody>
 
             <div className="d-flex justify-content-center mb-3">
-              <CButton
-                className="w-25 btn_submit"
-                onClick={() => handleSubmit()}
-              >
+              <CButton className="w-25 btn_submit" onClick={() => handleSubmit()}>
                 Submit
               </CButton>
             </div>
