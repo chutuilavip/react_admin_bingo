@@ -61,18 +61,17 @@ const Tables = () => {
   const [form, setForm] = useState(false)
   const [formEdit, setFormEdit] = useState(false)
   const [title, setTitle] = useState('')
-  const [image, setImage] = useState('')
+  const [image, setImage] = useState(null)
   const [status, setStatus] = useState(1)
   const [error, setError] = useState({})
   const [dataFormEdit, setDataFormEdit] = useState([])
-
-  // const reader = new FileReader()
 
   const navigate = useNavigate()
 
   const onChangeTitle = (e) => {
     setTitle(e.target.value)
   }
+
   const onChangeImage = (e) => {
     setImage(e.target.files[0])
   }
@@ -124,10 +123,6 @@ const Tables = () => {
       msg.title = 'Title is requied!'
     }
 
-    if (image === '') {
-      msg.image = 'Image is requied!'
-    }
-
     setError(msg)
     if (Object.keys(msg).length > 0) return false
     return true
@@ -137,9 +132,10 @@ const Tables = () => {
     validation()
   }
 
-  const handleSubmitAdd = async () => {
+  const handleSubmitAdd = async (e) => {
     const isValid = validation()
 
+    const formData = new FormData();
     if (isValid) {
       formData.append('title', title)
       formData.append('image', image)
@@ -151,22 +147,26 @@ const Tables = () => {
         data: formData,
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' },
       })
-        .then(function (response) { 
-         
+        .then(function (response) {
           console.log(response)
+          if (response.data.code === 200) {
+            setForm(!form)
+            toast.success('Add success!')
+            setTitle(null)
+            setImage(null)
+          }
+
           if (response.data.errors !== '') {
             response.data.errors.map((item, index) => toast.error(item))
           } else if (response.data.message !== '') {
             toast.error(response.data.message)
-          } else if (response.data.status === "success") {setForm(!form )
-            console.log("dasdasd",form);
-            toast.success('Add success!')
           }
         })
         .catch(function (err) {
           console.log(err)
         })
-
+        // setImage('')
+        // console.log(image);
       const pageFormServer = await fetchPage(pageNumber + 1)
       setData(pageFormServer)
     }
@@ -276,7 +276,7 @@ const Tables = () => {
             />
           </CCol>
 
-          {error.image && <p className="text-danger">{error.image}</p>}
+          {/* {error.image && <p className="text-danger">{error.image}</p>} */}
         </CModalBody>
         <CModalFooter>
           <CButton color="secondary" onClick={() => setForm(false)}>
