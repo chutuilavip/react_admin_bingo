@@ -100,6 +100,7 @@ const routes = [
   { path: '/notifications/toasts', name: 'Toasts', element: Toasts },
   { path: '/widgets', name: 'Widgets', element: Widgets },
   { path: '/admin/account', name: 'Account', element: Account, exact: true },
+  // { path: '/admin/account/:', name: 'Account', element: Account, exact: true },
   { path: '/admin/game', name: 'Game', element: Game, exact: true },
   { path: '/admin/play', name: 'Play', element: Play, exact: true },
   { path: '/admin/transaction', name: 'Transaction', element: Transaction, exact: true },
