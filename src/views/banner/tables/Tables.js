@@ -135,7 +135,7 @@ const Tables = () => {
   const handleSubmitAdd = async (e) => {
     const isValid = validation()
 
-    const formData = new FormData();
+    const formData = new FormData()
     if (isValid) {
       formData.append('title', title)
       formData.append('image', image)
@@ -165,8 +165,8 @@ const Tables = () => {
         .catch(function (err) {
           console.log(err)
         })
-        // setImage('')
-        // console.log(image);
+      // setImage('')
+      // console.log(image);
       const pageFormServer = await fetchPage(pageNumber + 1)
       setData(pageFormServer)
     }
