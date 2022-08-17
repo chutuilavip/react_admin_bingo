@@ -201,7 +201,7 @@ const Tables = () => {
                     />
                   </CCol>
                   <CCol xs lg={2}>
-                    <CButton color="primary" size="sm" onClick={getPage}>
+                    <CButton color="primary" onClick={getPage}>
                       Search
                     </CButton>
                   </CCol>
