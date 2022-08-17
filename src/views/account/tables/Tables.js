@@ -475,7 +475,7 @@ const Tables = () => {
                     />
                   </CCol>
                   <CCol>
-                    <CButton color="primary" onClick={getPage}>
+                    <CButton color="success" variant="outline" onClick={getPage}>
                       Search
                     </CButton>
                   </CCol>
@@ -517,7 +517,9 @@ const Tables = () => {
                         <CTableRow key={item.id}>
                           <CTableDataCell scope="row">{index}</CTableDataCell>
                           <CTableDataCell scope="row">{item.NickName}</CTableDataCell>
-                          <CTableDataCell colSpan="row">{item.UserID}</CTableDataCell>
+                          <CTableDataCell colSpan="row">
+                            {item.UserID.slice(0, 7)}...{item.UserID.slice(-5)}
+                          </CTableDataCell>
                           <CTableDataCell>{item.accountLevel}</CTableDataCell>
                           <CTableDataCell>{item.Cash}</CTableDataCell>
                           <CTableDataCell>{item.Gold}</CTableDataCell>

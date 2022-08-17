@@ -221,7 +221,7 @@ const Tables = () => {
                     </CForm>
                   </CCol>
                   <CCol>
-                    <CButton color="primary" onClick={getPage}>
+                    <CButton color="success" variant="outline" onClick={getPage}>
                       Search
                     </CButton>
                   </CCol>
