@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   CButton,
   CCard,
@@ -89,13 +89,11 @@ const Register = () => {
           toast('Register success!')
           navigate('/login')
         })
-        .catch(err => {
-          if(err.response.data.errors !== ''){
-            (err.response.data.errors).map((item, index) => (
-              toast.error(item)
-            ))
-          }else if(err.response.data.message !== ''){
-              toast.error(err.response.data.message)
+        .catch((err) => {
+          if (err.response.data.errors !== '') {
+            err.response.data.errors.map((item, index) => toast.error(item))
+          } else if (err.response.data.message !== '') {
+            toast.error(err.response.data.message)
           }
         })
     }

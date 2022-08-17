@@ -39,6 +39,7 @@ const Tables = () => {
   const [detail, setDetail] = useState(false)
   const [dataDetail, setDataDetail] = useState([])
   const [nickname, setNickname] = useState('')
+  const [stateResult, setStateResult] = useState('')
 
   // handle detail
 
@@ -56,6 +57,7 @@ const Tables = () => {
         },
         params: {
           nickname: nickname,
+          iswin: stateResult,
         },
       })
       console.log(result)
@@ -103,7 +105,9 @@ const Tables = () => {
     }
     ss()
   }, [])
-
+  const handleSelectAction = (e) => {
+    setStateResult(e.target.value)
+  }
   return (
     <div>
       <CModal className="modal_detail" visible={detail} onClose={() => setDetail(false)}>
@@ -172,8 +176,9 @@ const Tables = () => {
             <CCardHeader>
               <strong>History Play game</strong>
               <CContainer>
-                <CRow className="align-items-start">
-                  <CCol>
+                <div className="row justify-content-md-center">
+                  <CCol xs lg={2}></CCol>
+                  <CCol md="auto">
                     <CForm>
                       <CFormInput
                         type="email"
@@ -184,12 +189,23 @@ const Tables = () => {
                       />
                     </CForm>
                   </CCol>
-                  <CCol>
+                  <CCol xs lg={2}>
+                    <CFormSelect
+                      aria-label="Default select example"
+                      onChange={handleSelectAction}
+                      options={[
+                        'Win/Lose',
+                        { label: 'Win', value: '1' },
+                        { label: 'Lose', value: '0' },
+                      ]}
+                    />
+                  </CCol>
+                  <CCol xs lg={2}>
                     <CButton color="primary" size="sm" onClick={getPage}>
                       Search
                     </CButton>
                   </CCol>
-                </CRow>
+                </div>
               </CContainer>
             </CCardHeader>
 
@@ -215,8 +231,11 @@ const Tables = () => {
                       <CTableRow>
                         <CTableHeaderCell scope="col">ID</CTableHeaderCell>
                         <CTableHeaderCell scope="col">NickName</CTableHeaderCell>
-                        <CTableHeaderCell scope="col">Scope</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">Vs Player</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">Score</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">Win/Lose</CTableHeaderCell>
                         <CTableHeaderCell scope="col">Time</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">Fee</CTableHeaderCell>
                         <CTableHeaderCell scope="col">Action</CTableHeaderCell>
                       </CTableRow>
                     </CTableHead>
@@ -225,8 +244,13 @@ const Tables = () => {
                         <CTableRow key={index}>
                           <CTableHeaderCell scope="row">{item.tID}</CTableHeaderCell>
                           <CTableHeaderCell scope="row">{item.NickName}</CTableHeaderCell>
+                          <CTableHeaderCell scope="row">{item.vs_nickname}</CTableHeaderCell>
                           <CTableHeaderCell scope="row">{item.total_score}</CTableHeaderCell>
+                          <CTableHeaderCell scope="row">
+                            {item.is_win === 0 ? 'Lose' : 'Win'}
+                          </CTableHeaderCell>
                           <CTableHeaderCell scope="row">{item.logdate}</CTableHeaderCell>
+                          <CTableHeaderCell scope="row">{item.fee}</CTableHeaderCell>
                           <CTableDataCell>
                             <svg
                               onClick={() => handleDetail(item)}
