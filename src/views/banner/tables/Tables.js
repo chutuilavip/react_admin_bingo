@@ -4,6 +4,8 @@ import axios from 'axios'
 import { LoadingOutlined, FileExclamationOutlined } from '@ant-design/icons'
 
 import {
+  CContainer,
+  CForm,
   CCard,
   CCardBody,
   CCardHeader,
@@ -11,7 +13,7 @@ import {
   CRow,
   CTable,
   CTableBody,
-  // CTableCaption,
+  CFormSelect,
   CTableDataCell,
   CTableHead,
   CTableHeaderCell,
@@ -37,21 +39,6 @@ const token = localStorage.getItem('token_key')
 
 let limit = 5
 
-const getSignature = async () => {
-  try {
-    const result = await axios({
-      method: `Get`,
-      url: `${process.env.REACT_APP_URL_API}/api/banner?page=1&limit=${limit}`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    return result
-  } catch (err) {
-    console.log('err')
-  }
-}
-
 const formData = new FormData()
 const editData = new FormData()
 
@@ -66,6 +53,7 @@ const Tables = () => {
   const [status, setStatus] = useState(1)
   const [error, setError] = useState({})
   const [dataFormEdit, setDataFormEdit] = useState([])
+  const [stateActive, setStateActive] = useState('')
 
   const navigate = useNavigate()
 
@@ -79,7 +67,6 @@ const Tables = () => {
 
   async function getPage() {
     const data = await getSignature()
-    // console.log(data)
     const total = data.data.res.total
     setPage(Math.ceil(total / limit))
     setData(data)
@@ -166,8 +153,6 @@ const Tables = () => {
         .catch(function (err) {
           console.log(err)
         })
-      // setImage('')
-      // console.log(image);
       const pageFormServer = await fetchPage(pageNumber + 1)
       setData(pageFormServer)
     }
@@ -221,7 +206,23 @@ const Tables = () => {
 
     setFormEdit(form)
   }
-
+  const getSignature = async () => {
+    try {
+      const result = await axios({
+        method: `Get`,
+        url: `${process.env.REACT_APP_URL_API}/api/banner?page=1&limit=${limit}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          status: stateActive,
+        },
+      })
+      return result
+    } catch (err) {
+      console.log('err')
+    }
+  }
   const handleDelete = async (id) => {
     axios({
       method: 'Post',
@@ -239,6 +240,9 @@ const Tables = () => {
     setData(pageFormServer)
   }
 
+  const handleSelectAction = (e) => {
+    setStateActive(e.target.value)
+  }
   return (
     <div>
       <CButton
@@ -328,6 +332,35 @@ const Tables = () => {
           <CCard className="mb-4">
             <CCardHeader>
               <strong>Account Table</strong>
+              <CContainer>
+                <CRow className="align-items-end">
+                  <CCol>
+                    <CForm></CForm>
+                  </CCol>
+                  <CCol>
+                    <CForm></CForm>
+                  </CCol>
+                  <CCol>
+                    <CForm></CForm>
+                  </CCol>
+                  <CCol>
+                    <CFormSelect
+                      aria-label="Default select example"
+                      onChange={handleSelectAction}
+                      options={[
+                        'State',
+                        { label: 'Active', value: '1' },
+                        { label: 'Block', value: '0' },
+                      ]}
+                    />
+                  </CCol>
+                  <CCol>
+                    <CButton color="primary" size="sm" onClick={getPage}>
+                      Search
+                    </CButton>
+                  </CCol>
+                </CRow>
+              </CContainer>
             </CCardHeader>
             <CCardBody>
               {data?.data?.res?.data?.data ? (

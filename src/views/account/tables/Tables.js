@@ -12,7 +12,6 @@ import {
   CForm,
   CTableBody,
   CContainer,
-  // CTableCaption,
   CTableDataCell,
   CTableHead,
   CTableHeaderCell,
@@ -26,8 +25,6 @@ import {
   CFormInput,
   CFormSelect,
 } from '@coreui/react'
-// import { DocsExample } from 'src/components'
-// import { set } from 'core-js/core/dict'
 import ReactPaginate from 'react-paginate'
 
 import './style.css'
@@ -52,9 +49,11 @@ const Tables = () => {
   const [isBlock, setIsBlock] = useState('')
   const [avatar_index, setAvatar_index] = useState('')
 
+  //search
   const [userCode, setUserCode] = useState('')
   const [userID, setUserID] = useState('')
   const [nickname, setNickname] = useState('')
+  const [stateActive, setStateActive] = useState('')
 
   const getSignature = async () => {
     try {
@@ -68,6 +67,7 @@ const Tables = () => {
           usercode: userCode,
           userid: userID,
           nickname: nickname,
+          isblock: stateActive,
         },
       })
       console.log('data', result)
@@ -222,7 +222,9 @@ const Tables = () => {
     setData(pageFormServer)
     setDeleteForm(!deleteForm)
   }
-
+  const handleSelectAction = (e) => {
+    setStateActive(e.target.value)
+  }
   return (
     <div>
       <CModal className="modal_edit" visible={form} onClose={() => setForm(false)}>
@@ -432,7 +434,18 @@ const Tables = () => {
                       <CFormInput
                         type="email"
                         id="exampleFormControlInput1"
-                        placeholder="search User code"
+                        placeholder="Search Nick Name"
+                        aria-describedby="exampleFormControlInputHelpInline"
+                        onChange={(event) => setNickname(event.target.value)}
+                      />
+                    </CForm>
+                  </CCol>
+                  <CCol>
+                    <CForm>
+                      <CFormInput
+                        type="email"
+                        id="exampleFormControlInput1"
+                        placeholder="Search User Code"
                         aria-describedby="exampleFormControlInputHelpInline"
                         onChange={(event) => setUserCode(event.target.value)}
                       />
@@ -443,22 +456,23 @@ const Tables = () => {
                       <CFormInput
                         type="email"
                         id="exampleFormControlInput1"
-                        placeholder="search User Id"
+                        placeholder="Search User Id"
                         aria-describedby="exampleFormControlInputHelpInline"
                         onChange={(event) => setUserID(event.target.value)}
                       />
                     </CForm>
                   </CCol>
+
                   <CCol>
-                    <CForm>
-                      <CFormInput
-                        type="email"
-                        id="exampleFormControlInput1"
-                        placeholder="search nick name"
-                        aria-describedby="exampleFormControlInputHelpInline"
-                        onChange={(event) => setNickname(event.target.value)}
-                      />
-                    </CForm>
+                    <CFormSelect
+                      aria-label="Default select example"
+                      onChange={handleSelectAction}
+                      options={[
+                        'State',
+                        { label: 'Active', value: '0' },
+                        { label: 'Block', value: '1' },
+                      ]}
+                    />
                   </CCol>
                   <CCol>
                     <CButton color="primary" size="sm" onClick={getPage}>

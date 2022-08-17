@@ -1,14 +1,8 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Swal from 'sweetalert2'
-import {
-  CButton,
-  CCol,
-  CForm,
-  CFormInput,
-  CImage,
-} from '@coreui/react'
+import { CButton, CCol, CForm, CFormInput, CImage } from '@coreui/react'
 import './style.css'
 
 const token = localStorage.getItem('token_key')
@@ -75,39 +69,31 @@ const Tables = () => {
         console.log(response)
         const data = await getSignature()
         setData(data)
-        if(response.data.status === 200){
+        if (response.data.status === 200) {
           return Swal.fire({
-            title: "Success",
+            title: 'Success',
             text: response.data.success,
-            icon: "success",
-            confirmButtonText: "OK",
+            icon: 'success',
+            confirmButtonText: 'OK',
           })
-        }else{
+        } else {
           return Swal.fire({
-            title: "Error",
+            title: 'Error',
             text: response.data.error,
-            icon: "error",
-            confirmButtonText: "OK",
+            icon: 'error',
+            confirmButtonText: 'OK',
           })
         }
-        
-
       })
       .catch(function (err) {
         console.log(err)
       })
-
   }
 
   return (
     <CForm className="form_system">
       <CCol sm={12} className="d-flex align-items-center">
-        <CFormInput
-          label="Title"
-          type="text"
-          defaultValue={data.title}
-          onChange={onChangeTitle}
-        />
+        <CFormInput label="Title" type="text" defaultValue={data.title} onChange={onChangeTitle} />
       </CCol>
 
       <CCol sm={12} className="d-flex align-items-center mt-4">
