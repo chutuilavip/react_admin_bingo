@@ -1,9 +1,12 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import './style.css'
+import { LoadingOutlined, FileExclamationOutlined } from '@ant-design/icons'
 
 import axios from 'axios'
 import {
+  CForm,
+  CContainer,
   CModalFooter,
   CButton,
   CModal,
@@ -30,26 +33,12 @@ const token = localStorage.getItem('token_key')
 
 let limit = 10
 
-const getSignature = async () => {
-  try {
-    const result = await axios({
-      method: `Get`,
-      url: `${process.env.REACT_APP_URL_API}/api/history/plays?page=1&limit=${limit}`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    return result
-  } catch (err) {
-    console.log('err')
-  }
-}
-
 const Tables = () => {
   const [data, setData] = useState([])
   const [page, setPage] = useState(0)
   const [detail, setDetail] = useState(false)
   const [dataDetail, setDataDetail] = useState([])
+  const [nickname, setNickname] = useState('')
 
   // handle detail
 
@@ -57,7 +46,24 @@ const Tables = () => {
     setDataDetail(data)
     setDetail(!detail)
   }
-
+  const getSignature = async () => {
+    try {
+      const result = await axios({
+        method: `Get`,
+        url: `${process.env.REACT_APP_URL_API}/api/history/plays?page=1&limit=${limit}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          nickname: nickname,
+        },
+      })
+      console.log(result)
+      return result
+    } catch (err) {
+      console.log('err')
+    }
+  }
   async function getPage() {
     const data = await getSignature()
     const total = data.data.res.total
@@ -165,47 +171,98 @@ const Tables = () => {
           <CCard className="mb-4">
             <CCardHeader>
               <strong>History Play game</strong>
+              <CContainer>
+                <CRow className="align-items-start">
+                  <CCol>
+                    <CForm>
+                      <CFormInput
+                        type="email"
+                        id="exampleFormControlInput1"
+                        placeholder="NickName"
+                        aria-describedby="exampleFormControlInputHelpInline"
+                        onChange={(event) => setNickname(event.target.value)}
+                      />
+                    </CForm>
+                  </CCol>
+                  <CCol>
+                    <CButton color="primary" size="sm" onClick={getPage}>
+                      Search
+                    </CButton>
+                  </CCol>
+                </CRow>
+              </CContainer>
             </CCardHeader>
+
             <CCardBody>
-              <CTable>
-                <CTableHead>
-                  <CTableRow>
-                    <CTableHeaderCell scope="col">ID</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">NickName</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Scope</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Time</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Action</CTableHeaderCell>
-                  </CTableRow>
-                </CTableHead>
-                <CTableBody>
-                  {data?.data?.res?.data?.data.map((item, index) => (
-                    <CTableRow key={index}>
-                      {/* {console.log(item.tID)} */}
-                      <CTableHeaderCell scope="row">{item.tID}</CTableHeaderCell>
-                      <CTableHeaderCell scope="row">{item.NickName}</CTableHeaderCell>
-                      <CTableHeaderCell scope="row">{item.total_score}</CTableHeaderCell>
-                      <CTableHeaderCell scope="row">{item.logdate}</CTableHeaderCell>
-                      <CTableDataCell>
-                        {/* <button> */}
-                        <svg
-                          onClick={() => handleDetail(item)}
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-6 w-6"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          height={30}
-                          width={30}
-                          style={{ cursor: 'pointer' }}
-                        >
-                          <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                        </svg>
-                        {/* </button> */}
-                      </CTableDataCell>
-                    </CTableRow>
-                  ))}
-                </CTableBody>
-              </CTable>
+              {data?.data?.res?.data?.data ? (
+                data?.data?.res?.data?.total === 0 ? (
+                  <div
+                    style={{
+                      width: '100%',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      flexDirection: 'column',
+                    }}
+                  >
+                    <FileExclamationOutlined style={{ color: '#ccc', fontSize: 50, margin: 20 }} />
+                    <p style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                      No data
+                    </p>
+                  </div>
+                ) : (
+                  <CTable>
+                    <CTableHead>
+                      <CTableRow>
+                        <CTableHeaderCell scope="col">ID</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">NickName</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">Scope</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">Time</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+                      </CTableRow>
+                    </CTableHead>
+                    <CTableBody>
+                      {data?.data?.res?.data?.data.map((item, index) => (
+                        <CTableRow key={index}>
+                          <CTableHeaderCell scope="row">{item.tID}</CTableHeaderCell>
+                          <CTableHeaderCell scope="row">{item.NickName}</CTableHeaderCell>
+                          <CTableHeaderCell scope="row">{item.total_score}</CTableHeaderCell>
+                          <CTableHeaderCell scope="row">{item.logdate}</CTableHeaderCell>
+                          <CTableDataCell>
+                            <svg
+                              onClick={() => handleDetail(item)}
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-6 w-6"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              height={30}
+                              width={30}
+                              style={{ cursor: 'pointer' }}
+                            >
+                              <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                            </svg>
+                            {/* </button> */}
+                          </CTableDataCell>
+                        </CTableRow>
+                      ))}
+                    </CTableBody>
+                  </CTable>
+                )
+              ) : (
+                <div
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <LoadingOutlined style={{ color: '#ccc', fontSize: 50, margin: 20 }} />
+                  <p style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                    Loading...
+                  </p>
+                </div>
+              )}
             </CCardBody>
           </CCard>
         </CCol>

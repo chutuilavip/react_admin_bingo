@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { LoadingOutlined, FileExclamationOutlined } from '@ant-design/icons'
 import {
   CCard,
   CCardBody,
@@ -8,7 +9,9 @@ import {
   CCol,
   CRow,
   CTable,
+  CForm,
   CTableBody,
+  CContainer,
   // CTableCaption,
   CTableDataCell,
   CTableHead,
@@ -33,20 +36,6 @@ const token = localStorage.getItem('token_key')
 
 let limit = 10
 
-const getSignature = async () => {
-  try {
-    const result = await axios({
-      method: `Get`,
-      url: `${process.env.REACT_APP_URL_API}/api/user?page=1&limit=${limit}`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    return result
-  } catch (err) {
-    console.log('err')
-  }
-}
 const editData = new FormData()
 const Tables = () => {
   const [data, setData] = useState([])
@@ -63,6 +52,31 @@ const Tables = () => {
   const [isBlock, setIsBlock] = useState('')
   const [avatar_index, setAvatar_index] = useState('')
 
+  const [userCode, setUserCode] = useState('')
+  const [userID, setUserID] = useState('')
+  const [nickname, setNickname] = useState('')
+
+  const getSignature = async () => {
+    try {
+      const result = await axios({
+        method: `Get`,
+        url: `${process.env.REACT_APP_URL_API}/api/user?page=1&limit=${limit}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          usercode: userCode,
+          userid: userID,
+          nickname: nickname,
+        },
+      })
+      console.log('data', result)
+      return result
+    } catch (err) {
+      console.log('err')
+    }
+  }
+
   async function getPage() {
     const data = await getSignature()
     const total = data.data.res.total
@@ -71,17 +85,8 @@ const Tables = () => {
   }
   useEffect(() => {
     getPage()
-    //getEdit()
   }, [limit])
-  // useEffect(() => {
-  //   getPage()
-  // }, [limit, form])
-  //
-  // useEffect(() => {
-  //   getPage()
-  //   console.log('form')
-  // }, [form])
-  // console.log(() => {}, form)
+
   const getEdit = async (id) => {
     try {
       const result = await axios({
@@ -129,12 +134,12 @@ const Tables = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-
       return result
     } catch (err) {
       console.log('err')
     }
   }
+
   const handleDeleteForm = async (id) => {
     await getDelete(id)
     // setState(0)
@@ -149,7 +154,6 @@ const Tables = () => {
   }
   const handleDetail = async (id) => {
     await getEdit(id)
-
     setDetail(!detail)
   }
   const handlePageClick = async (data) => {
@@ -231,7 +235,6 @@ const Tables = () => {
               label="Nick Name"
               placeholder="1234 Main St"
               onChange={onChangeNickName}
-              // defaultValue={dataForm.data.cash}
               defaultValue={dataForm?.data?.res?.data?.NickName}
             />
           </CCol>
@@ -251,7 +254,6 @@ const Tables = () => {
               defaultValue={0}
             ></CFormInput>
           </CCol>
-
           <CCol md={12}>
             <CFormSelect
               id="inputState"
@@ -422,77 +424,152 @@ const Tables = () => {
           <CCard className="mb-4">
             <CCardHeader>
               <strong>Account Table</strong>
+
+              <CContainer>
+                <CRow className="align-items-start">
+                  <CCol>
+                    <CForm>
+                      <CFormInput
+                        type="email"
+                        id="exampleFormControlInput1"
+                        placeholder="search User code"
+                        aria-describedby="exampleFormControlInputHelpInline"
+                        onChange={(event) => setUserCode(event.target.value)}
+                      />
+                    </CForm>
+                  </CCol>
+                  <CCol>
+                    <CForm>
+                      <CFormInput
+                        type="email"
+                        id="exampleFormControlInput1"
+                        placeholder="search User Id"
+                        aria-describedby="exampleFormControlInputHelpInline"
+                        onChange={(event) => setUserID(event.target.value)}
+                      />
+                    </CForm>
+                  </CCol>
+                  <CCol>
+                    <CForm>
+                      <CFormInput
+                        type="email"
+                        id="exampleFormControlInput1"
+                        placeholder="search nick name"
+                        aria-describedby="exampleFormControlInputHelpInline"
+                        onChange={(event) => setNickname(event.target.value)}
+                      />
+                    </CForm>
+                  </CCol>
+                  <CCol>
+                    <CButton color="primary" size="sm" onClick={getPage}>
+                      Search
+                    </CButton>
+                  </CCol>
+                </CRow>
+              </CContainer>
             </CCardHeader>
             <CCardBody>
-              <CTable>
-                <CTableHead>
-                  <CTableRow>
-                    <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Nick Name</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">User ID</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Account Level</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Cash</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Gold</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">State</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Action</CTableHeaderCell>
-                  </CTableRow>
-                </CTableHead>
-                <CTableBody>
-                  {data?.data?.res?.data?.data.map((item, index) => (
-                    <CTableRow key={item.id}>
-                      <CTableDataCell scope="row">{index}</CTableDataCell>
-                      <CTableDataCell scope="row">{item.NickName}</CTableDataCell>
-                      <CTableDataCell colSpan="row">{item.UserID}</CTableDataCell>
-                      <CTableDataCell>{item.accountLevel}</CTableDataCell>
-                      <CTableDataCell>{item.Cash}</CTableDataCell>
-                      <CTableDataCell>{item.Gold}</CTableDataCell>
-                      <CTableDataCell>{item.isBlock === 1 ? 'Block' : 'Active'}</CTableDataCell>
-                      <CTableDataCell>
-                        <svg
-                          onClick={() => handleDetail(item.uID)}
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-6 w-6"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          height={30}
-                          width={30}
-                          style={{ cursor: 'pointer' }}
-                        >
-                          <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                        </svg>
-                        <svg
-                          onClick={() => handleEdit(item.uID)}
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-6 w-6 mx-2"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          height={28}
-                          width={28}
-                          style={{ cursor: 'pointer' }}
-                        >
-                          <path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                        </svg>
+              {data?.data?.res?.data?.data ? (
+                data?.data?.res?.data?.total === 0 ? (
+                  <div
+                    style={{
+                      width: '100%',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      flexDirection: 'column',
+                    }}
+                  >
+                    <FileExclamationOutlined style={{ color: '#ccc', fontSize: 50, margin: 20 }} />
+                    <p style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                      No data
+                    </p>
+                  </div>
+                ) : (
+                  <CTable>
+                    <CTableHead>
+                      <CTableRow>
+                        <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">Nick Name</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">User ID</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">Account Level</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">Cash</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">Gold</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">State</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+                      </CTableRow>
+                    </CTableHead>
+                    <CTableBody>
+                      {data?.data?.res?.data?.data.map((item, index) => (
+                        <CTableRow key={item.id}>
+                          <CTableDataCell scope="row">{index}</CTableDataCell>
+                          <CTableDataCell scope="row">{item.NickName}</CTableDataCell>
+                          <CTableDataCell colSpan="row">{item.UserID}</CTableDataCell>
+                          <CTableDataCell>{item.accountLevel}</CTableDataCell>
+                          <CTableDataCell>{item.Cash}</CTableDataCell>
+                          <CTableDataCell>{item.Gold}</CTableDataCell>
+                          <CTableDataCell>{item.isBlock === 1 ? 'Block' : 'Active'}</CTableDataCell>
+                          <CTableDataCell>
+                            <svg
+                              onClick={() => handleDetail(item.uID)}
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-6 w-6"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              height={30}
+                              width={30}
+                              style={{ cursor: 'pointer' }}
+                            >
+                              <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                            </svg>
+                            <svg
+                              onClick={() => handleEdit(item.uID)}
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-6 w-6 mx-2"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              height={28}
+                              width={28}
+                              style={{ cursor: 'pointer' }}
+                            >
+                              <path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                            </svg>
 
-                        <svg
-                          onClick={() => handleDeleteForm(item.uID)}
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-6 w-6"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          height={30}
-                          width={30}
-                          style={{ cursor: 'pointer' }}
-                        >
-                          <path d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
-                        </svg>
-                      </CTableDataCell>
-                    </CTableRow>
-                  ))}
-                </CTableBody>
-              </CTable>
+                            <svg
+                              onClick={() => handleDeleteForm(item.uID)}
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-6 w-6"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              height={30}
+                              width={30}
+                              style={{ cursor: 'pointer' }}
+                            >
+                              <path d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
+                            </svg>
+                          </CTableDataCell>
+                        </CTableRow>
+                      ))}
+                    </CTableBody>
+                  </CTable>
+                )
+              ) : (
+                <div
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <LoadingOutlined style={{ color: '#ccc', fontSize: 50, margin: 20 }} />
+                  <p style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                    Loading...
+                  </p>
+                </div>
+              )}
             </CCardBody>
           </CCard>
         </CCol>

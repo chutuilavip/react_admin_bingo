@@ -24,6 +24,7 @@
     "firebase": "npm run build && firebase deploy"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@coreui/chartjs": "^3.0.0",
     "@coreui/coreui": "^4.2.0",
     "@coreui/icons": "^2.1.0",
