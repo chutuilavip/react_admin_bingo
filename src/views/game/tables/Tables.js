@@ -317,7 +317,7 @@ const Tables = () => {
   }
   const handleSubmit = async () => {
     editData.append('play_time', playTime)
-    editData.append('cool_time  ', coolTime)
+    editData.append('cool_time', coolTime)
     editData.append('pick_score', numberPickScore)
     editData.append('bingo_score', numberBingoScore)
     editData.append('over_score', numberComboScore)
