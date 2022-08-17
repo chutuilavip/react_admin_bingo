@@ -1,7 +1,8 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-// import Form_Edit from 'src/views/pages/login/Form_Edit'
+import { LoadingOutlined, FileExclamationOutlined } from '@ant-design/icons'
+
 import {
   CCard,
   CCardBody,
@@ -135,7 +136,7 @@ const Tables = () => {
   const handleSubmitAdd = async (e) => {
     const isValid = validation()
 
-    const formData = new FormData();
+    const formData = new FormData()
     if (isValid) {
       formData.append('title', title)
       formData.append('image', image)
@@ -165,8 +166,8 @@ const Tables = () => {
         .catch(function (err) {
           console.log(err)
         })
-        // setImage('')
-        // console.log(image);
+      // setImage('')
+      // console.log(image);
       const pageFormServer = await fetchPage(pageNumber + 1)
       setData(pageFormServer)
     }
@@ -329,63 +330,95 @@ const Tables = () => {
               <strong>Account Table</strong>
             </CCardHeader>
             <CCardBody>
-              <CTable>
-                <CTableHead>
-                  <CTableRow>
-                    <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Image</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Status</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">Action</CTableHeaderCell>
-                  </CTableRow>
-                </CTableHead>
-                <CTableBody>
-                  {data?.data?.res?.data?.data.map((item, index) => (
-                    <CTableRow key={item.id}>
-                      <CTableDataCell scope="row">{index}</CTableDataCell>
-                      <CTableDataCell scope="row">{item.title}</CTableDataCell>
-                      <CTableDataCell colSpan="row">
-                        <CImage
-                          src={`${process.env.REACT_APP_URL_API}${item.image}`}
-                          alt="img"
-                          height={150}
-                          width={150}
-                        />
-                      </CTableDataCell>
-                      <CTableDataCell>{item.status ? 'Active' : 'Block'}</CTableDataCell>
-                      <CTableDataCell>
-                        <svg
-                          onClick={() => handleEdit(item.id)}
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-6 w-6 mx-2"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          height={28}
-                          width={28}
-                          style={{ cursor: 'pointer' }}
-                        >
-                          <path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                        </svg>
+              {data?.data?.res?.data?.data ? (
+                data?.data?.res?.data?.total === 0 ? (
+                  <div
+                    style={{
+                      width: '100%',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      flexDirection: 'column',
+                    }}
+                  >
+                    <FileExclamationOutlined style={{ color: '#ccc', fontSize: 50, margin: 20 }} />
+                    <p style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                      No data
+                    </p>
+                  </div>
+                ) : (
+                  <CTable>
+                    <CTableHead>
+                      <CTableRow>
+                        <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">Title</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">Image</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">Status</CTableHeaderCell>
+                        <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+                      </CTableRow>
+                    </CTableHead>
+                    <CTableBody>
+                      {data?.data?.res?.data?.data.map((item, index) => (
+                        <CTableRow key={item.id}>
+                          <CTableDataCell scope="row">{index}</CTableDataCell>
+                          <CTableDataCell scope="row">{item.title}</CTableDataCell>
+                          <CTableDataCell colSpan="row">
+                            <CImage
+                              src={`${process.env.REACT_APP_URL_API}${item.image}`}
+                              alt="img"
+                              height={150}
+                              width={150}
+                            />
+                          </CTableDataCell>
+                          <CTableDataCell>{item.status ? 'Active' : 'Block'}</CTableDataCell>
+                          <CTableDataCell>
+                            <svg
+                              onClick={() => handleEdit(item.id)}
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-6 w-6 mx-2"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              height={28}
+                              width={28}
+                              style={{ cursor: 'pointer' }}
+                            >
+                              <path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                            </svg>
 
-                        <svg
-                          onClick={() => handleDelete(item.id)}
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-6 w-6"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          height={30}
-                          width={30}
-                          style={{ cursor: 'pointer' }}
-                        >
-                          <path d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
-                        </svg>
-                      </CTableDataCell>
-                    </CTableRow>
-                  ))}
-                </CTableBody>
-              </CTable>
+                            <svg
+                              onClick={() => handleDelete(item.id)}
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-6 w-6"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              height={30}
+                              width={30}
+                              style={{ cursor: 'pointer' }}
+                            >
+                              <path d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
+                            </svg>
+                          </CTableDataCell>
+                        </CTableRow>
+                      ))}
+                    </CTableBody>
+                  </CTable>
+                )
+              ) : (
+                <div
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <LoadingOutlined style={{ color: '#ccc', fontSize: 50, margin: 20 }} />
+                  <p style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                    Loading...
+                  </p>
+                </div>
+              )}
             </CCardBody>
           </CCard>
         </CCol>
