@@ -195,9 +195,11 @@ const Tables = () => {
         <CCol xs={12}>
           <CCard className="mb-4">
             <CCardHeader>
-              <strong>History Transaction Table</strong>
               <CContainer>
                 <CRow className="align-items-start">
+                  <CCol>
+                    <strong>History Transaction Table</strong>
+                  </CCol>
                   <CCol>
                     <CForm>
                       <CFormInput
