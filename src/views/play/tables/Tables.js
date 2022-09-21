@@ -174,9 +174,11 @@ const Tables = () => {
         <CCol xs={12}>
           <CCard className="mb-4">
             <CCardHeader>
-              <strong>History Play game</strong>
               <CContainer>
                 <div className="row justify-content-md-center">
+                  <CCol>
+                    <strong>History Play game</strong>
+                  </CCol>
                   <CCol xs lg={2}></CCol>
                   <CCol md="auto">
                     <CForm>
@@ -201,7 +203,7 @@ const Tables = () => {
                     />
                   </CCol>
                   <CCol xs lg={2}>
-                    <CButton color="primary" onClick={getPage}>
+                    <CButton color="success" variant="outline" onClick={getPage}>
                       Search
                     </CButton>
                   </CCol>

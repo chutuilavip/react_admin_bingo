@@ -49,6 +49,7 @@ const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 const Account = React.lazy(() => import('./views/account/tables/Tables'))
+const DataPoint = React.lazy(() => import('./views/data-point/DataPoint'))
 const Game = React.lazy(() => import('./views/game/tables/Tables'))
 const Play = React.lazy(() => import('./views/play/tables/Tables'))
 const Transaction = React.lazy(() => import('./views/transaction/tables/Tables'))
@@ -100,6 +101,7 @@ const routes = [
   { path: '/notifications/toasts', name: 'Toasts', element: Toasts },
   { path: '/widgets', name: 'Widgets', element: Widgets },
   { path: '/admin/account', name: 'Account', element: Account, exact: true },
+  { path: '/admin/account/data-point', name: 'Data-point', element: DataPoint, exact: true },
   // { path: '/admin/account/:', name: 'Account', element: Account, exact: true },
   { path: '/admin/game', name: 'Game', element: Game, exact: true },
   { path: '/admin/play', name: 'Play', element: Play, exact: true },

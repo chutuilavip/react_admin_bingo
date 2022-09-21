@@ -331,11 +331,10 @@ const Tables = () => {
         <CCol xs={12}>
           <CCard className="mb-4">
             <CCardHeader>
-              <strong>Account Table</strong>
               <CContainer>
                 <CRow className="align-items-end">
                   <CCol>
-                    <CForm></CForm>
+                    <strong>Account Table</strong>
                   </CCol>
                   <CCol>
                     <CForm></CForm>
@@ -355,7 +354,7 @@ const Tables = () => {
                     />
                   </CCol>
                   <CCol>
-                    <CButton color="primary" onClick={getPage}>
+                    <CButton color="success" variant="outline" onClick={getPage}>
                       Search
                     </CButton>
                   </CCol>

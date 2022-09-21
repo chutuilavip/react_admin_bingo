@@ -121,27 +121,15 @@ const Tables = () => {
 
   const [league, setLeague] = useState({
     event_name: '',
-    // =========================================================================
-
-    //reqStart: '',
     req_start_date: '',
     req_start_hour: '',
     req_start_minute: '',
-
-    //reqEnd: '',
-
-    //startDate: '',
     league_start_date: '',
     league_start_hour: '',
     league_start_minute: '',
-
-    //endDate: '',
     league_end_date: '',
     league_end_hour: '',
     league_end_minute: '',
-
-    // =========================================================================
-
     req_gold: '',
     req_play_coin: '',
   })
