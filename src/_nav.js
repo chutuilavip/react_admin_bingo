@@ -301,6 +301,11 @@ const _nav = [
         name: 'List',
         to: '/admin/account',
       },
+      {
+        component: CNavItem,
+        name: 'Data Point',
+        to: '/admin/account/data-point',
+      },
     ],
   },
   {

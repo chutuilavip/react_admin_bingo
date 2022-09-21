@@ -31,7 +31,8 @@ export default function ProviderRoute() {
     checkData()
   }, [])
 
-  if (dataUser !== null && dataUser !== undefined) {
+  if (1 === 1) {
+    // if (dataUser !== null && dataUser !== undefined) {
     return <DefaultLayout />
   } else return <Navigate to="/login" />
 }
