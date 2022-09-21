@@ -103,25 +103,14 @@ const DataPoint = () => {
   //export
 
   const headers = [
-    { label: 'Avatar_index', key: 'Avatar_index' },
-    { label: 'Cash', key: 'Cash' },
-    { label: 'Gold', key: 'Gold' },
-    { label: 'NickName', key: 'NickName' },
-    { label: 'UserCode', key: 'UserCode' },
-    { label: 'UserID', key: 'UserID' },
-    { label: 'accountExp', key: 'accountExp' },
-    { label: 'accountLevel', key: 'accountLevel' },
-    { label: 'isBlock', key: 'isBlock' },
-    { label: 'lastAccessDate', key: 'lastAccessDate' },
-    { label: 'leagueTier', key: 'leagueTier' },
-    { label: 'loginKey', key: 'loginKey' },
-    { label: 'pendingGold', key: 'pendingGold' },
-    { label: 'registerDate', key: 'registerDate' },
-    { label: 'uID', key: 'uID' },
-    { label: 'v', key: 'uID' },
+    { label: 'Nick name ', key: 'NickName' },
+    { label: 'WalletAddress', key: 'UserID' },
+    { label: 'CreatedAt', key: 'registerDate' },
+    { label: 'DailyPoint', key: 'earnGoldToday' },
+    { label: 'TotalPoint', key: 'Gold' },
   ]
   const csvReport = {
-    data: data?.data?.res?.data?.data || '',
+    data: data?.data?.res?.data || '',
     headers: headers,
     filename: 'Data_point.csv',
   }
