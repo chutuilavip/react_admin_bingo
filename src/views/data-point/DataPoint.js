@@ -37,6 +37,10 @@ const DataPoint = () => {
   const [data, setData] = useState([])
   const [page, setPage] = useState(0)
   const [pageNumber, setPageNumber] = useState()
+  const [date, setDate] = useState({
+    start: '',
+    end: '',
+  })
 
   //search
 
@@ -44,12 +48,18 @@ const DataPoint = () => {
     try {
       const result = await axios({
         method: `Get`,
-        url: `${process.env.REACT_APP_URL_API}/api/user?page=1&limit=${limit}`,
+        url: `${process.env.REACT_APP_URL_API}/api/admin/data-point`,
+        // url: `${process.env.REACT_APP_URL_API}/api/user?page=1&limit=${limit}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        params: {},
+        params: {
+          start: date.start,
+          end: date.end,
+        },
       })
+
+      console.log(result)
       return result
     } catch (err) {
       console.log('err')
@@ -63,7 +73,6 @@ const DataPoint = () => {
     setData(data)
   }
   useEffect(() => {
-    console.log(data)
     getPage()
   }, [limit])
 
@@ -71,11 +80,14 @@ const DataPoint = () => {
     try {
       const result = await axios({
         method: `Get`,
-        url: `${process.env.REACT_APP_URL_API}/api/user?page=${currentPage}&limit=${limit}`,
+        url: `${process.env.REACT_APP_URL_API}/api/admin/data-point`,
+        // url: `${process.env.REACT_APP_URL_API}/api/user?page=${currentPage}&limit=${limit}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
+
+      console.log(result)
       return result
     } catch (err) {
       console.log('err')
@@ -108,19 +120,6 @@ const DataPoint = () => {
     { label: 'uID', key: 'uID' },
     { label: 'v', key: 'uID' },
   ]
-  const dataCsv = [
-    { firstName: 'Warren', lastName: 'Morrow', email: 'sokyt@mailinator.com', age: '36' },
-    { firstName: 'Gwendolyn', lastName: 'Galloway', email: 'weciz@mailinator.com', age: '76' },
-    { firstName: 'Astra', lastName: 'Wyatt', email: 'quvyn@mailinator.com', age: '57' },
-    { firstName: 'Jasmine', lastName: 'Wong', email: 'toxazoc@mailinator.com', age: '42' },
-    { firstName: 'Brooke', lastName: 'Mcconnell', email: 'vyry@mailinator.com', age: '56' },
-    { firstName: 'Christen', lastName: 'Haney', email: 'pagevolal@mailinator.com', age: '23' },
-    { firstName: 'Tate', lastName: 'Vega', email: 'dycubo@mailinator.com', age: '87' },
-    { firstName: 'Amber', lastName: 'Brady', email: 'vyconixy@mailinator.com', age: '78' },
-    { firstName: 'Philip', lastName: 'Whitfield', email: 'velyfi@mailinator.com', age: '22' },
-    { firstName: 'Kitra', lastName: 'Hammond', email: 'fiwiloqu@mailinator.com', age: '35' },
-    { firstName: 'Charity', lastName: 'Mathews', email: 'fubigonero@mailinator.com', age: '63' },
-  ]
   const csvReport = {
     data: data?.data?.res?.data?.data || '',
     headers: headers,
@@ -139,6 +138,28 @@ const DataPoint = () => {
                     <strong>Account Table</strong>
                   </CCol>
                   <CCol>
+                    <div className="px-1">
+                      <div className="d-flex">
+                        <CFormInput
+                          placeholder=""
+                          type="date"
+                          onChange={(e) => setDate({ ...date, start: e.target.value })}
+                        />
+                      </div>
+                    </div>
+                  </CCol>
+                  <CCol>
+                    <div className="px-1">
+                      <div className="d-flex">
+                        <CFormInput
+                          placeholder=""
+                          type="date"
+                          onChange={(e) => setDate({ ...date, end: e.target.value })}
+                        />
+                      </div>
+                    </div>
+                  </CCol>
+                  <CCol>
                     <CButton color="success" variant="outline" onClick={getPage}>
                       Search
                     </CButton>
@@ -152,66 +173,38 @@ const DataPoint = () => {
               </CContainer>
             </CCardHeader>
             <CCardBody>
-              {data?.data?.res?.data?.data ? (
-                data?.data?.res?.data?.total === 0 ? (
-                  <div
-                    style={{
-                      width: '100%',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      flexDirection: 'column',
-                    }}
-                  >
-                    <FileExclamationOutlined style={{ color: '#ccc', fontSize: 50, margin: 20 }} />
-                    <p style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                      No data
-                    </p>
-                  </div>
-                ) : (
-                  <CTable>
-                    <CTableHead>
-                      <CTableRow>
-                        <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                        <CTableHeaderCell scope="col">Nick Name</CTableHeaderCell>
-                        <CTableHeaderCell scope="col">User ID</CTableHeaderCell>
-                        <CTableHeaderCell scope="col">Account Level</CTableHeaderCell>
-                        <CTableHeaderCell scope="col">Cash</CTableHeaderCell>
-                        <CTableHeaderCell scope="col">Gold</CTableHeaderCell>
-                        <CTableHeaderCell scope="col">State</CTableHeaderCell>
-                      </CTableRow>
-                    </CTableHead>
-                    <CTableBody>
-                      {data?.data?.res?.data?.data.map((item, index) => (
-                        <CTableRow key={item.id}>
-                          <CTableDataCell scope="row">{index}</CTableDataCell>
-                          <CTableDataCell scope="row">{item.NickName}</CTableDataCell>
-                          <CTableDataCell colSpan="row">
-                            {item.UserID.slice(0, 7)}...{item.UserID.slice(-5)}
-                          </CTableDataCell>
-                          <CTableDataCell>{item.accountLevel}</CTableDataCell>
-                          <CTableDataCell>{item.Cash}</CTableDataCell>
-                          <CTableDataCell>{item.Gold}</CTableDataCell>
-                          <CTableDataCell>{item.isBlock === 1 ? 'Block' : 'Active'}</CTableDataCell>
-                        </CTableRow>
-                      ))}
-                    </CTableBody>
-                  </CTable>
-                )
-              ) : (
-                <div
-                  style={{
-                    width: '100%',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    flexDirection: 'column',
-                  }}
-                >
-                  <LoadingOutlined style={{ color: '#ccc', fontSize: 50, margin: 20 }} />
-                  <p style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                    Loading...
-                  </p>
-                </div>
-              )}
+              <CTable>
+                <CTableHead>
+                  <CTableRow>
+                    <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Nick Name</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Gold</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Turn</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">UserID</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">accountExp</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">earnGoldToday</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">lastAccessDate</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">registerDate</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">uID</CTableHeaderCell>
+                  </CTableRow>
+                </CTableHead>
+                <CTableBody>
+                  {data?.data?.res?.data.map((item, index) => (
+                    <CTableRow key={index}>
+                      <CTableDataCell scope="row">{index}</CTableDataCell>
+                      <CTableDataCell scope="row">{item.Gold}</CTableDataCell>
+                      <CTableDataCell scope="row">{item.NickName}</CTableDataCell>
+                      <CTableDataCell scope="row">{item.Turn}</CTableDataCell>
+                      <CTableDataCell scope="row">{item.UserID}</CTableDataCell>
+                      <CTableDataCell scope="row">{item.accountExp}</CTableDataCell>
+                      <CTableDataCell scope="row">{item.earnGoldToday}</CTableDataCell>
+                      <CTableDataCell scope="row">{item.lastAccessDate}</CTableDataCell>
+                      <CTableDataCell scope="row">{item.registerDate}</CTableDataCell>
+                      <CTableDataCell scope="row">{item.uID}</CTableDataCell>
+                    </CTableRow>
+                  ))}
+                </CTableBody>
+              </CTable>
             </CCardBody>
           </CCard>
         </CCol>
