@@ -2,7 +2,6 @@ import React from 'react'
 import { CSVLink } from 'react-csv'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { LoadingOutlined, FileExclamationOutlined } from '@ant-design/icons'
 import {
   CCard,
   CCardBody,
@@ -17,13 +16,7 @@ import {
   CTableHeaderCell,
   CTableRow,
   CButton,
-  CModal,
-  CModalHeader,
-  CModalTitle,
-  CModalBody,
-  CModalFooter,
   CFormInput,
-  CFormSelect,
 } from '@coreui/react'
 import ReactPaginate from 'react-paginate'
 
@@ -41,6 +34,10 @@ const DataPoint = () => {
     start: '',
     end: '',
   })
+  const [time, setTime] = useState({
+    time_start: '',
+    time_end: ''
+  })
 
   //search
 
@@ -56,6 +53,8 @@ const DataPoint = () => {
         params: {
           start: date.start,
           end: date.end,
+          time_start: time.time_start,
+          time_end: time.time_end
         },
       })
 
@@ -71,6 +70,7 @@ const DataPoint = () => {
     const total = data.data.res.total
     setPage(Math.ceil(total / limit))
     setData(data)
+    console.log(time)
   }
   useEffect(() => {
     getPage()
@@ -129,6 +129,7 @@ const DataPoint = () => {
                   <CCol>
                     <div className="px-1">
                       <div className="d-flex">
+                        Date start
                         <CFormInput
                           placeholder=""
                           type="date"
@@ -140,10 +141,35 @@ const DataPoint = () => {
                   <CCol>
                     <div className="px-1">
                       <div className="d-flex">
+                        Date end
                         <CFormInput
                           placeholder=""
                           type="date"
                           onChange={(e) => setDate({ ...date, end: e.target.value })}
+                        />
+                      </div>
+                    </div>
+                  </CCol>
+                  <CCol>
+                    <div className="px-1">
+                      <div className="d-flex">
+                        Time start
+                        <CFormInput
+                          placeholder=""
+                          type="time"
+                          onChange={(e) => setTime({ ...time, time_start: e.target.value })}
+                        />
+                      </div>
+                    </div>
+                  </CCol>
+                  <CCol>
+                    <div className="px-1">
+                      <div className="d-flex">
+                        Time end
+                        <CFormInput
+                          placeholder=""
+                          type="time"
+                          onChange={(e) => setTime({ ...time, time_end: e.target.value })}
                         />
                       </div>
                     </div>
