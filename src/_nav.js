@@ -306,6 +306,11 @@ const _nav = [
         name: 'Data Point',
         to: '/admin/account/data-point',
       },
+      {
+        component: CNavItem,
+        name: 'Register',
+        to: '/admin/register',
+      },
     ],
   },
   {
@@ -366,6 +371,11 @@ const _nav = [
         name: 'List',
         to: '/admin/system',
       },
+      // {
+      //   component: CNavItem,
+      //   name: 'Upload',
+      //   to: '/admin/upload',
+      // },
     ],
   },
 ]
