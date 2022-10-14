@@ -100,79 +100,68 @@ const Register = () => {
   }
 
   return (
-    <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
-      <CContainer>
-        <CRow className="justify-content-center">
-          <CCol md={9} lg={7} xl={6}>
-            <CCard className="mx-4">
-              <CCardBody className="p-4">
-                <CForm onSubmit={handleSubmit}>
-                  <h1>Register</h1>
-                  <p className="text-medium-emphasis">Create your account</p>
-                  <CInputGroup className="mb-3">
-                    <CInputGroupText>
-                      <CIcon icon={cilUser} />
-                    </CInputGroupText>
-                    <CFormInput
-                      placeholder="Username"
-                      autoComplete="username"
-                      name="adminID"
-                      defaultValue={username}
-                      onChange={onChangeUsername}
-                      onKeyUp={handleKeyUp}
-                    />
-                  </CInputGroup>
+    <div className="bg-light d-flex flex-row align-items-center">
+      <CForm onSubmit={handleSubmit}>
+        <p className="text-medium-emphasis">Create your account</p>
+        <CInputGroup className="mb-3">
+          <CInputGroupText>
+            <CIcon icon={cilUser} />
+          </CInputGroupText>
+          <CFormInput
+            placeholder="Username"
+            autoComplete="username"
+            name="adminID"
+            defaultValue={username}
+            onChange={onChangeUsername}
+            onKeyUp={handleKeyUp}
+          />
+        </CInputGroup>
 
-                  {error.username && <p className="text-danger">{error.username}</p>}
-                  {/* <CInputGroup className="mb-3">
+        {error.username && <p className="text-danger">{error.username}</p>}
+        {/* <CInputGroup className="mb-3">
                     <CInputGroupText>@</CInputGroupText>
                     <CFormInput placeholder="Email" autoComplete="email" />
                   </CInputGroup> */}
-                  <CInputGroup className="mb-3">
-                    <CInputGroupText>
-                      <CIcon icon={cilLockLocked} />
-                    </CInputGroupText>
-                    <CFormInput
-                      type="password"
-                      placeholder="Password"
-                      autoComplete="new-password"
-                      name="adminPW"
-                      defaultValue={password}
-                      onChange={onChangePassword}
-                      onKeyUp={handleKeyUp}
-                    />
-                  </CInputGroup>
+        <CInputGroup className="mb-3">
+          <CInputGroupText>
+            <CIcon icon={cilLockLocked} />
+          </CInputGroupText>
+          <CFormInput
+            type="password"
+            placeholder="Password"
+            autoComplete="new-password"
+            name="adminPW"
+            defaultValue={password}
+            onChange={onChangePassword}
+            onKeyUp={handleKeyUp}
+          />
+        </CInputGroup>
 
-                  {error.password && <p className="text-danger">{error.password}</p>}
+        {error.password && <p className="text-danger">{error.password}</p>}
 
-                  <CInputGroup className="mb-4">
-                    <CInputGroupText>
-                      <CIcon icon={cilLockLocked} />
-                    </CInputGroupText>
-                    <CFormInput
-                      type="password"
-                      placeholder="Repeat password"
-                      autoComplete="new-password"
-                      name="password_confirmation"
-                      defaultValue={confirmPassword}
-                      onChange={onChangeConfirmPassword}
-                      onKeyUp={handleKeyUp}
-                    />
-                  </CInputGroup>
+        <CInputGroup className="mb-4">
+          <CInputGroupText>
+            <CIcon icon={cilLockLocked} />
+          </CInputGroupText>
+          <CFormInput
+            type="password"
+            placeholder="Repeat password"
+            autoComplete="new-password"
+            name="password_confirmation"
+            defaultValue={confirmPassword}
+            onChange={onChangeConfirmPassword}
+            onKeyUp={handleKeyUp}
+          />
+        </CInputGroup>
 
-                  {error.confirmPassword && <p className="text-danger">{error.confirmPassword}</p>}
+        {error.confirmPassword && <p className="text-danger">{error.confirmPassword}</p>}
 
-                  <div className="d-grid">
-                    <CButton onClick={handleSubmit} color="success">
-                      Create Account
-                    </CButton>
-                  </div>
-                </CForm>
-              </CCardBody>
-            </CCard>
-          </CCol>
-        </CRow>
-      </CContainer>
+        <div className="d-grid">
+          <CButton onClick={handleSubmit} color="success">
+            Create Account
+          </CButton>
+        </div>
+      </CForm>
     </div>
   )
 }
