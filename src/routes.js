@@ -55,6 +55,8 @@ const Play = React.lazy(() => import('./views/play/tables/Tables'))
 const Transaction = React.lazy(() => import('./views/transaction/tables/Tables'))
 const Banner = React.lazy(() => import('./views/banner/tables/Tables'))
 const System = React.lazy(() => import('./views/system/tables/Tables'))
+const Register = React.lazy(() => import('./views/pages/register/Register'))
+
 const routes = [
   { path: '/', name: 'Dashboard', element: Dashboard },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
@@ -102,12 +104,12 @@ const routes = [
   { path: '/widgets', name: 'Widgets', element: Widgets },
   { path: '/admin/account', name: 'Account', element: Account, exact: true },
   { path: '/admin/account/data-point', name: 'Data-point', element: DataPoint, exact: true },
-  // { path: '/admin/account/:', name: 'Account', element: Account, exact: true },
   { path: '/admin/game', name: 'Game', element: Game, exact: true },
   { path: '/admin/play', name: 'Play', element: Play, exact: true },
   { path: '/admin/transaction', name: 'Transaction', element: Transaction, exact: true },
   { path: '/admin/banner', name: 'Banner', element: Banner, exact: true },
   { path: '/admin/system', name: 'System', element: System, exact: true },
+  { path: '/admin/register', name: 'Register', element: Register, exact: true },
 ]
 
 export default routes

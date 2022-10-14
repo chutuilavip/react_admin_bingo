@@ -124,6 +124,13 @@ const Tables = () => {
         </>
       )}
 
+      <CCol sm={12} className="d-flex align-items-center mt-4">
+        <CFormInput
+          label="File Apk"
+          type="file"
+          onChange={(e) => formData.append('apk', e.target.files[0])}
+        />
+      </CCol>
       <div className="d-flex justify-content-end mt-4">
         <CButton onClick={handleSubmit} className="btn_update" type="submit">
           Submit

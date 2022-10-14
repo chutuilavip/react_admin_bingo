@@ -20,7 +20,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import "../style.css"
+import '../style.css'
 
 let dataUser = new FormData()
 
@@ -127,11 +127,11 @@ const Login = () => {
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                       tempor incididunt ut labore et dolore magna aliqua.
                     </p>
-                    <Link to="/register">
+                    {/* <Link to="/register">
                       <CButton className="mt-3 btn_register" active tabIndex={-1}>
                         Register Now!
                       </CButton>
-                    </Link>
+                    </Link> */}
                   </div>
                 </CCardBody>
               </CCard>
