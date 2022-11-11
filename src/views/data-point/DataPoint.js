@@ -36,7 +36,7 @@ const DataPoint = () => {
   })
   const [time, setTime] = useState({
     time_start: '',
-    time_end: ''
+    time_end: '',
   })
 
   //search
@@ -54,7 +54,7 @@ const DataPoint = () => {
           start: date.start,
           end: date.end,
           time_start: time.time_start,
-          time_end: time.time_end
+          time_end: time.time_end,
         },
       })
 
@@ -192,6 +192,7 @@ const DataPoint = () => {
                 <CTableHead>
                   <CTableRow>
                     <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">uID</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Nick Name</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Gold</CTableHeaderCell>
                     <CTableHeaderCell scope="col">Turn</CTableHeaderCell>
@@ -200,22 +201,21 @@ const DataPoint = () => {
                     <CTableHeaderCell scope="col">earnGoldToday</CTableHeaderCell>
                     <CTableHeaderCell scope="col">lastAccessDate</CTableHeaderCell>
                     <CTableHeaderCell scope="col">registerDate</CTableHeaderCell>
-                    <CTableHeaderCell scope="col">uID</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
                   {data?.data?.res?.data.map((item, index) => (
                     <CTableRow key={index}>
                       <CTableDataCell scope="row">{index}</CTableDataCell>
-                      <CTableDataCell scope="row">{item.Gold}</CTableDataCell>
+                      <CTableDataCell scope="row">{item.uID}</CTableDataCell>
                       <CTableDataCell scope="row">{item.NickName}</CTableDataCell>
+                      <CTableDataCell scope="row">{item.Gold}</CTableDataCell>
                       <CTableDataCell scope="row">{item.Turn}</CTableDataCell>
                       <CTableDataCell scope="row">{item.UserID}</CTableDataCell>
                       <CTableDataCell scope="row">{item.accountExp}</CTableDataCell>
                       <CTableDataCell scope="row">{item.earnGoldToday}</CTableDataCell>
                       <CTableDataCell scope="row">{item.lastAccessDate}</CTableDataCell>
                       <CTableDataCell scope="row">{item.registerDate}</CTableDataCell>
-                      <CTableDataCell scope="row">{item.uID}</CTableDataCell>
                     </CTableRow>
                   ))}
                 </CTableBody>
